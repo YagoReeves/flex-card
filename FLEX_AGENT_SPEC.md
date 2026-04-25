@@ -11,19 +11,21 @@
 - DST reminder routine `trig_01EreY3zZT6e7sVapd6g9LVU` — fires Mon 19 Oct 2026. Updated to remind on bumping both routine crons (Brief + Sync) by +1 UTC hour.
 - GitHub repo `https://github.com/YagoReeves/flex-card` — private, attached to both production routines as a working-directory source. Holds spec, prompts, snapshot history.
 
-**First fire to monitor: Mon 27 Apr 2026.**
-- 08:07 BST: Sync runs first. Should parse Excel, diff vs `snapshots/webbank_checklist_2026-04-24.json`, update Mirror DB, write today's snapshot + diff JSONs, `git push origin main`, post digest to `#flex-agent-jago`.
-- 08:53 BST: Brief fires. Should consume today's diff JSON from working-dir clone, summarise WebBank slice, post to `#flex-agent-jago`.
+**Next session priorities (in order):**
 
-**Open for Jago (manual):**
+1. **Verify Mon 27 Apr first fires** — confirm both routines fired correctly, posted to `#flex-agent-jago`, Sync's commit landed on `main`, Mirror DB updated as expected. Debug anything broken.
+2. **Build Job 2 — Meeting Action Item Extractor**. Manual-trigger routine (Jago kicks off after a meeting). Reads Granola transcript for the named meeting, extracts candidate action items with strict rules, posts draft to `#flex-agent-jago`. Approval flow per spec §"Job 2".
+3. **Build Job 4 — Weekly Cycle**. Two cron routines: Mon 09:00 (week-ahead) and Fri 17:00 (week-in-review). Same wrapper pattern, repo-attached, `prompts/weekly_monday.md` + `prompts/weekly_friday.md`.
+4. **End-to-end workflow verification**. After Jobs 2 + 4 are live, run a full week (or two) and validate that the system actually delivers the "superhuman PM" experience the spec is built for. Capture friction, missed signals, false positives.
+
+**Open for Jago (manual, anytime):**
 - (In Notion UI) group the two Agent-owned DBs into a toggle section under Flex Hub's Central Memory — Notion API was blocking the auto-insert.
 - Spot-check a handful of Mirror DB rows against the Excel — we parsed 80 kept + 62 dropped, but WebBank's own Grand Total is 100; worth a sanity pass.
-- Watch Monday's first live fires; report any anomalies.
 
-**Outstanding jobs to build:**
-- Job 2: Meeting Action Item Extraction (manual trigger).
-- Job 4: Weekly Cycle (Mon 09:00 + Fri 17:00).
-- Approval Sweep — **blocked** by remote-routine 1-hour minimum; needs design revisit. Lower priority now that Sync auto-writes (no approval gate needed for it per locked spec).
+**Deferred (revisit triggers noted):**
+- **2026-05-08**: human-in-loop graduation review. Which flows can move from draft-then-approve to auto-send? Brief is already auto-post (no approval gate by design); Sync is auto-write (option-c locked). Job 2 (Action Items) and Job 4 (Weekly Cycle) ship with approval gates first; revisit graduation after they've run for a couple of weeks.
+- **Approval Sweep** — blocked by remote-routine 1-hour minimum. Design revisit (hourly poll, webhook trigger, etc). Lower priority now that Sync auto-writes; only matters for Jobs 2 and 4 once they're live.
+- **Dashboard** — revisit after 4 weeks of usage. Possible Claude-Code-built web app in this repo.
 
 ## TL;DR
 

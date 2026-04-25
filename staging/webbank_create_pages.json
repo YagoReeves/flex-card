@@ -1,0 +1,808 @@
+{
+  "parent": {
+    "type": "data_source_id",
+    "data_source_id": "a31ff0cd-3aaa-434a-815d-0c8dcc8ba53f"
+  },
+  "pages": [
+    {
+      "properties": {
+        "Item Code": "AQ11",
+        "Category": "AQ",
+        "Document Name": "3rd Party Agreements/ Contracts",
+        "Bank Guidance": "[Notes] Triparty (Marqeta, WebBank, Cleo) and ACH Origination Agreement, Tabapay?",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"Legal\", \"Other\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "AP1",
+        "Category": "AP",
+        "Document Name": "Online Application Flow (screen shots + process flow diagram) - Includes: Online Application Flow (screen shots + process flow diagram), Mobile Application Flow (screen shots + process flow diagram), Paper Credit Application (template), Phone Application Processing Call Scripts (talking points), Email Application (template), Mail-In Application (template), Joint Application (template), Re-opened application flow",
+        "Bank Guidance": "Bank needs to review happy path as well as any possible unhappy paths.\n\n[Notes] Post Launch Validation Testing",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\", \"Compliance\", \"Legal\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "AP2",
+        "Category": "AP",
+        "Document Name": "Application Restart Communications - Includes: Application Restart Communications, Incomplete Application Communications, Application Withdrawn Communications",
+        "Bank Guidance": "May be a script, email, text, or other applicable communication\n\n[Notes] Post Launch Validation Testing",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "AP5",
+        "Category": "AP",
+        "Document Name": "E-Sign Authorization & Capture Process (Incl. Disclosure, Consent, and email verification)",
+        "Bank Guidance": "Need to ensure ESIGN is consented to prior to delivery of a notice required to be provided in writing (Adverse Action, TILA). Also must ensure reasonable demonstration from the customer that they have the ability to view and retain the notice in the form provided (email, online document portal). Otherwise required notices must be provided in a paper format.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "AP7",
+        "Category": "AP",
+        "Document Name": "Terms of Use",
+        "Bank Guidance": "Includes Terms of Use for website or app",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "AP8",
+        "Category": "AP",
+        "Document Name": "Military Service Eligibility Communications (MLA) - MLA disclosures in agreement to also include verbal disclosures and phone number",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "UW1",
+        "Category": "UW",
+        "Document Name": "Credit Policy - Includes: Credit Policy , Credit Policy Change Management Procedure, Ability to Pay calculations, Non-Predatory Lending Assessment (for APR's/Effective Interest Rate > 36%)",
+        "Bank Guidance": "Should provide great detail pertaining to all aspects to credit decisions including pricing, limits, ability-to-pay, and other considerations.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"Credit\", \"Legal\", \"Other\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "UW3",
+        "Category": "UW",
+        "Document Name": "Model Governance Policy & Model Inventory List - Includes: Model Governance Policy, Model Development Document, Generic/Off the shelf Model Score Whitepapers (should be included in UW2.2), Fraud Model Documentation (should be included in UW2.2), Any other custom score model documentation (should be included in UW2.2), Model Performance Report, Independent Model Validation Report",
+        "Bank Guidance": "Compliance is becoming more and more involved in the review of models. Review as applicable and work with the Treating Customers Fairly officer and the assigned post-launch Compliance Manager to ensure the appropriate level of compliance review.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"Credit\", \"Other\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "UW8",
+        "Category": "UW",
+        "Document Name": "Validate APR Calculation (Incl. MAPR if applicable to Product)",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"Credit\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "UW10",
+        "Category": "UW",
+        "Document Name": "Notice of Incompleteness",
+        "Bank Guidance": "Relates directly to whether or not a Notice of Adverse Action must be sent to an applicant that has been declined for an incomplete application. If an NOI, that is in compliance with Reg B's requirements for an NOI, is sent to the applicant and the reason for adverse action is incomplete application, then a Notice of Adverse Action may not be required.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "UW13",
+        "Category": "UW",
+        "Document Name": "MLA Borrower Identification Procedures",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "UW15",
+        "Category": "UW",
+        "Document Name": "Credit Policy Adherence - Partner to provide documentation that confirms credit policy controls.",
+        "Bank Guidance": "A notice that is sent to the applicant to let them know why the applicant did not get approved for the lowest interest rate or other such prime terms. This notice is not required if the FCRA notice related to credit scores is provided.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Credit\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "UW16",
+        "Category": "UW",
+        "Document Name": "Credit Strategy Testing Performance Results - Volume and performance updates on all credit strategy tests active within the past quarter.",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Credit\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "UW17",
+        "Category": "UW",
+        "Document Name": "Credit Policy Support Documentation - Includes IP10. This will need to be completed by the Partner's Credit Team as an additional supporting document to their Credit Policy. This will be submitted in conjunction with the new Credit Policy or any Credit Policy Changes. Notify Credit, SP, and Compliance., This will need to be completed by the Partners Credit Team as an additional supporting document to their Credit Policy. This will be submitted in conjunction with the new Credit Policy or any Credit Policy Changes.",
+        "Bank Guidance": "A notice that is sent to the applicant to let them know why the applicant did not get approved for the lowest interest rate or other such prime terms. This notice is not required if the FCRA notice related to credit scores is provided.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Credit\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DD1",
+        "Category": "DD",
+        "Document Name": "Daily Deposit Transactions File",
+        "Bank Guidance": "Related to application approvals and decline notices. There are model forms for counteroffer notices under the applicable federal regulations.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DD3",
+        "Category": "DD",
+        "Document Name": "Daily Deposit Reconciliation Report",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DD4",
+        "Category": "DD",
+        "Document Name": "Daily Deposit Applications File",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DD5",
+        "Category": "DD",
+        "Document Name": "Daily FDIC Deposit Data Report",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DD6",
+        "Category": "DD",
+        "Document Name": "Outgoing ACH & Outgoing ACH - ACH Totals File (2 separate files)",
+        "Bank Guidance": "Autopay cannot be required for the extension of credit. WebBank generally does not allow autopay as the default payment option, so we require the applicant to affirmative choose automated payments.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DD7",
+        "Category": "DD",
+        "Document Name": "Outgoing Returns ACH & Outgoing Returns ACH - ACH Totals File (2 separate files)",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP1",
+        "Category": "DP",
+        "Document Name": "Reg CC Policy  (Timing of when deposits are available)",
+        "Bank Guidance": "Related to application approvals and decline notices. There are model forms for counteroffer notices under the applicable federal regulations.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP3",
+        "Category": "DP",
+        "Document Name": "Reg DD Policy",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP4",
+        "Category": "DP",
+        "Document Name": "Reg DD Procedure",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP5",
+        "Category": "DP",
+        "Document Name": "Consumer Deposit Account Policy",
+        "Bank Guidance": "",
+        "WebBank Status": "In Review",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP6",
+        "Category": "DP",
+        "Document Name": "Consumer Account Agreement",
+        "Bank Guidance": "Autopay cannot be required for the extension of credit. WebBank generally does not allow autopay as the default payment option, so we require the applicant to affirmative choose automated payments.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"Legal\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP7",
+        "Category": "DP",
+        "Document Name": "Dispute (Reg E) Procedure",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP8",
+        "Category": "DP",
+        "Document Name": "NACHA Policy & Requirements",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP9",
+        "Category": "DP",
+        "Document Name": "NACHA Procedure",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "DP10",
+        "Category": "DP",
+        "Document Name": "ACH Risk Assessment Matrix",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "OR4",
+        "Category": "OR",
+        "Document Name": "Auto Pay Enrollment (at Origination)",
+        "Bank Guidance": "Autopay cannot be required for the extension of credit. WebBank generally does not allow autopay as the default payment option, so we require the applicant to affirmative choose automated payments.\n\n[Notes] Post Launch Validation Testing",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "OR5",
+        "Category": "OR",
+        "Document Name": "Funding - Includes: Loan Disbursement Procedure/Process Flow, Bank Information Confirmation, Funding Statement Sample, Funding & Settlement Processes Tested , NACHA File, Funding & Purchase Process Flow (visio), Purchase Statement sample",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "OR7",
+        "Category": "OR",
+        "Document Name": "Processing Procedure and Reports",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"Other\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "OR8",
+        "Category": "OR",
+        "Document Name": "Card Mailing, Use, and Activation - Includes: Plastic (Card design, activation label), Envelopes, Card design, Activation label, Card Carrier, PIN Mailer, Card Activation Instructions & Procedure, Card Activation Procedure, Origination/Activation Call Scripts (talking points)",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"Ops\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "SV4",
+        "Category": "SV",
+        "Document Name": "Payment Procedure - Includes: Payment Procedure, Auto Pay Enrollment (at Servicing), Payment Adjustment Procedure",
+        "Bank Guidance": "Should address disputes coming directly from the customer or the customer's financial institution. Must address any applicable regulatory provisions.",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "SV5",
+        "Category": "SV",
+        "Document Name": "Payment Communications - Includes: Payment Inquiry Responses, Payment Schedule(d) Communications, Payment Reminders Communications, Payment Received Communications, Auto Pay Enabled / Disabled Notification, Payment Return/NSF Communications, Due Date Changed Notification Communications",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "SV8",
+        "Category": "SV",
+        "Document Name": "Billing statement(s) + Demonstration - Partner to provide sample billing statements for the Bank's review that model the actual statements that customers will receive or have access to in production upon launch. Statements should demonstrate accurate calculations and include appropriate compliance requirements, as applicable (e.g., transaction data including charges, credits, payments, interest, fees, other account & balance adjustments, due dates, proper disclosure language, etc.).",
+        "Bank Guidance": "Statements must be made available 14-21 days prior to the due date on open-end credit.\n\n[Notes] Post Launch Validation Testing",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "SV9",
+        "Category": "SV",
+        "Document Name": "Return Handling/Chargebacks/Statement Credits(Open-end)",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "SV18",
+        "Category": "SV",
+        "Document Name": "Bankruptcy Procedures",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "SV19",
+        "Category": "SV",
+        "Document Name": "Card Reissuance & Replacement - Includes: Card Reissuance & Replacement, Reissuance Communications",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "SV20",
+        "Category": "SV",
+        "Document Name": "Backup & Successor Servicing Agreement (or equivalent)",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Legal\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "CO1",
+        "Category": "CO",
+        "Document Name": "Collections Policy - Includes: Collections Policy, Collections Procedures",
+        "Bank Guidance": "Operations policy regarding collection on delinquent accounts. Policy may include Collections Model/Strategy and the monitoring and oversight of third-party debt collectors under the regulation of FDCPA.\n\n[Notes] Product specific language updates",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "CO3",
+        "Category": "CO",
+        "Document Name": "Collections Communications - Includes: Collections Communications (30/60/90/120, charge-off, etc.), Collection Call Scripts (talking points), Default Communications",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "CO8",
+        "Category": "CO",
+        "Document Name": "Settlement Procedure",
+        "Bank Guidance": "Should align with collection model / strategy document and collections policy.\n\n[Notes] adjustments needed",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "CO9",
+        "Category": "CO",
+        "Document Name": "Charge-Off - Includes: Charge-Off Policy, Charge-Off procedure",
+        "Bank Guidance": "May or may not include information on writing-off the debt.\n\n[Notes] adjustments needed, current one is specific to Pay Later",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"Credit\", \"Other\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "WB1",
+        "Category": "WB",
+        "Document Name": "Application Data File",
+        "Bank Guidance": "[Notes] *Bank note: This should also be reviewed by Zoe",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Credit\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "WB2",
+        "Category": "WB",
+        "Document Name": "Loan/Account Data File (Positions)",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "WB3",
+        "Category": "WB",
+        "Document Name": "Portfolio Monthly Metrics and Performance Report",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "WB5",
+        "Category": "WB",
+        "Document Name": "Card network reporting requirements",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "WB10",
+        "Category": "WB",
+        "Document Name": "State Reporting",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "WB11",
+        "Category": "WB",
+        "Document Name": "Transactions",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "WB12",
+        "Category": "WB",
+        "Document Name": "Credit Policy Adherence Monitoring Results Report - Results of any ongoing credit policy adherence controls in place, including any audits, transaction testing, independent validation, or other monitoring activities.",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Credit\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "CM1",
+        "Category": "CM",
+        "Document Name": "Compliance Management System (CMS) Policies",
+        "Bank Guidance": "[Notes] Marketing Policy - contains product specific language, Social Media Policy - contains product specific languag, SCRA/MLA Policy - review for Flex as the Cleo Card and Pay Later are handled differently, new deposit policies in DP",
+        "WebBank Status": "Not Started",
+        "Party": "[]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "CM4",
+        "Category": "CM",
+        "Document Name": "Compliance Training",
+        "Bank Guidance": "[Notes] Additional training has been assigned that should cover Compliance topics",
+        "WebBank Status": "Not Started",
+        "Party": "[]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "CM5",
+        "Category": "CM",
+        "Document Name": "1st & 2nd Line Testing - Initial and Annual Plan: A risk-based approach will see that this plan is based on the Partner's Risk Assessment. The monitoring aspect will outline the real-time monitoring of systems and controls.",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "CM6",
+        "Category": "CM",
+        "Document Name": "Compliance Risk Assessment",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA1",
+        "Category": "BSA",
+        "Document Name": "BSA/AML Program/Policy Document (including Risk Appetite) - Includes: BSA/AML Program/Policy Document (including Risk Appetite)",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA2",
+        "Category": "BSA",
+        "Document Name": "USA Patriot Act Training Module",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA3",
+        "Category": "BSA",
+        "Document Name": "OFAC Training Module",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA4",
+        "Category": "BSA",
+        "Document Name": "BSA Training Module",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA5",
+        "Category": "BSA",
+        "Document Name": "CIP Verification - Includes: CIP Procedures, CIP verification during application/underwriting process, CIP Software Demonstration - Specific to CIP collection during application process, CIP Software Data Validation - Specific to CIP collection during application process",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA6",
+        "Category": "BSA",
+        "Document Name": "Watchlist Screening -  Initial, Ongoing and ACH screening",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA7",
+        "Category": "BSA",
+        "Document Name": "Annual Training Plan - includes system/platform, report and plan.",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA8",
+        "Category": "BSA",
+        "Document Name": "CDD/EDD High Risk Customer Identification -  Includes: CDD/EDD High Risk Customer Identification Procedure, CDD/EDD software demonstration, CDD/EDD software data validation, CDD/EDD Records/Reporting",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA9",
+        "Category": "BSA",
+        "Document Name": "List or other identification of specialized training (specific to new risk of the New Product)",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA10",
+        "Category": "BSA",
+        "Document Name": "BSA Monitoring & Testing Plan",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA11",
+        "Category": "BSA",
+        "Document Name": "BSA Independent Audit Report/Annual System and Model Validation",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA12",
+        "Category": "BSA",
+        "Document Name": "BSA Change Management",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA13",
+        "Category": "BSA",
+        "Document Name": "Suspicious Activity Detection/Investigation/Reporting - Includes: Suspicious Activity Investigation/Reporting Procedures, Process for reporting Suspicious Activity to the Bank  SAR Procedures, Transaction Surveillance Thresholds, Transaction Surveillance Software Demonstration, Transaction Surveillance Software Data Validation, process for detecting suspicious activity. FCC Case Management Software Demonstration, FCC Case Management Software Data Validation",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\", \"Legal\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA14",
+        "Category": "BSA",
+        "Document Name": "FCC Point of Contact",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA15",
+        "Category": "BSA",
+        "Document Name": "314a - Includes: 314a Procedures, 314a Software Demonstration, 314a Software Data Validation, 314a Report",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "BSA16",
+        "Category": "BSA",
+        "Document Name": "Aged Alert/Case Volumes Report (monthly)",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "RF1",
+        "Category": "RF",
+        "Document Name": "Red Flags / External Fraud Program Policy - Includes Credit Fraud - Includes: Fraud Procedures, Fraud Communications, Document Request Communications,  Red Flags software demonstration, Red Flags data validation, Red Flags thresholds, Fraud Procedure and controls for mitigating, detecting, and resolving fraud after account opening",
+        "Bank Guidance": "Must include: potential red flags, process for detecting red flags, actions to take when red flags are detected, identification of emerging threats\n\n[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\", \"Legal\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "RF2",
+        "Category": "RF",
+        "Document Name": "Red Flags / External Fraud Procedure",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "RF3",
+        "Category": "RF",
+        "Document Name": "Red Flags / External Fraud Report",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "RF4",
+        "Category": "RF",
+        "Document Name": "Identity Theft Red Flags / External Fraud Training Module",
+        "Bank Guidance": "[Notes] See FCC New Product Questionnaire",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "PV1",
+        "Category": "PV",
+        "Document Name": "Privacy - Program Policy & Procedures: Includes - Online Privacy Statement, Training Modules, Training System/Platform, Annual Training  Plan, Periodic Training Report- Template or Current Report, Annual Training Report- Template or Current Report, Monitoring & Testing Plam",
+        "Bank Guidance": "[Notes] review due to cross-product data combining",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "VM1",
+        "Category": "VM",
+        "Document Name": "Vendor Management Program/Policy - Includes: Vendor Management Program/Policy, Critical Vendor Risk Assessment(s) for e. Critical Vendor, Vendor Inventory (updated as needed), Due Diligence Questionnaire for e. Critical Vendor, Monitoring & Testing Plan(s)",
+        "Bank Guidance": "[Notes] *Marqeta",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Other\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "TS1",
+        "Category": "TS",
+        "Document Name": "Test Plan - Includes: Initial Test Plans, Tester Terms and Conditions, Tester Scripts, Finalized Test Scripts, Test Results (proving launch functionality), Pilot Program Design Test Plan",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\", \"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "TS2",
+        "Category": "TS",
+        "Document Name": "Pre Launch Testing or Demonstration - Additional demonstrations per Bank's request",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"Compliance\", \"SP\"]"
+      }
+    },
+    {
+      "properties": {
+        "Item Code": "TS3",
+        "Category": "TS",
+        "Document Name": "Post Launch Validation Testing - Testing of key policies and procedures to ensure practice aligns with approved materials.",
+        "Bank Guidance": "",
+        "WebBank Status": "Not Started",
+        "Party": "[\"BSA\", \"Compliance\", \"Credit\", \"SP\"]"
+      }
+    }
+  ]
+}

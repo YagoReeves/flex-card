@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Per-machine Claude Code state (permission allowlists, session data)
+.claude/
+
+# Secrets — defence in depth, in case anything ever lands here
+*.env
+*.key
+*.pem
+secrets/
+credentials/

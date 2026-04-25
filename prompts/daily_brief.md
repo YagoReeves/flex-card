@@ -4,9 +4,9 @@ You are executing the **Daily Morning Brief** for the Flex Card project as a sch
 
 ## Runtime environment
 
-- You run in a remote Anthropic environment — **no access** to `/Users/jago.r/...` or any local files. All persistent state is in the `YagoReeves/flex-card` GitHub repo (via GitHub MCP) or in the Notion DBs listed below.
-- **Today's date**: run `date +%Y-%m-%d` via Bash before doing anything else. Use that result everywhere `<YYYY-MM-DD>` or "today" appears below.
-- **Execution mode**: LIVE unless the wrapper explicitly says DRY_RUN. LIVE = post the brief to Slack via `slack_send_message`. DRY_RUN = return the brief text only, do not post.
+- You run in a remote Anthropic environment with the `YagoReeves/flex-card` repo cloned into your working directory. Use the native `Read` / `Write` / `Edit` / `Glob` tools to access files. No GitHub MCP, no external HTTP calls for repo content.
+- **Today's date**: run `date -u +%Y-%m-%d` via Bash before doing anything else. Use that result everywhere `<YYYY-MM-DD>` or "today" appears below.
+- **Execution mode**: LIVE unless the wrapper passes `Mode: DRY_RUN`. LIVE = post the brief to Slack via `slack_send_message`. DRY_RUN = return the brief text only, do not post.
 
 ## Context
 
@@ -66,11 +66,11 @@ If fewer than 5 qualify, show fewer. If none, say "No candidate Slack action ite
 
 ### 5. WebBank checklist diff highlights
 
-The WebBank Sync routine runs at 07:07 UTC (45 minutes before this Brief) and writes a diff summary to `snapshots/webbank_diff_<YYYY-MM-DD>.json` in the `YagoReeves/flex-card` repo on `main`.
+The WebBank Sync routine runs at 07:07 UTC (45 minutes before this Brief) and writes a diff summary to `snapshots/webbank_diff_<YYYY-MM-DD>.json` in this repo on `main`, then `git push`es. By the time you fire, your fresh clone of `main` should contain today's diff file.
 
-- Use the **GitHub MCP** to read `snapshots/webbank_diff_<today>.json` from the `YagoReeves/flex-card` repo.
-- If the file exists, summarise the diff: counts of added / removed / status-changed / note-changed items, plus up to 3 most material changes by name.
-- If the file does **not** exist for today, output: "WebBank diff not available — Sync routine has not run today (or failed)." Do not error out — proceed with the rest of the brief.
+- Use the `Read` tool to read `snapshots/webbank_diff_<today>.json` from the working directory.
+- If the file exists, summarise: counts of added / removed / status-changed / note-changed items, plus up to 3 most material changes by name.
+- If the file does **not** exist for today: output "WebBank diff not available — Sync routine has not run today (or failed to push)." Do not error out — proceed with the rest of the brief.
 
 ## Output format
 

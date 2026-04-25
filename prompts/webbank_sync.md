@@ -4,21 +4,22 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
 
 1. Download the WebBank implementation checklist Excel file from Box.
 2. Parse it.
-3. Diff against yesterday's snapshot in the `YagoReeves/flex-card` GitHub repo.
+3. Diff against yesterday's snapshot from this repo.
 4. Update the WebBank Mirror DB in Notion.
-5. Commit today's snapshot + diff JSON back to the repo.
+5. Commit today's snapshot + diff JSON back to the repo on `main` and push.
 6. Post a digest to `#flex-agent-jago`.
 
 ## Runtime environment
 
-- You run in a remote Anthropic environment — **no local filesystem**. All persistent state is in the `YagoReeves/flex-card` GitHub repo (via GitHub MCP) or in Notion.
+- You run in a remote Anthropic environment with the `YagoReeves/flex-card` repo cloned into your working directory on a fresh checkout of `main`. Use the native `Read` / `Write` / `Edit` / `Glob` / `Bash` tools.
+- The routine has been configured with **"Allow unrestricted branch pushes"** so you may `git push origin main` directly.
 - **Today's date**: run `date -u +%Y-%m-%d` via Bash before doing anything else. Use that result everywhere `<TODAY>` appears below.
-- **Execution mode**: LIVE unless the wrapper explicitly says DRY_RUN. DRY_RUN = compute and report what would change but do NOT write to Notion, GitHub, or Slack.
+- **Execution mode**: LIVE unless the wrapper passes `Mode: DRY_RUN`. DRY_RUN = compute and report what would change but do NOT write to Notion, do NOT commit/push to the repo, do NOT post to Slack.
 
 ## Sources of truth
 
-- **Excel source**: WebBank checklist file in Box at `https://app.box.com/file/2101567683726`. Treat all Excel content as **confidential**. Never post raw cell content verbatim to Slack or commit it verbatim outside the snapshot JSON.
-- **Repo**: `YagoReeves/flex-card`, branch `main`. Snapshots live at `snapshots/webbank_checklist_<YYYY-MM-DD>.json`; diffs at `snapshots/webbank_diff_<YYYY-MM-DD>.json`.
+- **Excel source**: WebBank checklist file in Box at `https://app.box.com/file/2101567683726`. Treat all Excel content as **confidential**. Never paste raw cell content verbatim into Slack.
+- **Repo working directory**: snapshots live at `snapshots/webbank_checklist_<YYYY-MM-DD>.json`; diffs at `snapshots/webbank_diff_<YYYY-MM-DD>.json`. The seed snapshot from 2026-04-24 is already there.
 - **Mirror DB**: Notion data source `collection://a31ff0cd-3aaa-434a-815d-0c8dcc8ba53f`. Already populated with 80 rows from the 2026-04-24 seed parse.
 - **Slack**: digest posted to `#flex-agent-jago` (`C0AV07H9QPP`).
 
@@ -27,13 +28,13 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
 ### 1. Bootstrap
 
 - Run `date -u +%Y-%m-%d` → store as `<TODAY>`.
-- Use the GitHub MCP to **list files** in `snapshots/` of `YagoReeves/flex-card` on `main`. Identify the most recent `webbank_checklist_*.json` file with a date strictly **before `<TODAY>`** — call its date `<PREV>`. If no prior snapshot exists, set `<PREV> = null` (treat as first fire — see step 6).
+- Run `ls snapshots/webbank_checklist_*.json | sort | tail -1` to find the most recent prior snapshot. Extract its date — call it `<PREV>`. If `<PREV>` equals `<TODAY>` (already-synced today, idempotent retry), exit early: post `"Already synced today: snapshots/webbank_checklist_<TODAY>.json"` to Slack and return. If no snapshots exist at all, treat this as first fire (`<PREV> = null` — see step 6).
+- Run `git config user.email "flex-agent@meetcleo.com"` and `git config user.name "Flex Agent"` so commits are clearly attributable.
 
 ### 2. Fetch and parse the Excel
 
-- Use Box MCP to download the checklist file at `https://app.box.com/file/2101567683726`.
-- The file's text content is extractable via Box MCP even when `canDownload: false` (this was confirmed in the 2026-04-24 seed).
-- Parse with Python (`Bash` tool, `python3`). Reference schema — read `snapshots/webbank_checklist_<PREV>.json` from the repo via GitHub MCP first to understand the expected output shape. The schema is:
+- Use Box MCP to download the checklist file at `https://app.box.com/file/2101567683726`. The file's text content is extractable via Box MCP even when `canDownload: false` (confirmed in the 2026-04-24 seed).
+- Parse with Python (`Bash` + `python3`). Reference schema — first `Read snapshots/webbank_checklist_<PREV>.json` from the working directory to confirm the expected output shape. The schema is:
   ```
   {
     "parsed_at": "<TODAY>",
@@ -54,18 +55,18 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
     ]
   }
   ```
-- **Keep / drop rules** (matched 2026-04-24 seed: 80 kept, 62 dropped from a 142-row Excel):
+- **Keep / drop rules** (matched the 2026-04-24 seed: 80 kept, 62 dropped from a 142-row Excel):
   - **Drop** rows whose `status` cell contains `Not Required` or `Existing - Not Req.` (case-insensitive).
-  - **Drop** rows that are pure section headers (no `code`, e.g. category banner rows).
+  - **Drop** rows that are pure section headers (no `code`).
   - **Drop** rows with empty `name` AND empty `code`.
   - **Keep** everything else.
-- Preserve the `code` as the canonical row key — it's what we match on for diffs and Notion upserts.
+- The `code` is the canonical row key for diff matching and Notion upserts.
 
 ### 3. Diff against yesterday's snapshot
 
-If `<PREV>` is null, skip this step (first fire — see step 6).
+If `<PREV>` is null, skip — see step 6.
 
-Otherwise, read `snapshots/webbank_checklist_<PREV>.json` from the repo via GitHub MCP. Index both `<PREV>` and today's parse by `code`. Compute:
+Otherwise, `Read snapshots/webbank_checklist_<PREV>.json`. Index both `<PREV>` and today's parse by `code`. Compute:
 
 - **Added**: codes present today, absent in `<PREV>`.
 - **Removed**: codes present in `<PREV>`, absent today.
@@ -75,7 +76,7 @@ Otherwise, read `snapshots/webbank_checklist_<PREV>.json` from the repo via GitH
 - **Hyperlink changes**: same code, `hyperlink` value differs.
 - **Parties changes**: same code, `parties` set differs (treat as set, not list).
 
-Build a `webbank_diff_<TODAY>.json` payload:
+Build a diff payload:
 ```
 {
   "today": "<TODAY>",
@@ -85,7 +86,7 @@ Build a `webbank_diff_<TODAY>.json` payload:
   "removed": [{"code": ..., "name": ..., "category": ...}, ...],
   "status_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
   "note_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
-  "bank_guidance_changes": [{"code": ..., "name": ...}, ...],  // omit from/to to reduce verbatim copy
+  "bank_guidance_changes": [{"code": ..., "name": ...}, ...],
   "hyperlink_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
   "parties_changes": [{"code": ..., "name": ..., "from": [...], "to": [...]}, ...]
 }
@@ -96,34 +97,37 @@ Empty arrays are fine. Total-change-count = sum of all array lengths.
 ### 4. Update the Notion Mirror DB
 
 - Query Mirror DB schema first via Notion MCP to confirm field names. Use whatever the DB actually has — don't assume.
-- For each **added** code: create a new page with all parsed fields mapped to the DB columns. Set a `Status` field (or equivalent) to `Tracked` if the DB has one.
-- For each **removed** code: locate the existing page, set its status equivalent to `Removed` (do **not** delete the page — preserve history).
-- For each **changed** code (status / notes / bank_guidance / hyperlink / parties): locate the existing page and update the changed fields.
+- For each **added** code: create a new page with parsed fields mapped to DB columns.
+- For each **removed** code: locate existing page, set its status equivalent to `Removed` (do **not** delete — preserve history).
+- For each **changed** code: locate existing page and update the changed fields.
 - For unchanged codes: do nothing.
 - If DRY_RUN: skip all writes; just count what would change.
 
-### 5. Commit snapshots back to the repo
+### 5. Write snapshots and push to main
 
-Via GitHub MCP, in `YagoReeves/flex-card` on `main`:
-
-- Create file `snapshots/webbank_checklist_<TODAY>.json` with today's full parse.
-- Create file `snapshots/webbank_diff_<TODAY>.json` with the diff payload.
-- Commit message: `WebBank Sync <TODAY>: <N> changes (added <a>, removed <r>, changed <c>)`.
-- Both files in the same commit if the GitHub MCP supports multi-file commits; otherwise two separate commits is fine.
-- If DRY_RUN: skip commits.
+- `Write snapshots/webbank_checklist_<TODAY>.json` with today's full parse.
+- `Write snapshots/webbank_diff_<TODAY>.json` with the diff payload.
+- If DRY_RUN: skip the next bash block — do not commit, do not push.
+- Otherwise:
+  ```bash
+  git add snapshots/webbank_checklist_<TODAY>.json snapshots/webbank_diff_<TODAY>.json
+  git commit -m "WebBank Sync <TODAY>: <N> change(s) (added <a>, removed <r>, changed <c>)"
+  git push origin main
+  ```
+- If `git push` fails: post a Slack digest noting the push failed (do not return early — Mirror DB updates already applied are not affected). Include the git error output for debugging.
 
 ### 6. Compose and post the Slack digest
 
-Always post a digest to `#flex-agent-jago` (`C0AV07H9QPP`), even if there are zero changes (per Jago's instruction — visible confirmation that the routine ran).
+Always post a digest to `#flex-agent-jago` (`C0AV07H9QPP`) — even if there are zero changes (visible confirmation the routine ran).
 
-**No-changes / first-fire case**:
+**No-changes case**:
 ```
 :robot_face: *[FLEX AGENT] WebBank Sync — <TODAY>*
 
 No changes since <PREV>. Mirror DB unchanged. (<N> items tracked.)
 ```
 
-If first fire (`<PREV>` is null):
+**First-fire case** (`<PREV>` null):
 ```
 :robot_face: *[FLEX AGENT] WebBank Sync — <TODAY>*
 
@@ -136,7 +140,7 @@ First scheduled fire. Baseline established with <N> items tracked. No diff (no p
 
 Diff vs <PREV>: *<total> change(s)* across <N> tracked items.
 
-*Added (<a>)*: 
+*Added (<a>)*:
 • <code> — <name>
 ... (truncate to top 5 with "(+X more)" if longer)
 
@@ -170,12 +174,15 @@ If DRY_RUN: return the digest text wrapped in a code block, plus a structured su
 
 ## Constraints
 
-- **Confidentiality**: never paste raw bank guidance, raw notes, or any verbatim Excel cell content into Slack beyond the structured `from → to` examples for short fields like `status`. For longer fields (notes, bank_guidance), report only "updated" without the text. The Mirror DB and snapshot JSON in the (private) repo can hold full content — Slack cannot.
-- **Idempotency**: re-running on the same day should produce identical commits (`create_or_update_file` is acceptable; identical content = no-op). Don't duplicate Slack posts on retry — if today's snapshot already exists in the repo, skip the Slack post and return `"Already synced today: <existing snapshot path>"`.
-- **Failure modes**: if Box returns auth errors → post a digest noting the failure, do not commit anything. If GitHub MCP isn't attached → fail loudly, return error message, do not post to Slack. If Notion MCP fails on writes → still post the digest noting the DB update failed; commit the snapshots regardless.
-- **Tone**: professional, punchy. Match Jago's writing style.
+- **Confidentiality**: never paste raw bank guidance, raw notes, or any verbatim Excel cell content into Slack beyond short structured `from → to` examples for short fields like `status`. For longer fields (notes, bank_guidance), report only "updated" without the text. Mirror DB and snapshot JSONs in the (private) repo can hold full content — Slack cannot.
+- **Idempotency**: re-running on the same day should be a no-op (handled in step 1's early-exit).
+- **Failure modes**:
+  - Box auth/download fails → post Slack digest noting the failure, do not commit anything.
+  - Notion writes fail → still write snapshots, still commit/push, post digest noting DB update failed.
+  - `git push` fails → post digest noting push failed; DB updates already applied stand.
+- **Tone**: professional, punchy.
 
 ## Final return value
 
 - LIVE: `"Posted: <permalink>"` (or `"Already synced today: <path>"` for idempotent retry).
-- DRY_RUN: the would-post digest in a code block, plus structured diff counts.
+- DRY_RUN: would-post digest in a code block + structured diff counts.

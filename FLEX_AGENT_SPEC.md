@@ -1,28 +1,29 @@
 # Flex Agent — Spec (v1)
 
-**Last updated**: 2026-04-24 · **Owner**: Jago Reeves · **Status**: Daily Brief live; WebBank Mirror populated; WebBank Sync routine pending
+**Last updated**: 2026-04-25 · **Owner**: Jago Reeves · **Status**: Daily Brief + WebBank Sync routines both live and configured for Mon 27 Apr first fires
 
 ## Pick up here next session
 
 **What's live:**
-- Daily Brief cron (routine `trig_0168M4zWyESpqBw57f9PDXfp`) — fires Mon 27 Apr @ 07:53 UTC
-- WebBank Mirror DB populated (80 rows, initial state)
-- DST reminder routine (`trig_01EreY3zZT6e7sVapd6g9LVU`) — fires Mon 19 Oct 2026
+- Daily Brief routine `trig_0168M4zWyESpqBw57f9PDXfp` — fires `53 7 * * 1-5` (08:53 BST). Wrapper-pattern prompt fetches `prompts/daily_brief.md` from working-dir clone of `YagoReeves/flex-card`.
+- WebBank Sync routine `trig_01V1a8NQ1SayN7kpnq1Q7Eh2` — fires `7 7 * * 1-5` (08:07 BST). Same wrapper pattern, fetches `prompts/webbank_sync.md`. Dry-run verified successful 2026-04-25.
+- WebBank Mirror DB populated (80 rows, initial state).
+- DST reminder routine `trig_01EreY3zZT6e7sVapd6g9LVU` — fires Mon 19 Oct 2026. Updated to remind on bumping both routine crons (Brief + Sync) by +1 UTC hour.
+- GitHub repo `https://github.com/YagoReeves/flex-card` — private, attached to both production routines as a working-directory source. Holds spec, prompts, snapshot history.
 
-**Next task: WebBank Daily Sync routine.** Awaiting Jago confirmation on:
-1. Timing — proposed `7 7 * * 1-5` (07:07 UTC = 08:07 London, ~45 min before the Brief)
-2. Initial-diff behaviour — on first fire, post "no changes" digest to `#flex-agent-jago` so it's visible the routine ran, even if Excel is unchanged
+**First fire to monitor: Mon 27 Apr 2026.**
+- 08:07 BST: Sync runs first. Should parse Excel, diff vs `snapshots/webbank_checklist_2026-04-24.json`, update Mirror DB, write today's snapshot + diff JSONs, `git push origin main`, post digest to `#flex-agent-jago`.
+- 08:53 BST: Brief fires. Should consume today's diff JSON from working-dir clone, summarise WebBank slice, post to `#flex-agent-jago`.
 
-Once confirmed → scope the routine prompt (includes embedded Python parser + diff + Notion upsert + Slack digest) → create via RemoteTrigger → dry-run verify → schedule.
+**Open for Jago (manual):**
+- (In Notion UI) group the two Agent-owned DBs into a toggle section under Flex Hub's Central Memory — Notion API was blocking the auto-insert.
+- Spot-check a handful of Mirror DB rows against the Excel — we parsed 80 kept + 62 dropped, but WebBank's own Grand Total is 100; worth a sanity pass.
+- Watch Monday's first live fires; report any anomalies.
 
-**Also still open for Jago:**
-- (In Notion UI) group the two Agent-owned DBs into a toggle section under Flex Hub's Central Memory — Notion API was blocking the auto-insert
-- Spot-check a handful of Mirror DB rows against the Excel — we parsed 80 kept + 62 dropped, but WebBank's own Grand Total is 100; worth a sanity pass
-
-**Outstanding jobs to build after WebBank Sync:**
-- Job 2: Meeting Action Item Extraction (manual trigger, inlined prompt)
-- Job 4: Weekly Cycle (Mon 09:00 + Fri 17:00)
-- Approval Sweep — **blocked** by remote-routine 1-hour minimum; needs design revisit (hourly sweep, or different mechanism)
+**Outstanding jobs to build:**
+- Job 2: Meeting Action Item Extraction (manual trigger).
+- Job 4: Weekly Cycle (Mon 09:00 + Fri 17:00).
+- Approval Sweep — **blocked** by remote-routine 1-hour minimum; needs design revisit. Lower priority now that Sync auto-writes (no approval gate needed for it per locked spec).
 
 ## TL;DR
 
@@ -52,9 +53,10 @@ Non-goals for v1: custom dashboard, conversational Slack bot with its own identi
 - **Interactive session** (Claude in terminal). Same MCP access. Used for ad-hoc questions, investigations, and occasional manual-trigger commands (e.g. post-meeting action-item extraction).
 
 **Shared state:**
-- **Notion** — Flex Hub workspace; Action Items DB + WebBank Mirror DB owned by the agent.
-- **Local** — `/Users/jago.r/Documents/flex_card/staging/` for JSON drafts awaiting approval; `/Users/jago.r/Documents/flex_card/snapshots/` for yesterday's WebBank checklist snapshot (diff source).
-- **Slack** — `#flex-agent-jago` (private channel) as the draft/review surface.
+- **GitHub repo** `https://github.com/YagoReeves/flex-card` (private, owner `YagoReeves`) — single source of truth for prompts, spec, and WebBank snapshot history. Both production routines have it attached as a working-dir source with `allow_unrestricted_git_push: true`, so they read prompts via native `Read` tool and the Sync `git push`es daily snapshot/diff JSONs to `main` directly. Local clone at `/Users/jago.r/Documents/flex_card/`.
+- **Notion** — Flex Hub workspace; Action Items DB + WebBank Mirror DB owned by the agent. Mirror DB is the live queryable state; Notion MCP is the routine's read/write surface for it.
+- **Local-only directories** (not used by routines, kept for human-side reference): `staging/` holds the original 2026-04-24 seed parse artifacts.
+- **Slack** — `#flex-agent-jago` (private channel) as the draft/review surface and the Sync's daily digest destination.
 
 **Identity note:** scheduled agent posts to Slack *as Jago* via the user-auth MCP. Agent posts are distinguished by a marker prefix (`🤖 [FLEX AGENT] …`) and/or fenced code blocks, not by sender. A true bot identity is a v2 consideration.
 
@@ -172,18 +174,19 @@ Unread messages in watched channels summarised in Daily Brief. Direct mentions e
 - [x] Create **Flex Action Items DB** in Notion — `https://www.notion.so/ca353d70ea9b417ca10c10fd1c391995` · data source `collection://52101c73-4538-4710-8327-797e8445dcc5`
 - [x] Create **WebBank Mirror DB** in Notion — `https://www.notion.so/f534187e1f12499bbad85bb9e52b6740` · data source `collection://a31ff0cd-3aaa-434a-815d-0c8dcc8ba53f`
 - [ ] **Manual (Jago, in Notion UI)**: group the two DBs under a new "Agent-owned DBs" toggle section below Central Memory on the Flex Hub page. Notion API validator blocked the automated edit.
-- [x] Build **Daily Morning Brief** routine — live end-to-end. Cron `53 7 * * 1-5` (07:53 UTC = 08:53 Europe/London BST). Routine ID `trig_0168M4zWyESpqBw57f9PDXfp`. Model: `claude-sonnet-4-6`. MCP connections attached: Slack, Notion, Granola, Google-Calendar, Gmail (attached 2026-04-25).
-- [x] One-shot DST reminder routine to bump cron pre-GMT switch — `trig_01EreY3zZT6e7sVapd6g9LVU`, fires Mon 19 Oct 2026 (UK switches BST→GMT Sun 25 Oct; reminder DMs `#flex-agent-jago` to update cron from `53 7` to `53 8`).
-- [ ] Build **Approval Sweep** — 15-min interval per spec, but remote routines have a 1-hour minimum. Design revisit needed: hourly sweep, local CronCreate (session-bound), or webhook trigger. Deferred.
+- [x] Build **Daily Morning Brief** routine — live end-to-end. Cron `53 7 * * 1-5` (07:53 UTC = 08:53 Europe/London BST). Routine ID `trig_0168M4zWyESpqBw57f9PDXfp`. Model: `claude-sonnet-4-6`. MCP connections attached: Slack, Notion, Granola, Google-Calendar, Gmail. Repo source attached: `YagoReeves/flex-card` with `allow_unrestricted_git_push: true`. Wrapper-pattern prompt (Reads `prompts/daily_brief.md` from working dir).
+- [x] One-shot DST reminder routine to bump crons pre-GMT switch — `trig_01EreY3zZT6e7sVapd6g9LVU`, fires Mon 19 Oct 2026 (UK switches BST→GMT Sun 25 Oct). Reminds Jago to update both routine crons by +1 UTC hour.
+- [ ] Build **Approval Sweep** — 15-min interval per spec, but remote routines have a 1-hour minimum. Design revisit needed: hourly sweep, local CronCreate (session-bound), or webhook trigger. Deferred — lower priority now that Sync auto-writes (no approval gate per locked option-c design).
 
 ### Routine management
 
-- **Inlined-prompt drift**: the cron routine carries an inlined copy of `prompts/daily_brief.md`. When the prompt file is edited, the routine must also be updated via `RemoteTrigger` — they do not auto-sync. Workflow: edit the file, then pass the new content to `RemoteTrigger action=update`.
+- **Wrapper-prompt pattern** (adopted 2026-04-25): both production routines carry a tiny ~6-line wrapper that fetches the canonical prompt from `prompts/<file>.md` in the attached repo's working directory. To change a prompt, edit the file in the repo, commit, push to `main`. Next routine fire automatically picks up the new version — no `RemoteTrigger` update needed.
+- **Caveats on `RemoteTrigger` PUTs**: when calling `update`, send the **full** `session_context` object (including `sources` with `allow_unrestricted_git_push: true`). Partial updates replace the object whole and clobber attached repo state. Always `RemoteTrigger get` first if you're unsure of the current shape.
 - All routines visible + editable at https://claude.ai/code/routines
 
 ### Phase 2 — Core jobs
 - [x] **WebBank Mirror DB initial population** — 80 rows seeded from Excel (2026-04-24 parse); 62 rows filtered as `Not Required`/`Existing - Not Req.`. Parser in Python, kept at `staging/webbank_parsed.json`. Schema extended with `DD`, `DP`, `IP` category options after first-pass revealed missing codes.
-- [ ] **WebBank Checklist Daily Sync** routine — design locked on option (c) (auto-write DB + digest to `#flex-agent-jago` only, no `#product-cleo-card`). Awaiting Jago approval on `7 7 * * 1-5` timing and "no-changes" initial-digest behaviour. Needs embedded Python parser + diff + upsert + Slack digest.
+- [x] **WebBank Checklist Daily Sync** routine — live. Cron `7 7 * * 1-5` (08:07 BST). Routine ID `trig_01V1a8NQ1SayN7kpnq1Q7Eh2`. Model: `claude-sonnet-4-6`. MCP connections: Slack, Notion, Box. Repo source: `YagoReeves/flex-card` with `allow_unrestricted_git_push: true`. Design: option-c (auto-write DB + digest to `#flex-agent-jago` only, no `#product-cleo-card`, no approval gate). On fire: Read prior snapshot from working dir, parse Excel via Box MCP, diff, update Mirror DB, write today's snapshot+diff JSONs, `git push origin main`, post digest. Dry-run completed 2026-04-25.
 - [ ] Build **Post-Meeting Action Item Extractor** (manual trigger)
 - [ ] Build **Weekly Cycle** (Mon 09:00, Fri 17:00)
 
@@ -208,3 +211,8 @@ Unread messages in watched channels summarised in Daily Brief. Direct mentions e
 - **2026-04-24** — Daily Brief prompt written at `prompts/daily_brief.md`. Two dry-runs + one live post to `#flex-agent-jago` ([permalink](https://cleo-team.slack.com/archives/C0AV07H9QPP/p1777047912553659)). Prompt iterated on: candidate actionables rephrased as imperatives (not quotes); BNPL/Pay Later/Peach meetings excluded; OOO auto-responders excluded; `#collab-compliance-credit` added to watched channels.
 - **2026-04-24** — Switched scheduling mechanism from local CronCreate (session-bound, 7-day expiry) to remote `/schedule` routines (cloud-hosted, persistent). Daily Brief + DST reminder routines created. Remote routines have 1-hour minimum — blocks the spec's 15-min approval sweep; deferred with design-revisit flag.
 - **2026-04-24** — WebBank Mirror initial population: 80 rows seeded. Fingerprint check on Excel header row passed. Parser handles 22 category codes; schema extended to include `DD`, `DP`, `IP`, `Other` after detection of missing options. 15 pages initially remapped to `Other` then corrected to `DD`/`DP` post-schema-update.
+- **2026-04-25** — Migrated project to GitHub: created private repo `YagoReeves/flex-card`, set up SSH auth on Mac, pushed initial commit. Repo holds spec, prompts, and snapshot history.
+- **2026-04-25** — Adopted **wrapper-prompt + repo-attached-source** pattern. Investigated three alternatives: (a) hosted GitHub MCP — not available in routine connector picker; (b) GitHub PAT via `curl` + env var — rejected in favour of (c); (c) Anthropic-managed git source attachment with "Allow unrestricted branch pushes" toggle — selected as cleanest. Both production routines now have `YagoReeves/flex-card` attached as a working-dir source; native `Read`/`Write`/`Edit`/`Bash` tools handle all file ops; Sync `git push`es to main directly each fire.
+- **2026-04-25** — WebBank Sync routine `trig_01V1a8NQ1SayN7kpnq1Q7Eh2` created with cron `7 7 * * 1-5`. Mirror DB confirmed as live runtime state (queried via Notion MCP); repo holds point-in-time snapshot history (immutable JSON commits to `main`). Dry-run successful — first live fire scheduled Mon 27 Apr 08:07 BST.
+- **2026-04-25** — Daily Brief routine refactored to wrapper pattern: prompt now reads `prompts/daily_brief.md` from working-dir clone instead of carrying an inlined copy. WebBank diff slice updated to read `snapshots/webbank_diff_<today>.json` from working dir.
+- **2026-04-25** — DST reminder routine updated to remind on bumping both routine crons (Brief and Sync) by +1 UTC hour at the BST→GMT switch.

@@ -1,31 +1,47 @@
 # Flex Agent — Spec (v1)
 
-**Last updated**: 2026-04-26 (end-of-session) · **Owner**: Jago Reeves · **Status**: All four scheduled routines wired (Sync, Brief, Weekly Mon, Weekly Fri) — Mon 27 Apr is first end-to-end natural-fire validation. Brief now auto-writes Slack candidates as `Proposed` rows (capture-flow retired). Manual Granola extraction pattern validated + saved at `prompts/granola_extract.md`. WebBank Mirror DB at canonical 94 rows. Approval Sweep obsoleted. Job 2 reframed to conversational Slack agent (pending Pipedream bridge build).
+**Last updated**: 2026-04-26 (late evening) · **Owner**: Jago Reeves · **Status**: Six scheduled routines wired (Sync, Brief, Weekly Mon, Weekly Fri, **Heartbeat**, **Granola Sweep**) — Mon 27 Apr is first end-to-end natural-fire validation across all six. New `prompts/project_context.md` is canonical project reference (workstream taxonomy, partner stack, critical-path risks); read by every routine on every fire. Brief now auto-writes Slack candidates as `Proposed` rows + flags risks + reads Sweep digest + watches expanded channel + DM list. Friday routine writes a structured per-workstream entry to the new **Flex — Weekly Progress Log** Notion DB. Action Items DB workstream options aligned with Flex Hub spine (`Servicing & Operations`, `Card Issuance & Fulfilment`). Manual Granola extraction pattern at `prompts/granola_extract.md`. WebBank Mirror DB at canonical 94 rows. Approval Sweep obsoleted. Job 2 Tier 3 (conversational Slack agent via Pipedream) still backlog.
 
 ## Pick up here next session
 
-**What's live and validated:**
-- Daily Brief routine `trig_0168M4zWyESpqBw57f9PDXfp` — fires `30 6 * * 1-5` (07:30 BST nominal; `next_run_at` shows ~07:36 BST due to scheduler jitter). Re-cronned via API 2026-04-26.
-- WebBank Sync routine `trig_01V1a8NQ1SayN7kpnq1Q7Eh2` — fires `0 6 * * 1-5` (07:00 BST nominal; ~07:07 actual). **Parser rewritten 2026-04-26** (handles multi-line cells, parties from Excel col 20 with canonical→Other mapping, upsert-by-code on Notion writes, sanity-check abort if <80 rows). Validated locally against 24 Apr cached + 26 Apr live Box outputs (94 rows each, matches openpyxl truth code-for-code). End-to-end remote validation deferred to Mon's natural fire because idempotent-exit blocks today's test. Re-cronned via API 2026-04-26.
-- Weekly Monday routine `trig_01CdWfPUFDnn2Eg64SruRszZ` — fires `30 7 * * 1` (08:30 BST nominal; ~08:36 actual). Created via API 2026-04-26 with `allow_unrestricted_git_push: true` set at creation. Reads `prompts/weekly_monday.md`. MCPs: Slack, Notion, Google-Calendar, Gmail.
-- Weekly Friday routine `trig_015kvdNZvkNCL8CFgJP4299X` — fires `0 16 * * 5` (17:00 BST nominal; ~17:01 actual). Created via API 2026-04-26 with push toggle at creation. Reads `prompts/weekly_friday.md`. MCPs: Slack, Notion.
-- **WebBank Mirror DB at canonical 94 rows** (was 80 from buggy seed → 82 after routine added DP11.1/.2 → 94 after manual recovery on 2026-04-26 added the 12 rows the seed missed: AP4, AQ5, BSA17–20, DD2, DP2, OR2, SV1, UW5, UW11). All have correct WebBank Status + Party.
-- **26 Apr snapshot committed** (`snapshots/webbank_checklist_2026-04-26.json`) with all 94 rows, parties populated. This is the baseline Mon's fire diffs against.
-- **Action Items DB schema verified** (live fetch 2026-04-26). Properties: Title (text), Owner (person), Status (select: Proposed/Active/Blocked/Done/Rejected), Workstream (select: Programme/Card Product/BNPL Product/Bank & Compliance/Platform Foundations/Money Movement/Servicing & Ops/Card Issuance/Credit Reporting/Fraud & Risk), Source (select: Meeting/Slack/Email/Manual), Source Context (text), Source Link (url), Notes (text), Priority (select: P0–P3), Due (date), Last Nudged (date), Created (auto). Brief prompt + granola_extract prompt both verified against this schema.
-- **Manual Granola extraction pattern** validated 2026-04-26 against the "Ladi CU" meeting (4 Proposed items written cleanly). Canonical prompt: `prompts/granola_extract.md`. Tier-1 invocation: in any Claude Code session with Granola + Notion MCPs, say *"Extract action items from this Granola meeting: <url>"*. Owner field stays blank; owner-name string goes in Notes for Jago to tag manually in Notion. Tier-2 (slash-skill) and Tier-3 (Slack-conversational via Pipedream) are backlog items.
-- DST reminder routine `trig_01EreY3zZT6e7sVapd6g9LVU` — fires Mon 19 Oct 2026.
+**Six scheduled routines (all live, none yet validated end-to-end):**
+
+| Routine | Trigger ID | Cron (UTC) | BST | MCPs | Pushes? |
+|---|---|---|---|---|---|
+| WebBank Sync | `trig_01V1a8NQ1SayN7kpnq1Q7Eh2` | `0 6 * * 1-5` | 07:00 | Slack · Notion · Box | yes |
+| Granola Sweep | `trig_01HZ3C9MMXSkRvzdZmFDZrGP` | `45 5 * * 1-5` | 06:45 | Slack · Notion · Granola | yes |
+| Daily Brief | `trig_0168M4zWyESpqBw57f9PDXfp` | `30 6 * * 1-5` | 07:30 | Slack · Notion · Granola · Calendar · Gmail | yes |
+| Weekly Monday | `trig_01CdWfPUFDnn2Eg64SruRszZ` | `30 7 * * 1` | 08:30 | Slack · Notion · Calendar · Gmail · Granola | yes |
+| Heartbeat | `trig_01QdXrotgoZJXQLvgf7Av9Yj` | `0 9 * * 1-5` | 10:00 | Slack | no (read-only) |
+| Weekly Friday | `trig_015kvdNZvkNCL8CFgJP4299X` | `0 16 * * 5` | 17:00 | Slack · Notion · Calendar · Gmail · Granola | yes |
+| (one-shot) DST reminder | `trig_01EreY3zZT6e7sVapd6g9LVU` | run-once Mon 19 Oct 2026 | — | Slack | no |
+
+**Canonical context:**
+- **`prompts/project_context.md`** (added 2026-04-26 evening) — single-source-of-truth project reference: product summary, partner stack, top milestones (Aug/Sep/Nov 2026), 2 critical-path risks, **10-workstream spine** (Programme · Card Product · BNPL Product · Bank & Compliance · Platform Foundations · Money Movement · Servicing & Operations · Card Issuance & Fulfilment · Credit Reporting · Fraud & Risk), funded/unfunded map removed per Jago, "what Card squad does NOT own", source doc URLs. Read by all routines on every fire.
+- **WebBank Sync parser** rewritten 2026-04-26 (handles multi-line cells, parties from Excel col 20 with canonical→Other mapping, upsert-by-code on Notion writes, sanity-check abort if <80 rows). Validated locally against 24 Apr cached + 26 Apr live Box outputs (94 rows each, matches openpyxl truth code-for-code). End-to-end remote validation deferred to Mon's natural fire because idempotent-exit blocks today's test.
+- **WebBank Mirror DB** at canonical 94 rows (was 80 from buggy seed → 94 after manual recovery 2026-04-26 added the 12 rows the seed missed: AP4, AQ5, BSA17–20, DD2, DP2, OR2, SV1, UW5, UW11).
+- **26 Apr snapshot** committed (`snapshots/webbank_checklist_2026-04-26.json`). Baseline for Mon's diff.
+- **Action Items DB** schema (data source `collection://52101c73-4538-4710-8327-797e8445dcc5`): Title · Owner (person) · Status (Proposed/Active/Blocked/Done/Rejected) · Workstream (10 options matching Flex Hub spine — `Servicing & Operations` and `Card Issuance & Fulfilment` were renamed from abbreviated forms 2026-04-26) · Source (Meeting/Slack/Email/Manual) · Source Context · Source Link · Notes · Priority (P0–P3) · Due · Last Nudged · Created. Verified live.
+- **Flex — Weekly Progress Log DB** (data source `collection://2d98ca42-9f65-4442-8ed2-0f97b0563429`, lives under Flex Hub) — created 2026-04-26 evening. Properties: Title (`Week of <YYYY-MM-DD>`), Week ending (date), Workstreams covered (multi-select, the 10), Total progress items (number), Total blockers (number), Status (`Auto-generated`/`Reviewed by Jago`), Created. Body: H2 per workstream with **Progress this week / Blockers / risks / Next week** bullets. Friday routine writes one entry per week.
+- **Manual Granola extraction** validated 2026-04-26 against the "Ladi CU" meeting. Canonical prompt: `prompts/granola_extract.md`. Tier-1 invocation: any Claude Code session with Granola + Notion MCPs.
+- **Granola Sweep** (new routine) reuses extraction logic with stricter dedup + per-meeting cap of 3, writes candidates as Proposed. Window: yesterday (Tue–Fri) or last Friday → Sunday (Mondays only).
+- **Heartbeat** silent on success; posts to `#flex-agent-jago` only if today's expected artefacts are missing. Mondays additionally check last Friday's `weekly_friday_<date>.json`.
 
 **Next session priorities (in order):**
 
-*Time-sensitive validation (week of 27 Apr):*
-1. **Verify Mon 27 Apr ~07:07 BST WebBank Sync fire** — first natural fire of the new parser + the toggle-cycle 403 fix attempt. Expected: 94 rows parsed, ~0 changes vs 26 Apr snapshot, **`git push origin main` succeeds**, Slack digest posts, Mirror DB unchanged. If push still 403s: Sync was *updated* (not recreated) so push toggle was set post-creation per the original failure mode — disable + recreate via API with toggle at creation time. (Weekly Mon + Fri were created with toggle at creation, so are the canonical test of whether create-time toggle setting fixes 403.)
-2. **Verify Mon 27 Apr ~07:36 BST Daily Brief fire** — first natural fire post re-cron + post auto-write switch. Should write `snapshots/daily_brief_<today>.json`, auto-write Slack candidates as `Status=Proposed` rows in Action Items DB (schema mapping verified 2026-04-26), reference today's freshly-pushed WebBank diff. Brief was *updated* not recreated, so its push behaviour follows Sync's.
-3. **Verify Mon 27 Apr ~08:36 BST Weekly Monday fire** — first natural fire of `weekly_monday`. Should read Daily Brief artefact (or fall back to its own scan if Brief's push 403'd). First-cycle behaviour expected: `had_week_ahead_plan = false`, no carry-over from prior Friday. **Canonical test of create-time push-toggle setting** — if Weekly Mon's push succeeds while Sync/Brief 403, working hypothesis confirmed; recreate Sync + Brief via API path.
-4. **Verify Fri 1 May ~17:01 BST Weekly Friday fire** — first cycle. Reads daily-brief artefacts Mon-Fri + this week's Weekly Mon artefact. Writes `commitments_for_next_week` for Mon 4 May continuity loop.
+*Time-sensitive validation — Mon 27 Apr is the gating event:*
+1. **~06:45 BST Granola Sweep fire** — first ever fire of new routine. Window covers Fri 24 Apr → Sun 26 Apr. Friday's meetings (per test pull) include WebBank Implementation Calls + Marqeta product alignment session; expect ~3-5 auto-process meetings + ~2-3 grey-zone catch-ups. Write to `snapshots/granola_sweep_<date>.json` + Notion `Proposed` rows; `git push`. If 0 candidates land, validate that filter logic isn't over-strict.
+2. **~07:00 BST WebBank Sync fire** — first natural fire of the rewritten parser + the toggle-cycle 403 fix attempt. Expected: 94 rows parsed, ~0 changes vs 26 Apr snapshot, **`git push origin main` succeeds**, Slack digest posts, Mirror DB unchanged. If push still 403s: Sync was *updated* (not recreated) — disable + recreate via API with toggle at creation time. (Weekly Mon + Fri + Heartbeat + Sweep were all created with toggle at creation, so are the canonical test.)
+3. **~07:30 BST Daily Brief fire** — first natural fire of the **fully-loaded** Brief: reads `project_context.md` + Sweep artefact + WebBank diff; auto-writes Slack candidates as `Proposed`; produces new "Risks & things to be mindful of" section synthesised against critical-path risks; surfaces 2 new channels (`#x-cleo-mq`, `#x-cleo-mq-ic`) + 4 DM watch counterparts (Andres@MQ, Lea, Ladi, Madelaine) with Flex-relevance filter; lists Granola sweep digest. Watch all of these — first run is the calibration data point for tuning.
+4. **~08:30 BST Weekly Monday fire** — first cycle. First-cycle behaviour: `had_week_ahead_plan = false`, no carry-over from prior Friday.
+5. **~10:00 BST Heartbeat fire** — first ever fire. Should silently confirm Mon's morning artefacts (Sync, Brief, Sweep, Weekly Mon) all present + last Fri's `weekly_friday` artefact (will be missing — first Friday hasn't fired yet; Heartbeat will alert. Expected behaviour, not a bug. After Fri 1 May fires, Mon 4 May Heartbeat should be silent.)
+6. **Fri 1 May ~17:00 BST Weekly Friday fire** — first cycle. Reads daily-brief artefacts Mon-Fri + Mon's Weekly artefact. Performs new **Workstream synthesis** + writes structured entry to **Flex — Weekly Progress Log** Notion DB. Includes new **Stuck items** detection (action items >14d, WebBank items >14d unchanged, cold partner threads >7d). Writes `commitments_for_next_week` for Mon 4 May continuity.
 
 *Post-week-1 calibration (after Fri 1 May):*
-5. **Calibrate Slack candidate extraction** — review Proposed queue for false positives, missed commitments, dedup over/under-aggressiveness. Tune `prompts/daily_brief.md`.
-6. **Audit Calendar filter coverage** — likely false-negatives for meetings without "Flex" in title. Compare actual Flex meetings vs surfaced; expand keyword/attendee-domain list.
+7. **Calibrate Slack-candidate + Sweep extraction** — review Proposed queue for false positives, missed commitments, dedup over/under-aggressiveness. Tune both `prompts/daily_brief.md` and `prompts/granola_sweep.md`.
+8. **Calibrate Risk synthesis** — was the "Risks & things to be mindful of" section useful or padded? Tune the §5 input definition in `daily_brief.md`.
+9. **Audit Calendar + Sweep filter coverage** — likely false-negatives for meetings without "Flex" in title. Compare actual Flex meetings vs surfaced; expand keyword/attendee-domain list. Same for the Sweep title regex (`Flex|Marqeta|Mastercard|WebBank|Idemia|TabaPay|Card x Payments|Implementation Call|Cleo Card|Clear Flex`) — too narrow may drop CUs with Flex content.
+10. **Review Weekly Progress Log entry** for Fri 1 May — does the structure work? Should anything else flow into the Blockers / risks bucket? Flip Status to "Reviewed by Jago" on the entry.
 
 *Then work down the audit backlog (next section).*
 
@@ -34,22 +50,27 @@
 
 **Audit backlog:**
 
+*Done in this session (2026-04-26 evening) — closed out:*
+- ~~Heartbeat / failure-detection routine~~ — shipped (`prompts/heartbeat.md`, trigger `trig_01QdXrotgoZJXQLvgf7Av9Yj`). v1 catches catastrophic "nothing fired" failures; missing artefacts trigger Slack alert. Does NOT catch malformed-artefact / Slack-post-failed-but-artefact-wrote / degraded-MCP cases (richer artefact validation = v2 enhancement).
+- ~~Trend detection in Weekly Friday~~ — shipped (input 7 in `prompts/weekly_friday.md`). Stuck action items >14d + unchanged WebBank items >14d + cold partner threads >7d feed both Slack output and the Workstream Progress Log Blockers bucket.
+- ~~Granola summaries in Daily Brief prep pointers~~ — superseded by the Granola Sweep routine (richer solution: not just summaries in prep, but full extraction → Proposed-row writes).
+
 *High leverage — build next:*
-1. **Job 2 (full) — Conversational Slack extraction agent.** Manual extraction works today via `prompts/granola_extract.md` in any Claude Code session (Tier 1, validated 2026-04-26). The remaining build is the **Slack-conversational version** (Tier 3): persistent Managed Agents session + Pipedream bridge to relay Slack messages → Anthropic API → Slack replies. Same `granola_extract.md` prompt drives it. Bridge research complete (2026-04-26): Pipedream is the right path, ~4 hours to wire, ~$0–10/mo. No native Anthropic Slack app exists for Managed Agents; Cloudflare Workers is the next-best fallback. Hourly auto-extract was rejected — too noisy given mixed Flex relevance across 25–40 meetings/week. The conversational pattern is the only sensible auto-trigger model.
-2. **Heartbeat / failure-detection routine.** Daily ~09:30 BST check — reads today's `daily_brief_<date>.json` + `webbank_diff_<date>.json`; if either missing, posts `:rotating_light: Routine failure detected` to `#flex-agent-jago`. Cheap insurance against silent failures (biggest unaddressed risk).
-3. **Trend detection in Weekly Friday.** Compare this Friday vs last Friday. Flag stuck items: action items In-Progress > 14 days, WebBank items unchanged > 14 days, partner threads with no inbound > 7 days. Turns review from "what happened" to "where are we stuck".
-4. **Granola summaries in Daily Brief prep pointers.** Currently referenced in prompt but not actually pulled — wire 1-line summary of most recent prior transcript per recurring meeting. Prompt edit only, no new routine.
-5. **OOO/holiday suppression.** `config/skip_dates.json` in repo; each routine reads as first step and exits cleanly if today's listed.
+1. **Job 2 (full) — Conversational Slack extraction agent.** Manual extraction works via `prompts/granola_extract.md` in any Claude Code session (Tier 1, validated 2026-04-26). Granola Sweep now covers automated extraction across yesterday's meetings (Tier 4, fires Mon-Fri). The remaining build is the **on-demand Slack-conversational version** (Tier 3) for ad-hoc "extract from this URL" via Slack: persistent Managed Agents session + Pipedream bridge. Bridge research complete: Pipedream is the right path, ~4 hours to wire, ~$0–10/mo. **Reconsider need:** Tier 1 (terminal) + Tier 4 (Sweep) may close most of the gap; ask if Tier 3 still adds enough value to justify the build.
+2. **OOO/holiday suppression.** `config/skip_dates.json` in repo; each routine reads as first step and exits cleanly if today's listed. Heartbeat should also respect the skip list (don't alert when routines were intentionally skipped).
+3. **Heartbeat v2 — richer artefact validation.** Today's heartbeat checks file-existence only. Enhance: open each artefact, validate (a) `slack_permalink` is non-null, (b) `mode == "LIVE"`, (c) for Brief: `meetings`, `inbox`, `slack_candidates_written` all present (even if empty arrays), not all-null degraded run. Catches the "ran but degraded" failure class.
+4. **Watch-list externalization.** Brief's channel/DM/email-domain watch lists are inline in `prompts/daily_brief.md`. As the list grows, pull into `config/watch_sources.json`; Brief reads at fire time. Edit-only changes don't require prompt edits.
+5. **Risk-callout calibration.** After 1-2 weeks of Brief fires, audit whether the Risks section identifies useful signal vs padding. May need (a) tightening the source rules (only escalate if mapped to a critical-path risk), (b) adding a max-count cap, (c) surfacing as a Slack `:warning:` only if at least one is critical-path-tagged.
 
 *Cosmetic / nice-to-have:*
 6. **Tier-2 Claude Code slash-skill for `/extract-meeting <url>`.** Body just delegates to `prompts/granola_extract.md`. ~10 minutes of work; pure UX polish over Tier-1 natural-language invocation.
 
-*First-week calibration items pulled into "Next session priorities" above (items 5–6 there).*
+*First-week calibration items pulled into "Next session priorities" above (items 7-10).*
 
 *Lower priority — revisit when scale demands:*
 7. **KPI tracking** — capture rate, false-positive rate, triage latency, routine fire success rate. Likely a Friday aggregate or monthly routine.
 8. **Escalation path for urgent items** — distinguish routine from urgent partner signal. Options: marked-priority section, Slack DM, or `:rotating_light:` keyword-triggered routine.
-9. **Notion retry / partial-write handling.** Current prompt has no recovery if Notion is flaky mid-Brief and only 3 of 5 candidates write. Options: all-or-nothing transactional, idempotency key per candidate, or surface partial state in artefact.
+9. **Notion retry / partial-write handling.** Current prompts have no recovery if Notion is flaky mid-write. Options: all-or-nothing transactional, idempotency key per candidate, or surface partial state in artefact.
 
 *Identified but not actioned (low leverage at current scale):*
 - Notification fatigue calibration (3–5 messages/day in `#flex-agent-jago` — monitor signal:noise; calibrate by tuning extraction strictness + content density).
@@ -67,7 +88,7 @@
 
 ## TL;DR
 
-An AI-assisted PMO workflow for the Flex Card launch (UAT target Sept 2026), built on scheduled Claude agents. Four scheduled cron routines (WebBank Sync, Daily Brief, Weekly Monday, Weekly Friday) plus a manual Granola-meeting extractor cover daily/weekly briefs, action-item capture, and a live WebBank checklist mirror. **Brief + Sync auto-write to Notion** (Brief writes Slack candidates as `Status=Proposed` for triage; Sync writes WebBank checklist deltas). **Weekly Mon/Fri post drafts to `#flex-agent-jago`** for Jago to manually edit + publish onward. **No approval sweep** — human-in-loop happens at the Notion-triage step (Brief) or manual-publish step (Weekly), not via Slack thread replies. Canonical source-of-truth stays in Flex Hub Notion; the agent writes only to a purpose-built Action Items DB + WebBank Mirror DB. No custom dashboard in v1.
+An AI-assisted PMO workflow for the Flex Card launch (UAT target Sept 2026), built on scheduled Claude agents. **Six scheduled cron routines** (WebBank Sync, Granola Sweep, Daily Brief, Weekly Monday, Heartbeat, Weekly Friday) plus a manual Granola-meeting extractor cover daily/weekly briefs, action-item capture from meetings + Slack, a live WebBank checklist mirror, weekly progress logging structured by workstream, and silent monitoring. **Brief + Sync + Sweep + Friday auto-write to Notion** (Brief: Slack candidates as `Proposed`; Sync: WebBank checklist deltas; Sweep: meeting candidates as `Proposed`; Friday: structured workstream progress log entry). **Weekly Mon/Fri post drafts to `#flex-agent-jago`** for Jago to manually edit + publish onward. Heartbeat is silent on success, alerts on failure. **No approval sweep** — human-in-loop happens at the Notion-triage step or manual-publish step, not via Slack thread replies. Canonical source-of-truth stays in Flex Hub Notion; the agent writes only to three purpose-built DBs it owns (**Flex Action Items**, **WebBank Mirror**, **Flex — Weekly Progress Log**). All routines read `prompts/project_context.md` on every fire for product/partner/workstream context. No custom dashboard in v1.
 
 ## Goals
 
@@ -100,65 +121,38 @@ Non-goals for v1: custom dashboard, conversational Slack bot with its own identi
 
 **Identity note:** scheduled agent posts to Slack *as Jago* via the user-auth MCP. Agent posts are distinguished by a marker prefix (`🤖 [FLEX AGENT] …`) and/or fenced code blocks, not by sender. A true bot identity is a v2 consideration.
 
-## The four scheduled jobs
+## The six scheduled jobs
 
-### Job 1 — Daily Morning Brief
-- **When**: 09:00 Mon-Fri.
-- **Output**: Posted to `#flex-agent-jago`. The Brief itself needs no approval; it enables a capture flow for Slack-originated action items (see below).
-- **Inputs**:
-  - WebBank checklist diff highlights (from Job 3 snapshot).
-  - Action Items DB: overdue + due today.
-  - Priority inbox hits since yesterday's brief (email domains + Slack channels — see Priority Inbox below).
-  - Today's Flex-relevant meetings from Google Calendar with prep pointers (Granola history, Central Memory, linked Notion pages).
-  - **Candidate Slack action items**: top 5 explicit commitments spotted in watched channels since last Brief. Strict extraction criteria — `I'll do X by Y`, verb + deliverable `@`-mentions, any agreed emoji/prefix conventions. Each listed with numeric index + thread link.
-- **Format**: single message in `#flex-agent-jago`, short headers, links over long quotes.
-- **Capture flow**: reply in thread with `capture 1, 3` to flip specified candidates into the Action Items DB draft pipeline (processed by the approval sweep like any other draft). Unreplied candidates expire after 24h; anything not captured by Friday rolls into the Week-in-Review list for a last chance.
+Prompts are the authoritative spec — this section is a high-level map. Each routine's full behaviour, input contract, and output contract live in `prompts/<name>.md`.
 
-### Job 2 — Meeting Action Item Extraction
-- **When**: manual `/run` after any Flex-relevant meeting. Triggered by Jago in an interactive session.
-- **Scope**: any meeting in Granola — not limited to the 3 weeklies. Slack-originated action items are handled via the Daily Brief capture flow, **not** here, to avoid duplicating the Slack scan.
-- **Flow**:
-  1. Pull Granola transcript for the specified meeting.
-  2. Extract candidate action items (title, owner if stated, due date if stated, source quote).
-  3. Flag any action item missing a clear owner — explicit ownership-gap surface.
-  4. Post draft table to `#flex-agent-jago` in a new thread: `🤖 [FLEX AGENT] Draft action items — <meeting> <date>`.
-  5. On approval (`approve` / `approve with edits: …`), sweep writes to Flex Action Items DB + posts summary to the appropriate project Slack channel tagging owners.
+### 1. WebBank Sync — `prompts/webbank_sync.md`
+Mon-Fri 07:00 BST. Pulls the WebBank Excel from Box, parses (94 rows canonical), diffs vs yesterday's snapshot, upserts the WebBank Mirror DB in Notion by code, writes today's snapshot + diff to `snapshots/webbank_checklist_<date>.json` and `snapshots/webbank_diff_<date>.json`, pushes to `main`, posts a digest to `#flex-agent-jago` (auto-write, no approval gate). Confidential: never quotes Excel cell content verbatim beyond short `from → to` for short fields.
 
-### Job 3 — WebBank Checklist Daily Sync
-- **When**: 08:00 Mon-Fri (runs before Daily Brief so the brief can reference fresh diff).
-- **Source**: WebBank checklist Excel file in Box, at `https://app.box.com/file/2101567683726` (stable).
-- **Flow**:
-  1. Download the Excel file from Box.
-  2. Parse checklist rows.
-  3. Diff against yesterday's snapshot in `snapshots/webbank_checklist_YYYY-MM-DD.json`.
-  4. Produce diff summary: new items, status changes, new notes, removed items.
-  5. Post draft diff digest to `#flex-agent-jago`: `🤖 [FLEX AGENT] Draft WebBank digest — <date>`.
-  6. On approval, sweep posts digest to `#product-cleo-card` and updates WebBank Mirror DB in Notion.
-  7. Save today's parse as the new snapshot.
-- **Confidentiality**: Excel contents summarised only. Raw cell contents never re-posted to Slack or Notion verbatim beyond status/label-level detail needed for diff clarity.
+### 2. Granola Sweep — `prompts/granola_sweep.md`
+Mon-Fri 06:45 BST. Pulls yesterday's Granola meetings (Mondays: Fri-Sun), filters into auto-process / grey-zone / skip, fetches summaries (transcript fallback), runs strict extraction (cap 3 candidates/meeting), dedups against last-14-day Action Items DB, writes survivors as `Proposed` rows, persists `snapshots/granola_sweep_<date>.json`. Silent on success — Brief surfaces the digest. Posts to Slack only if artefact write fails.
 
-### Job 4 — Weekly Cycle
-- **Monday 09:00** — Week-ahead summary: upcoming Flex deliverables, at-risk items, priority meetings of the week, outstanding action items by owner. Draft to `#flex-agent-jago`; on approval, published to Flex Hub + relevant Slack channel.
-- **Friday 17:00** — Week-in-review: what shipped, what slipped, WebBank checklist net change over the week, action items closed / still open. Same approval flow.
+### 3. Daily Morning Brief — `prompts/daily_brief.md`
+Mon-Fri 07:30 BST. Reads `project_context.md` first. Inputs: today's Flex meetings, active+triage action items, **risks synthesis** (mapped to critical-path risks), priority inbox (8 partner email domains + 7 watched Slack channels + 4 DM watch-list with Flex-relevance filter), auto-write top-5 Slack candidates as `Proposed` rows, Granola Sweep digest, WebBank diff. Outputs single Slack message + `snapshots/daily_brief_<date>.json` artefact.
 
-## Approval flow
+### 4. Weekly Monday — `prompts/weekly_monday.md`
+Mon 08:30 BST. Reads `project_context.md` + last Friday's `weekly_friday_<date>.json` (continuity) + today's Daily Brief artefact (weekend signal, team-relevance filter). Outputs week-ahead draft to `#flex-agent-jago`: meetings by day, action items by owner, WebBank state, weekend signal, top risks. Audience-framed for `#product-cleo-card` (Jago manually edits + publishes onward in v1; auto-publish gated on 2026-05-08 graduation review).
 
-### Slack draft pattern (for posts destined for project channels)
-Initially: agent DMs Jago the draft text; Jago edits and sends to the destination channel manually. When graduated (post-2026-05-08 review), agent posts directly to destination with no sweep needed.
+### 5. Heartbeat — `prompts/heartbeat.md`
+Mon-Fri 10:00 BST. Read-only. Verifies today's expected artefacts (Sync + Brief + Sweep, plus Mon-only: Weekly Monday + last Friday's Weekly Friday) are present in repo. Silent on success. Posts a single `:rotating_light:` alert to `#flex-agent-jago` if any are missing, with cause inference and "what to check" actions. Catches catastrophic "didn't fire" failures; does not catch malformed-artefact / Slack-failed / degraded-MCP cases (v2 enhancement on backlog).
 
-### Notion DB writes (for Action Items DB + WebBank Mirror DB)
-Thread-based approval via `#flex-agent-jago`:
+### 6. Weekly Friday — `prompts/weekly_friday.md`
+Fri 17:00 BST. Reads `project_context.md` + this week's daily-brief artefacts + this Monday's weekly artefact. Inputs: shipped/slipped action items, WebBank week-delta, triage queue, decisions + risk movements, **stuck items** (action items >14d, WebBank items >14d unchanged, cold partner threads >7d), commitments_for_next_week (continuity), **workstream synthesis**. Outputs (a) Slack draft to `#flex-agent-jago`, (b) **structured Notion page in Flex — Weekly Progress Log DB** (TL;DR + per-workstream Progress / Blockers / Next week), (c) `snapshots/weekly_friday_<date>.json` artefact for Mon's continuity.
 
-1. Job posts a draft to a new thread, prefixed `🤖 [FLEX AGENT]`, with structured proposed rows.
-2. Draft payload also staged as JSON in `staging/<YYYY-MM-DD>_<job>.json`.
-3. **Approval sweep cron** runs every 15 min during working hours (Mon-Fri, 09:00-19:00):
-   - Reads recent thread replies from Jago in `#flex-agent-jago`.
-   - Matches replies to pending staging files by thread reference.
-   - `approve` → executes the Notion write, posts confirmation in thread.
-   - `approve with edits: <edits>` → applies edits, executes, confirms.
-   - `reject` → discards staging file, logs reason.
-   - `capture <indices>` on a Daily Brief thread → flips the specified candidate Slack action items into a staging draft, then processes it as a normal action item write on the next sweep tick.
-   - No reply within 48h → flags in next Daily Brief as a reminder.
+### Manual: Granola Meeting Extraction — `prompts/granola_extract.md`
+Tier-1 invocation in any Claude Code session with Granola + Notion MCPs: *"Extract action items from this Granola meeting: <url>"*. Same logic the Sweep routine reuses, but human-in-loop on each candidate with table-then-approve flow. Used for ad-hoc post-meeting extraction outside the Sweep window.
+
+## Human-in-loop — where it happens now
+
+(Approval Sweep cron retired 2026-04-26. Original 15-min Slack-thread approval flow obsolete.)
+
+- **Notion writes** (Brief auto-write Slack candidates · Sync auto-write WebBank deltas · Sweep auto-write meeting candidates · Friday writes Progress Log entry) — all auto-write as `Proposed` / `Auto-generated` rows. Human review happens **in Notion**: Jago triages Action Items DB (assign Owner → `Active`, or delete / `Rejected`); flips Progress Log Status from `Auto-generated` → `Reviewed by Jago` after vetting.
+- **Slack drafts** (Weekly Mon · Weekly Fri) — auto-post to `#flex-agent-jago` only; Jago manually edits + republishes onward to `#product-cleo-card`. Graduation to direct-publish gated on 2026-05-08 review.
+- **Heartbeat alerts** — auto-post to `#flex-agent-jago`; Jago investigates manually using the `What to check` actions in the alert.
 
 ## Notion structure
 
@@ -170,35 +164,34 @@ Thread-based approval via `#flex-agent-jago`:
 - **Key Decision Log DB** — read-only.
 - **Flex Card Implementation Checklist (Banking Ops) DB** — explicitly not used by agent per user decision 2026-04-24.
 
-### New (agent-owned, to be created in build phase)
-- **Flex Action Items DB**
-  - Columns: Title · Owner · Source (meeting/Slack/email/link) · Status (Proposed/Active/Done/Blocked/Rejected) · Due · Created · Last nudged · Priority · Notes
-- **WebBank Mirror DB**
-  - Columns: TBD — inspect Excel structure first, then propose a column subset + Jago-added custom columns (per user decision 2026-04-24: not a direct mirror, selected columns only)
+### Agent-owned DBs (live)
+- **Flex Action Items DB** — `https://www.notion.so/ca353d70ea9b417ca10c10fd1c391995` · data source `collection://52101c73-4538-4710-8327-797e8445dcc5`
+  - Properties: Title · Owner (person) · Status (`Proposed` / `Active` / `Blocked` / `Done` / `Rejected`) · Workstream (10 options matching Flex Hub spine) · Source (`Meeting` / `Slack` / `Email` / `Manual`) · Source Context · Source Link · Notes · Priority (`P0`–`P3`) · Due · Last Nudged · Created.
+  - Workstream options aligned with Flex Hub spine 2026-04-26 (`Servicing & Operations`, `Card Issuance & Fulfilment` — renamed from abbreviated forms in place; no row data lost).
+- **WebBank Mirror DB** — `https://www.notion.so/f534187e1f12499bbad85bb9e52b6740` · data source `collection://a31ff0cd-3aaa-434a-815d-0c8dcc8ba53f`
+  - Live state: 94 canonical rows, agent-managed via Sync routine. Properties include code, name, bank guidance, WebBank Status, parties (canonical → Other mapping from Excel col 20), notes, hyperlink, target/actual submission, document name.
+- **Flex — Weekly Progress Log DB** (created 2026-04-26 evening) — `https://www.notion.so/ebef90dc293c4f6c8bc0a8dd370d93af` · data source `collection://2d98ca42-9f65-4442-8ed2-0f97b0563429`
+  - Properties: Title (`Week of <YYYY-MM-DD>`) · Week ending (date) · Workstreams covered (multi-select, the 10) · Total progress items (number) · Total blockers (number) · Status (`Auto-generated` / `Reviewed by Jago`) · Created.
+  - Body: TL;DR + H2 per workstream (Progress / Blockers / Next week). Friday routine writes one entry per week. First entry due Fri 1 May.
 
 ## Priority inbox
 
-### Email (Gmail MCP)
-- `@webbank.com`
-- `@marqeta.com`
-- `@ic.group` (IC Group — physical card provider)
-- `@mastercard.com`
-- *(list grows over time — add new partners here as they engage)*
+(Authoritative list lives in `prompts/daily_brief.md` §3 — keep this section in sync when editing.)
 
-Surfaced in Daily Brief; high-priority hits (e.g. unanswered > 24h from webbank.com) also flagged in Slack DM ad-hoc.
+### Email partner domains (Gmail MCP)
+- `@webbank.com` · `@marqeta.com` · `@ic.group` · `@mastercard.com` · `@idemia.com` · `@tabapay.com` · `@accourt.com` · `@gvgroup.net`
 
-### Slack (Slack MCP)
-Watched channels:
-- `#product-cleo-card` (primary)
-- `#collab-card-accourt`
-- `#proj-flex-card-design`
-- `#collab-card_ops_support`
-- `#collab-compliance-credit`
-- *(list grows as new channels spin up)*
+### Slack channels — fully Flex-relevant (no per-message filter)
+- `#product-cleo-card` · `#collab-card-accourt` · `#proj-flex-card-design` · `#collab-card_ops_support` · `#collab-compliance-credit` · `#x-cleo-mq` (Marqeta cross-org) · `#x-cleo-mq-ic` (Marqeta + IC Payments cross-org)
 
-Plus: any `@`-mention of Jago anywhere Flex-adjacent.
+### Slack DMs — with Flex-relevance filter
+These counterparts sometimes discuss non-Flex topics in DMs. Brief applies strict filtering — only surfaces messages that mention Flex/Marqeta/WebBank/Mastercard/Idemia/TabaPay/BNPL-on-Flex/Pay-Later-on-Flex/sandbox/BIN/etc., are continuing a Flex thread, or link to Flex docs. Default-drop on ambiguity.
+- `aarellano@marqeta.com` (Andres, Marqeta — typically all Flex)
+- `lea@meetcleo.com` (Lea Maalouf — Card squad, mostly Flex)
+- `oladipo@meetcleo.com` (Ladi — broader scope)
+- `madelaine.ford@meetcleo.com` (Madelaine — broader scope)
 
-Unread messages in watched channels summarised in Daily Brief. Direct mentions escalated to self-DM.
+Plus: any `@`-mention of Jago anywhere Flex-adjacent. Lists grow as new partners/channels engage — append in both `prompts/daily_brief.md` and this section.
 
 ## Build sequence
 
@@ -227,19 +220,22 @@ Unread messages in watched channels summarised in Daily Brief. Direct mentions e
 ### Phase 2 — Core jobs
 - [x] **WebBank Mirror DB initial population** — seeded 2026-04-24 (80 rows; buggy due to seed-parser multi-line-cell handling). Reconciled to canonical **94 rows** on 2026-04-26 via local openpyxl parse + Notion MCP backfill of the 12 missed codes + 4 carryover patches. See 2026-04-26 change log entries for full recovery.
 - [x] **WebBank Checklist Daily Sync** routine — live with rewritten parser (2026-04-26). Cron `7 7 * * 1-5` (08:07 BST). Routine ID `trig_01V1a8NQ1SayN7kpnq1Q7Eh2`. Model: `claude-sonnet-4-6`. MCP connections: Slack, Notion, Box. Repo source: `YagoReeves/flex-card` with `allow_unrestricted_git_push: true`. Design: option-c (auto-write DB + digest to `#flex-agent-jago` only, no `#product-cleo-card`, no approval gate). On fire: Read prior snapshot from working dir, parse Excel via Box MCP using the robust parser embedded in `prompts/webbank_sync.md`, diff, upsert Mirror DB by code, write today's snapshot+diff JSONs, `git push origin main`, post digest. **Mon 27 Apr is first natural fire of the new parser + first push attempt since the 403 toggle-cycle fix attempt.**
-- [ ] Build **Post-Meeting Action Item Extractor** (manual trigger)
-- [x] Build **Weekly Cycle** — prompts + routines live 2026-04-26. Weekly Monday `trig_01CdWfPUFDnn2Eg64SruRszZ` (cron `30 7 * * 1`), Weekly Friday `trig_015kvdNZvkNCL8CFgJP4299X` (cron `0 16 * * 5`). Both created via API with `allow_unrestricted_git_push: true` set at creation (canonical 403-fix path). Daily Brief gained `snapshots/daily_brief_<date>.json` artefact-write step. Friday writes `commitments_for_next_week` for Mon's continuity loop. Audience framing: drafts in `#flex-agent-jago` only for v1; Jago manually publishes onward to `#product-cleo-card` post-edit. Pending end-to-end validation Mon 27 Apr (Weekly Monday) + Fri 1 May (Weekly Friday).
+- [~] Build **Post-Meeting Action Item Extractor** (manual trigger) — Tier-1 (manual via terminal session) shipped 2026-04-26 as `prompts/granola_extract.md`. Tier-4 (cron-driven daily sweep across yesterday's meetings) shipped 2026-04-26 evening as `prompts/granola_sweep.md` + trigger `trig_01HZ3C9MMXSkRvzdZmFDZrGP`. Tier-3 (conversational Slack agent via Pipedream bridge) still backlog.
+- [x] Build **Weekly Cycle** — prompts + routines live 2026-04-26.
+- [x] Build **Heartbeat** — `prompts/heartbeat.md` + trigger `trig_01QdXrotgoZJXQLvgf7Av9Yj` shipped 2026-04-26 evening.
+- [x] **Project context layer** — `prompts/project_context.md` (canonical product / partner / workstream reference) shipped 2026-04-26 evening; all routines read it.
+- [x] **Weekly Progress Log DB** — created 2026-04-26 evening; Friday routine writes to it. Weekly Monday `trig_01CdWfPUFDnn2Eg64SruRszZ` (cron `30 7 * * 1`), Weekly Friday `trig_015kvdNZvkNCL8CFgJP4299X` (cron `0 16 * * 5`). Both created via API with `allow_unrestricted_git_push: true` set at creation (canonical 403-fix path). Daily Brief gained `snapshots/daily_brief_<date>.json` artefact-write step. Friday writes `commitments_for_next_week` for Mon's continuity loop. Audience framing: drafts in `#flex-agent-jago` only for v1; Jago manually publishes onward to `#product-cleo-card` post-edit. Pending end-to-end validation Mon 27 Apr (Weekly Monday) + Fri 1 May (Weekly Friday).
 
 ### Phase 3 — Iteration
 - [ ] **2026-05-08**: review human-in-loop graduation — which flows move to auto-send?
 - [ ] 4-week usage review: is a dashboard worth building as a learning project in this folder?
-- [ ] Expand Granola coverage beyond the 3 weekly meetings if extraction reliability proven
+- [x] Expand Granola coverage beyond the 3 weekly meetings — Granola Sweep covers all yesterday's Flex-relevant meetings Mon-Fri (Mon also covers Fri-Sun). Manual Tier-1 extraction available for any meeting on demand.
 
 ## Open items / deferred
 
 - **Dashboard**: deferred; revisit after 4 weeks of usage. Possible Claude-Code-built web app in this folder as learning project.
 - **True agentic auto-send**: gated on 2026-05-08 review.
-- **Webhook approval trigger** (instant rather than 15-min polled): only if 15-min sweep proves too slow.
+- ~~**Webhook approval trigger** (instant rather than 15-min polled)~~ — obsolete: Approval Sweep retired 2026-04-26.
 - **Standalone Slack bot identity**: only if self-DM/self-post model causes confusion.
 - **Akiflow integration**: no MCP available; not in scope.
 
@@ -267,3 +263,19 @@ Unread messages in watched channels summarised in Daily Brief. Direct mentions e
 - **2026-04-26 (end-of-session wrap-up)** — Session summary captured. Header status, pick-up section, audit backlog, TL;DR + Principles all refreshed against current state. Job 2 reframed (Tier 1 manual = done via `prompts/granola_extract.md`; Tier 3 conversational = backlog, blocked on Pipedream bridge build). Approval Sweep deferred item retired. Outstanding items in audit backlog: 9 prioritised + Tier-2 slash-skill cosmetic. Next session: Mon 27 Apr fire validation is the gating event before any new build work.
 - **2026-04-26** — **Manual extraction trial run on "Ladi CU" Granola meeting.** Pattern validated: pull transcript via Granola MCP → strict-criteria extraction → propose with table → user approves with edits → write `Proposed` rows to Notion. 4 items written successfully. Trial surfaced a real bug in the Daily Brief prompt: `Source` field is a select `[Meeting/Slack/Email/Manual]`, not free text — Brief's `"Slack — #channel"` string would have failed Mon morning. Patched. Also discovered `Workstream`, `Source Context`, and `Source Link` fields exist that the Brief should populate properly. Brief prompt now uses correct schema mapping. Canonical extraction logic saved as `prompts/granola_extract.md` so any future invocation (terminal session, future conversational Slack agent, future skill wrapper) reads the same source-of-truth prompt.
 - **2026-04-26** — **Brief switched from Slack-capture flow to auto-write `Proposed` rows.** Slack candidates that pass strict criteria are now auto-written to the Action Items DB with `Status = Proposed`, blank Owner/Priority/Due, Source field tagging the Slack channel. Jago triages in Notion: assign owner → `Active`, or delete/`Rejected`. Dedup before write: fuzzy-match against `Status IN (Proposed, Active)` rows created in last 7 days. Brief output replaces "Candidate Slack action items + capture N" section with "Added to Action Items DB" linking each Notion page. Action Items section gains a triage-nudge line: `:warning: N Proposed items > 3 days old — needs triage` when queue accumulates. Weekly Monday updated to read `slack_candidates_written` (was `slack_candidates`). Weekly Friday's "late-capture" section repurposed to "Triage queue: Proposed items added this week, still untriaged" — same-week visibility on uncleared queue. Approval Sweep deferred item retired: Brief no longer needs it; Weekly drafts are manually edited+published by Jago; only Job 2 might revisit.
+
+- **2026-04-26 (evening)** — **Project context layer added.** New `prompts/project_context.md` is the canonical project reference (~95 lines): product summary distilled from Construct V2 + Abridged Web doc; partner stack (no Bloom — bureau reporting in-house); top milestones (Aug/Sep/Nov 2026); 2 critical-path risks (product complexity + partner approval delays — WebBank capacity + internal capacity dropped at Jago's instruction since instalment-loan reprioritisation); 10-workstream spine from Flex Hub (with Marqeta migration + Mastercard BIN setup as named sub-workstreams under Platform Foundations); list of what Card squad does NOT own; source doc URLs. **All four existing routines** (Sync, Brief, Weekly Mon, Weekly Fri) now `Read prompts/project_context.md` on every fire. Daily Brief gains a new "**Risks & things to be mindful of**" output section (input 5) synthesising signal across all inputs, mapped to critical-path risks where applicable.
+
+- **2026-04-26 (evening)** — **Workstream taxonomy aligned across stack.** Action Items DB Workstream select options renamed in place (no rows lost): `Servicing & Ops` → `Servicing & Operations`, `Card Issuance` → `Card Issuance & Fulfilment`. `prompts/daily_brief.md` and `prompts/granola_extract.md` updated to use full names. project_context.md §5 uses same names. All consistent with Flex Hub Project Workstreams toggle.
+
+- **2026-04-26 (evening)** — **Flex — Weekly Progress Log DB created.** New Notion DB under Flex Hub (data source `collection://2d98ca42-9f65-4442-8ed2-0f97b0563429`). Schema: Title (`Week of <date>`), Week ending, Workstreams covered (multi-select × 10), Total progress items, Total blockers, Status (`Auto-generated` / `Reviewed by Jago`). Body: TL;DR + H2 per workstream with **Progress this week / Blockers / risks / Next week** bullets. Empty workstreams skipped, no padding. Weekly Friday routine extended with input 9 (workstream synthesis) + new "Persist Weekly Progress Log entry" step before the JSON artefact write — creates one Notion page per Friday fire. Slack output appends `_Progress log: <notion_url>_` after successful create. First entry due Fri 1 May.
+
+- **2026-04-26 (evening)** — **Heartbeat routine shipped.** New `prompts/heartbeat.md`. Trigger `trig_01QdXrotgoZJXQLvgf7Av9Yj`, cron `0 9 * * 1-5` (10:00 BST Mon-Fri). Read-only — no `git push`, no `allow_unrestricted_git_push`. Verifies today's expected artefacts (`webbank_checklist_*`, `webbank_diff_*`, `daily_brief_*`, `granola_sweep_*`, plus Mon-only: `weekly_monday_*` + last Friday's `weekly_friday_*`) are present in repo. Silent on success. Posts `:rotating_light:` Slack alert with cause inference + "what to check" actions only if any missing. Trigger created via UI (API v1→v2 translator bug blocked `RemoteTrigger.create`). Catches catastrophic "didn't fire" failures; richer artefact validation (slack_permalink non-null, schema integrity) is v2 enhancement on backlog.
+
+- **2026-04-26 (evening)** — **Granola Sweep routine shipped.** New `prompts/granola_sweep.md`. Trigger `trig_01HZ3C9MMXSkRvzdZmFDZrGP`, cron `45 5 * * 1-5` (06:45 BST Mon-Fri, fires before WebBank Sync). Window dynamic by `<DOW>`: Tue-Fri = yesterday only; Monday = last Friday → Sunday (catches Friday meetings + rare weekend). Filters meetings into auto-process (title regex `Flex|Marqeta|Mastercard|WebBank|Idemia|TabaPay|Card x Payments|Implementation Call|Cleo Card|Clear Flex` OR partner domain in @webbank/@marqeta/@idemia/@mastercard/@tabapay/@accourt/@gvgroup; BNPL/Pay Later/Peach exclusion unless Flex also in title), grey-zone (CUs/1:1s with ≤3 attendees including Card squad members — flagged in artefact for manual review, not auto-extracted), or skip. Auto-process: `get_meetings` for summaries (transcript fallback if summary <200 chars), strict extraction per `granola_extract.md` rules, cap 3 candidates/meeting, dedup against last-14-day Action Items DB, write survivors as `Proposed`. Persists `snapshots/granola_sweep_<date>.json`. Silent on success — Daily Brief (input 6) reads artefact and surfaces `*Granola sweep* (<window-label>) — N auto-processed · M written · K deduped · G grey-zone` line + up to 3 grey-zone meeting URLs. Posts to Slack only if artefact write itself fails. First fire Mon 27 Apr 06:45 BST processes Fri 24 Apr meetings.
+
+- **2026-04-26 (evening)** — **Trend detection in Weekly Friday.** Input 7 ("Stuck items") added: action items `Status=Active AND Created<today-14 AND NOT slipped`, WebBank items unchanged ≥14 days vs 14-day-ago snapshot (with Glob fallback for closest snapshot), cold partner threads with no inbound >7 days from `@webbank.com / @marqeta.com / @ic.group / @mastercard.com / @idemia.com / @tabapay.com` (best-effort; skipped if Gmail MCP unavailable). Stuck items get their own Slack section (`:hourglass: Stuck items (no movement in 14d+)`) and feed the Workstream Progress Log Blockers bucket. JSON artefact gains `stuck_items` object.
+
+- **2026-04-26 (evening)** — **Brief priority-inbox watch lists expanded.** Added Slack channels `#x-cleo-mq` and `#x-cleo-mq-ic` (Marqeta cross-org channels — fully Flex-relevant). Added 4 DM watch counterparts with Flex-relevance filter: `aarellano@marqeta.com` (typically all Flex), `lea@meetcleo.com`, `oladipo@meetcleo.com`, `madelaine.ford@meetcleo.com` (latter three: broader scope, default-drop on ambiguity). Email partner domains expanded from 4 → 8 (added `@idemia.com`, `@tabapay.com`, `@accourt.com`, `@gvgroup.net` — alignment with Granola Sweep filter). Slack output gains `Slack DMs (Flex-relevant only):` sub-bullet under Priority inbox; omitted entirely on quiet days. JSON schema gains `inbox.slack_dms` + `inbox.slack_dms_unresolved` (when Slack user-by-email lookup fails).
+
+- **2026-04-26 (evening)** — **API v1→v2 translator bug confirmed for `RemoteTrigger.create`.** Tried 6 different event-shape variations; API rejected `event_type` as both required (translation layer) and unknown (proto layer). Worked around by creating Heartbeat + Granola Sweep triggers via UI at https://claude.ai/code/routines. UI sidesteps the translator. Both new triggers verified via `RemoteTrigger.list` post-creation. Memory updated.

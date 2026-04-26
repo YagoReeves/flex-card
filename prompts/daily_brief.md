@@ -44,7 +44,7 @@ Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action It
 ### 3. Priority inbox hits (last 24h)
 
 **Email** (Gmail MCP):
-- Search threads from senders matching any of: `@webbank.com`, `@marqeta.com`, `@ic.group`, `@mastercard.com`.
+- Search threads from senders matching any of: `@webbank.com`, `@marqeta.com`, `@ic.group`, `@mastercard.com`, `@idemia.com`, `@tabapay.com`, `@accourt.com`, `@gvgroup.net`.
 - For each: sender, subject, one-line snippet, link to thread.
 - Flag threads where Jago hasn't replied and the external party was last to message.
 - **Exclude auto-responders**: drop any thread where subject contains `OOO`, `Out of Office`, `Automatic reply`, or body opens with `I'm currently out of office` / `I am out of office` / similar.

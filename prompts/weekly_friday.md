@@ -87,6 +87,22 @@ For each: title, owner, source (action-item / WebBank / explicit), expected outc
 
 If <3 commitments materialise, output what you have and flag in the artefact `low_commitments_signal: true` — the team may not have alignment on next week.
 
+### 8. Workstream synthesis (for Weekly Progress Log)
+
+Bucket all gathered signal into the canonical 10-workstream spine from `project_context.md` §5. For **each workstream that has signal this week**, build a structured entry with three buckets:
+
+- **Progress this week** — items shipped (input 3), WebBank items that moved forward (input 4), decisions logged (input 6), explicit progress mentioned in daily briefs (input 1).
+- **Blockers / risks** — slipped items (input 3), newly Blocked WebBank items (input 4), risks escalated or unchanged from Monday (input 6), partner-approval delays surfaced this week.
+- **Next week** — commitments from input 7 tagged to this workstream.
+
+Rules:
+- A bullet appears under exactly **one** workstream. If genuinely cross-cutting, default to the workstream most accountable for outcome.
+- Skip any workstream where all three buckets would be empty — don't pad.
+- Keep bullets short (one line each), concrete, name owners and partners.
+- Action items already have a `Workstream` field — use that. WebBank items always go under **Bank & Compliance**. Plastics/Idemia under **Card Issuance & Fulfilment**. Marqeta migration and Mastercard BIN setup under **Platform Foundations** (note as sub-workstream in the bullet).
+
+Capture the synthesis in the artefact under `workstream_log_entries` keyed by workstream name (see schema). Counts: `total_progress_items` (sum of "Progress this week" bullets across all workstreams), `total_blockers` (sum of "Blockers / risks" bullets).
+
 ## Output format
 
 One Slack message, mrkdwn, structured exactly:
@@ -133,6 +149,47 @@ _Draft week-in-review. Review, edit, publish to #product-cleo-card when ready._
 - **Honesty**: if a section is empty or data is missing, say so explicitly. The review's value comes from being trusted as accurate, not from filling space.
 - **Tone**: professional, punchy. Match Jago's writing style (formal-direct, bullets over prose, no fluff).
 
+## Persist Weekly Progress Log entry (LIVE only)
+
+Before writing the JSON artefact, create a new entry in the **Flex — Weekly Progress Log** Notion DB (data source: `collection://2d98ca42-9f65-4442-8ed2-0f97b0563429`, lives under Flex Hub).
+
+Use `mcp__claude_ai_Notion__notion-create-pages` with parent `data_source_id = 2d98ca42-9f65-4442-8ed2-0f97b0563429`. One page per fire.
+
+**Properties:**
+- **Title** (text): `Week of <this-monday>` (the Monday of the week ending today). Format: `Week of YYYY-MM-DD`.
+- **`date:Week ending:start`** (date): `<today>` (the Friday).
+- **Workstreams covered** (multi-select): array of workstream names from §8 that have at least one bullet. Must use exact names: `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Operations, Card Issuance & Fulfilment, Credit Reporting, Fraud & Risk]`.
+- **Total progress items** (number): sum from §8.
+- **Total blockers** (number): sum from §8.
+- **Status** (select): `Auto-generated`.
+
+**Page content** (Notion-flavored Markdown):
+
+```
+## TL;DR
+
+<2-3 sentences summarising the week. Lead with most material progress; flag the biggest blocker; one line on what next week's focus is.>
+
+---
+
+## Programme
+**Progress this week**
+- <bullet>
+**Blockers / risks**
+- <bullet>
+**Next week**
+- <bullet>
+
+## Card Product
+... (same structure)
+
+... (one H2 section per workstream that has signal — skip empty ones)
+```
+
+Capture the resulting Notion page URL — it goes into the artefact and the Slack final message.
+
+If the page-creation call fails (auth, schema mismatch): log the failure in the artefact (`workstream_log_url: null`, `workstream_log_error: "<message>"`) and continue. Do not retry destructively. The repo JSON artefact still gets the structured data so a retry is possible later.
+
 ## Persist artefact (LIVE only)
 
 After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the working directory. Schema:
@@ -164,7 +221,18 @@ After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the work
   "commitments_for_next_week": [
     {"title": "...", "owner": "...", "source": "action-item | webbank | explicit", "expected_outcome": "..."}
   ],
-  "low_commitments_signal": false
+  "low_commitments_signal": false,
+  "workstream_log_entries": {
+    "<workstream-name>": {
+      "progress_this_week": ["..."],
+      "blockers_risks": ["..."],
+      "next_week": ["..."]
+    }
+  },
+  "workstream_log_total_progress_items": 0,
+  "workstream_log_total_blockers": 0,
+  "workstream_log_url": "<Notion page URL or null>",
+  "workstream_log_error": null
 }
 ```
 
@@ -183,6 +251,6 @@ If DRY_RUN: skip artefact write + push entirely.
 
 ## Final action
 
-If LIVE: post via `slack_send_message` (`channel="C0AV07H9QPP"`, `text=<full body>`), persist + push the artefact, return only `"Posted: <permalink> · Artefact: <pushed | local-only>"`.
+If LIVE: create the Weekly Progress Log Notion entry, post the Slack message via `slack_send_message` (`channel="C0AV07H9QPP"`, `text=<full body>`) — append `\n_Progress log: <notion_url>_` to the body before posting if the entry was created successfully — persist + push the JSON artefact. Return only `"Posted: <permalink> · Log: <notion_url or 'failed'> · Artefact: <pushed | local-only>"`.
 
-If DRY_RUN: return the full body text wrapped in a code block. No post, no write.
+If DRY_RUN: return the full body text wrapped in a code block plus the structured `workstream_log_entries` payload. No Slack post, no Notion write, no JSON artefact.

@@ -63,7 +63,7 @@ Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5`. Use `mcp__clau
 - **Title** (text): the approved imperative actionable
 - **Status** (select): `Proposed`
 - **Source** (select, exact value): `Meeting`
-- **Workstream** (select): infer from content — one of `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Ops, Card Issuance, Credit Reporting, Fraud & Risk]`. Default to `Programme` when ambiguous.
+- **Workstream** (select): infer from content — one of `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Operations, Card Issuance & Fulfilment, Credit Reporting, Fraud & Risk]`. Default to `Programme` when ambiguous.
 - **Source Link** (url): the Granola URL Jago provided
 - **Source Context** (text): `<Meeting title>, <YYYY-MM-DD> — "<short verbatim quote>"` (quote under ~120 chars)
 - **Notes** (text): `Owner: <name>.` followed by any context worth carrying (one short sentence). Owner field itself stays blank — Jago tags the Notion person manually.

@@ -79,7 +79,7 @@ If a fuzzy match exists, skip the write and log it under `slack_candidates_skipp
 - **Title** (text): the imperative actionable
 - **Status** (select): `Proposed`
 - **Source** (select, exact value): `Slack`
-- **Workstream** (select): infer one of `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Ops, Card Issuance, Credit Reporting, Fraud & Risk]` based on the candidate's content. When ambiguous, default to `Programme`.
+- **Workstream** (select): infer one of `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Operations, Card Issuance & Fulfilment, Credit Reporting, Fraud & Risk]` based on the candidate's content. Match `project_context.md` §5 for scope per workstream. When ambiguous, default to `Programme`.
 - **Source Link** (url): the Slack thread permalink
 - **Source Context** (text): `<author> in #<channel> on <day>: "<short verbatim quote>"` — keep quote under ~120 chars
 - **Notes** (text): suggested owner as a string (e.g. `Owner: Jago.`) plus any assumed-due text from the source (e.g. `Source mentions: "by Friday".`). Owner field itself stays empty — Jago tags the Notion person manually.

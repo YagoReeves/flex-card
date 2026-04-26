@@ -109,3 +109,4 @@ People often misattribute these — don't bucket signal here against Card:
 - **Abridged construct doc (for WebBank):** https://www.notion.so/Abridged-doc-for-Web-3425c63b874580cd9ef7e92447c82d4b — compact version, source for §1 above
 - **WebBank Mirror DB** (agent-managed) — checklist tracker, lives in Flex Hub
 - **Action Items DB** (agent-managed) — Proposed/Confirmed action items, lives in Flex Hub
+- **Weekly Progress Log DB** (agent-managed) — one entry per week, structured by workstream, written by the Friday routine: `https://www.notion.so/ebef90dc293c4f6c8bc0a8dd370d93af`

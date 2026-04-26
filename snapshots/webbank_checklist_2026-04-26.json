@@ -11,7 +11,10 @@
       "status": "",
       "notes": "Post Launch Validation Testing",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
     },
     {
       "line": 13,
@@ -68,7 +71,10 @@
       "status": "",
       "notes": "",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
     },
     {
       "line": 18,
@@ -154,7 +160,12 @@
       "status": "",
       "notes": "Flex application flow introduces a self-reported Ability-to-Pay assessment",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Compliance",
+        "Credit",
+        "Other",
+        "SP"
+      ]
     },
     {
       "line": 32,
@@ -193,7 +204,10 @@
       "status": "",
       "notes": "Post Launch Validation Testing\nNo new adverse action reasons are being introduced",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
     },
     {
       "line": 37,
@@ -269,7 +283,9 @@
       "status": "",
       "notes": "",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Other"
+      ]
     },
     {
       "line": 44,
@@ -359,7 +375,10 @@
       "status": "",
       "notes": "",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
     },
     {
       "line": 52,
@@ -482,7 +501,9 @@
       "status": "In Review",
       "notes": "",
       "hyperlink": "https://webbank.app.box.com/file/2191952675072",
-      "parties": []
+      "parties": [
+        "Other"
+      ]
     },
     {
       "line": 61,
@@ -493,7 +514,9 @@
       "status": "In Review",
       "notes": "",
       "hyperlink": "https://webbank.app.box.com/file/2191955588660",
-      "parties": []
+      "parties": [
+        "Other"
+      ]
     },
     {
       "line": 63,
@@ -504,7 +527,11 @@
       "status": "",
       "notes": "Post Launch Validation Testing",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Compliance",
+        "Legal",
+        "SP"
+      ]
     },
     {
       "line": 65,
@@ -560,7 +587,7 @@
       "hyperlink": "",
       "parties": [
         "Compliance",
-        "Ops",
+        "Other",
         "SP"
       ]
     },
@@ -573,7 +600,10 @@
       "status": "",
       "notes": "",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
     },
     {
       "line": 76,
@@ -741,7 +771,8 @@
       "notes": "*Bank note: This should also be reviewed by Zoe",
       "hyperlink": "",
       "parties": [
-        "Credit"
+        "Credit",
+        "Other"
       ]
     },
     {
@@ -753,7 +784,9 @@
       "status": "",
       "notes": "",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Other"
+      ]
     },
     {
       "line": 107,
@@ -840,7 +873,10 @@
       "status": "",
       "notes": "Additional training has been assigned that should cover Compliance topics\nrelated to Flex Card",
       "hyperlink": "",
-      "parties": []
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
     },
     {
       "line": 128,

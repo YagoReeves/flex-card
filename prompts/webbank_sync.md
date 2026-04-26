@@ -59,9 +59,25 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
         [6] Status  [7] Priority  [8] Product Type  [9] Notes
         [10] Target Submission  [11] Actual Submission
         [12] Waiting On  [13] Document Name  [14] Hyperlink
+        [20] Required Reviews (parties — comma-separated raw names)
       """
       DROP_STATUS = ('not required', 'existing - not req.')
       ROW_START_RE = re.compile(r'^\t\t[^\t]+\t[^\t]+\t')
+      # Mirror DB Party multi-select options. Excel uses additional names
+      # (MRM, LC/Board, VP-New Products, Finance, IT, VM, etc.) — collapse all
+      # non-canonical names to "Other" to match the seed parser's behaviour.
+      CANONICAL_PARTIES = {'SP', 'Compliance', 'Credit', 'BSA', 'Legal', 'Ops', 'Product'}
+
+      def parse_parties(cell_value):
+          if not cell_value or not cell_value.strip():
+              return []
+          out = set()
+          for p in cell_value.split(','):
+              p = p.strip()
+              if not p:
+                  continue
+              out.add(p if p in CANONICAL_PARTIES else 'Other')
+          return sorted(out)
 
       start = box_text.find('Implementation Checklist')
       if start < 0:
@@ -87,7 +103,7 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
       parsed = []
       for idx, r in enumerate(rows, start=1):
           cells = r.split('\t')
-          while len(cells) < 15:
+          while len(cells) < 25:
               cells.append('')
           phase = cells[2].strip()
           code = cells[3].strip()
@@ -96,6 +112,7 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
           status = cells[6].strip()
           notes = cells[9].strip()
           hyperlink = cells[14].strip()
+          parties = parse_parties(cells[20])
 
           # Header row matches ROW_START_RE if read naively — filter explicitly.
           if phase.lower() == 'phase' or code.lower() == 'process item':
@@ -120,7 +137,7 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
               'status': status,
               'notes': notes,
               'hyperlink': hyperlink,
-              'parties': [],                    # parties parsing deferred — see notes below
+              'parties': parties,
           })
       return parsed
   ```
@@ -129,7 +146,7 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
   { "parsed_at": "<TODAY>", "total": <coalesced row count>, "kept": [<rows from parse_checklist>], "dropped_count": <total - len(kept)> }
   ```
 - **Sanity check before continuing**: the parser should return roughly 94 rows on a healthy run. If the result is materially smaller (say <80), abort: post a Slack failure digest with the row count and do not commit anything or update Notion. Do not silently proceed with a degraded parse.
-- **`parties` is intentionally empty for now.** The seed snapshot has populated `parties` arrays whose source column is unclear; reproducing that mapping is deferred. Diffing parties against the seed produces ~77 false positives, so the diff step (below) **must skip parties_changes** until we revisit.
+- **`parties` is read from Excel col 20 ("Required Reviews")** with a canonical→Other mapping. Excel may list non-canonical names (MRM, LC/Board, VP-New Products, Finance, IT, VM, etc.) — these collapse to a single `Other` entry. Canonical names (SP, Compliance, Credit, BSA, Legal, Ops, Product) pass through unchanged. The mapping matches the seed parser's behaviour, so re-parsing existing rows produces stable values.
 - The `code` is the canonical row key for diff matching and Notion upserts.
 
 ### 3. Diff against yesterday's snapshot
@@ -144,7 +161,7 @@ Otherwise, `Read snapshots/webbank_checklist_<PREV>.json`. Index both `<PREV>` a
 - **Note changes**: same code, `notes` value differs.
 - **Bank-guidance changes**: same code, `bank_guidance` value differs.
 - **Hyperlink changes**: same code, `hyperlink` value differs.
-- **Parties changes**: SKIP (the parser emits `parties: []` until parties parsing is revisited; diffing against historical non-empty seed values would produce ~77 spurious changes). Always emit `parties_changes: []` in the diff payload.
+- **Parties changes**: same code, `parties` set differs (treat as set, not list).
 
 Build a diff payload:
 ```

@@ -96,5 +96,48 @@
       "to": "https://webbank.app.box.com/file/2200497966844"
     }
   ],
-  "parties_changes": []
+  "parties_changes": [
+    {
+      "code": "CM4",
+      "name": "Compliance Training",
+      "from": [],
+      "to": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "code": "OR8",
+      "name": "Card Mailing, Use, and Activation - Includes: Plastic (Card design, activation label), Envelopes, Card design, Activation label, Card Carrier, PIN Mailer, Card Activation Instructions & Procedure, Card Activation Procedure, Origination/Activation Call Scripts (talking points)",
+      "from": [
+        "Compliance",
+        "Ops",
+        "SP"
+      ],
+      "to": [
+        "Compliance",
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "code": "WB1",
+      "name": "Application Data File",
+      "from": [
+        "Credit"
+      ],
+      "to": [
+        "Credit",
+        "Other"
+      ]
+    },
+    {
+      "code": "WB2",
+      "name": "Loan/Account Data File (Positions)",
+      "from": [],
+      "to": [
+        "Other"
+      ]
+    }
+  ]
 }

@@ -108,7 +108,17 @@ Each risk line: one sentence, concrete, naming the workstream and (where possibl
 
 If nothing qualifies: `_No risks flagged today._` Do not pad. False positives erode trust in this section.
 
-### 6. WebBank checklist diff highlights
+### 6. Granola sweep digest
+
+The Granola Sweep routine runs at 05:45 UTC (45 min before this Brief) and writes `snapshots/granola_sweep_<YYYY-MM-DD>.json` to the repo on `main`, then `git push`es. By the time you fire, your fresh clone of `main` should contain today's sweep artefact.
+
+- Use the `Read` tool to read `snapshots/granola_sweep_<today>.json` from the working directory.
+- If the file exists, summarise: `auto_processed_count` meetings processed, `candidates_written` count, `candidates_skipped` count, `grey_zone_count`.
+- If `grey_zone_count > 0`: list up to 3 grey-zone meeting titles + Granola URLs as a "consider extracting manually?" pointer.
+- If the file does **not** exist for today: output `_Granola sweep not available — Sweep routine has not run today (or failed to push)._`. Do not error out.
+- If the file exists but `granola_unavailable: true`: output `_Granola MCP was unavailable to the Sweep routine — manual extraction may be needed._`.
+
+### 7. WebBank checklist diff highlights
 
 The WebBank Sync routine runs at 07:07 UTC (45 minutes before this Brief) and writes a diff summary to `snapshots/webbank_diff_<YYYY-MM-DD>.json` in this repo on `main`, then `git push`es. By the time you fire, your fresh clone of `main` should contain today's diff file.
 
@@ -149,6 +159,13 @@ Slack:
 ...
 Skipped as dedup: N (already in queue)
 ... or "_No new Slack candidates auto-added today._"
+
+*Granola sweep* (yesterday's meetings)
+<N meetings auto-processed · M candidates written · K deduped · G grey-zone>
+Grey-zone meetings (consider manual extraction):   ← only if G > 0
+• <meeting title> — <granola_url>
+... up to 3
+... or "_Granola sweep not available._"
 
 *WebBank diff*
 <summary or "Not available — Sync hasn't run today.">
@@ -195,6 +212,14 @@ Schema:
     {"actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "existing_page_url": "...", "reason": "fuzzy-match"}
   ],
   "proposed_queue_size_over_3_days": 0,
+  "granola_sweep_summary": {
+    "available": true,
+    "auto_processed_count": 0,
+    "candidates_written": 0,
+    "candidates_skipped": 0,
+    "grey_zone_count": 0,
+    "grey_zone_highlights": [{"title": "...", "granola_url": "..."}]
+  },
   "risks_flagged": [
     {"workstream": "...", "risk": "...", "why_it_matters": "...", "critical_path_risk_ref": "1 | 2 | null", "source": "inbox | action-item | webbank | meeting | quiet-workstream"}
   ],

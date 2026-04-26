@@ -1,0 +1,100 @@
+{
+  "today": "2026-04-26",
+  "prev": "2026-04-24",
+  "totals": {
+    "kept_today": 94,
+    "kept_prev": 80
+  },
+  "added": [
+    {
+      "code": "AP4",
+      "name": "Automated Payment Set-up (Incl. ACH Authorization and Capture process)",
+      "category": "AP"
+    },
+    {
+      "code": "AQ5",
+      "name": "Marketing Materials - Includes: Dealer/Contractor/Retailer Materials, Paid Content or API Partner Materials , Digital (including website), Apple App Store Page, Google Play Store Page, Digital (Landing Page), Social Media, Email, Print, Direct Mail, Press Release, TV/Radio/Other, All Website Screenshots (FAQ's, Contact, About Us, etc.)",
+      "category": "AQ"
+    },
+    {
+      "code": "BSA17",
+      "name": "Enhanced Monitoring Program Risk Asessment",
+      "category": "BSA"
+    },
+    {
+      "code": "BSA18",
+      "name": "Enhanced Monitoring Reporting",
+      "category": "BSA"
+    },
+    {
+      "code": "BSA19",
+      "name": "System Access - QA level access for bank team",
+      "category": "BSA"
+    },
+    {
+      "code": "BSA20",
+      "name": "Enhanced Goverance Program - ex: More frequent site vists, weekly meetings, etc.",
+      "category": "BSA"
+    },
+    {
+      "code": "DD2",
+      "name": "Daily Deposit Positions Report",
+      "category": "DD"
+    },
+    {
+      "code": "DP11.1",
+      "name": "Flex Card ACH Bill Pay",
+      "category": "DP"
+    },
+    {
+      "code": "DP11.2",
+      "name": "Flex Card ACH Direct Deposit",
+      "category": "DP"
+    },
+    {
+      "code": "DP2",
+      "name": "Reg CC Procedure",
+      "category": "DP"
+    },
+    {
+      "code": "OR2",
+      "name": "Borrower Agreements - Includes: Cardholder Agreement (if open-end), Terms and Conditions, Business Loan Agreement (if SMB), Consumer Loan Agreement, Promissory Note, Truth In Lending Disclosure (TIL), Loan Agreement (if closed-end)",
+      "category": "OR"
+    },
+    {
+      "code": "SV1",
+      "name": "Account Servicing Policy/Procedures - Includes: Account Servicing Policy/Procedures , Account Closing Procedure, Servicing Portal Screen Shots, Servicing Call Scripts (talking points), Fraud Procedures (Servicing), Fraud Communications, Escheatment",
+      "category": "SV"
+    },
+    {
+      "code": "UW11",
+      "name": "Decisions & Reasons - Includes: Decision Communication , AA Methodology , AA Reasons, Adverse Action Communications - Bureau, Adverse Action Communications - Non Bureau, Adverse Action Communications - Manual Delivery Process, ECOA/Adverse Action Reporting, Approval Communication",
+      "category": "UW"
+    },
+    {
+      "code": "UW5",
+      "name": "Income Verification Procedures",
+      "category": "UW"
+    }
+  ],
+  "removed": [],
+  "status_changes": [],
+  "note_changes": [
+    {
+      "code": "CM4",
+      "name": "Compliance Training",
+      "from": "Additional training has been assigned that should cover Compliance topics",
+      "to": "Additional training has been assigned that should cover Compliance topics\nrelated to Flex Card"
+    }
+  ],
+  "bank_guidance_changes": [],
+  "hyperlink_changes": [
+    {
+      "code": "DP5",
+      "name": "Consumer Deposit Account Policy",
+      "from": "",
+      "to": "https://webbank.app.box.com/file/2200497966844"
+    }
+  ],
+  "parties_changes": []
+}

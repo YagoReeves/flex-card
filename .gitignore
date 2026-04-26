@@ -10,3 +10,6 @@
 *.pem
 secrets/
 credentials/
+
+# Local-only WebBank scratch (spec §Architecture: not used by routines)
+staging/

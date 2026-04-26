@@ -111,8 +111,64 @@ Reply in thread: `capture 1, 3` to promote to Action Items DB draft.
 - **Strict extraction**: false positives in candidates are worse than false negatives. When in doubt, drop it.
 - **Tone**: professional, punchy. Match Jago's writing style (formal-direct, bullets over prose, no fluff).
 
+## Persist artefact (LIVE only)
+
+After posting to Slack, write a structured JSON artefact to `snapshots/daily_brief_<today>.json` in the working directory. This is the project log + the input source for the Weekly Monday routine, so populate every field even when the section is empty (use `[]` or `null`).
+
+Schema:
+
+```json
+{
+  "date": "<today>",
+  "generated_at_utc": "<ISO8601 from `date -u +%FT%TZ`>",
+  "mode": "LIVE",
+  "slack_permalink": "<permalink returned by slack_send_message>",
+  "meetings": [
+    {"title": "...", "time_local": "HH:MM", "attendees_summary": "...", "prep_pointer": "<link or null>"}
+  ],
+  "action_items_due": [
+    {"title": "...", "owner": "...", "due": "<YYYY-MM-DD or null>", "priority": "..."}
+  ],
+  "inbox": {
+    "email": [
+      {"sender": "...", "subject": "...", "snippet": "...", "link": "...", "awaiting_jago_reply": true}
+    ],
+    "email_status": "ok | unavailable",
+    "slack": [
+      {"channel": "#...", "new_count": 0, "key_discussion": "...", "mentions_jago": 0}
+    ]
+  },
+  "slack_candidates": [
+    {"index": 1, "actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "assumed_owner": "...", "assumed_due": "<YYYY-MM-DD or null>"}
+  ],
+  "webbank_diff_summary": {
+    "available": true,
+    "added": 0,
+    "removed": 0,
+    "status_changed": 0,
+    "note_changed": 0,
+    "highlights": ["..."]
+  },
+  "rendered_slack_text": "<the full markdown body posted to Slack>"
+}
+```
+
+Then commit + push to `main`:
+
+```
+cd <working-dir>
+git pull --rebase origin main   # WebBank Sync runs ~30min before; pull its commit first
+git add snapshots/daily_brief_<today>.json
+git commit -m "Daily Brief <today>: artefact log"
+git push origin main
+```
+
+If `git push` returns 403 (the known credential-scope issue): log the failure but **do not** retry destructively. Continue and return the Slack permalink as normal — the artefact remains in the routine clone for this fire only. Weekly Monday's fallback path handles a missing artefact.
+
+If DRY_RUN: skip the artefact write + push entirely.
+
 ## Final action
 
-If LIVE: call `slack_send_message` with `channel="C0AV07H9QPP"` and `text=<the full brief>`. Capture the permalink. Return only `"Posted: <permalink>"` — no preamble, no meta-commentary.
+If LIVE: post via `slack_send_message` (`channel="C0AV07H9QPP"`, `text=<the full brief>`), persist the artefact + push (per above), then return only `"Posted: <permalink> · Artefact: <pushed | local-only>"` — no preamble, no meta-commentary.
 
-If DRY_RUN: return the full brief text wrapped in a code block. Do not post to Slack.
+If DRY_RUN: return the full brief text wrapped in a code block. Do not post to Slack, do not write the artefact.

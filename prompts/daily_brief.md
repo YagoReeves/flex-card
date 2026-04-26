@@ -113,7 +113,10 @@ If nothing qualifies: `_No risks flagged today._` Do not pad. False positives er
 The Granola Sweep routine runs at 05:45 UTC (45 min before this Brief) and writes `snapshots/granola_sweep_<YYYY-MM-DD>.json` to the repo on `main`, then `git push`es. By the time you fire, your fresh clone of `main` should contain today's sweep artefact.
 
 - Use the `Read` tool to read `snapshots/granola_sweep_<today>.json` from the working directory.
-- If the file exists, summarise: `auto_processed_count` meetings processed, `candidates_written` count, `candidates_skipped` count, `grey_zone_count`.
+- If the file exists, derive the window label from `meetings_window_start` and `meetings_window_end`:
+  - If start == end: window is a single day (e.g. `"yesterday"` if today-1, or the date if not).
+  - If start != end: window is a range (e.g. `"Fri–Sun"` for the Monday case spanning Friday → Sunday).
+- Summarise: window-label, `auto_processed_count` meetings processed, `candidates_written` count, `candidates_skipped` count, `grey_zone_count`.
 - If `grey_zone_count > 0`: list up to 3 grey-zone meeting titles + Granola URLs as a "consider extracting manually?" pointer.
 - If the file does **not** exist for today: output `_Granola sweep not available — Sweep routine has not run today (or failed to push)._`. Do not error out.
 - If the file exists but `granola_unavailable: true`: output `_Granola MCP was unavailable to the Sweep routine — manual extraction may be needed._`.
@@ -160,7 +163,7 @@ Slack:
 Skipped as dedup: N (already in queue)
 ... or "_No new Slack candidates auto-added today._"
 
-*Granola sweep* (yesterday's meetings)
+*Granola sweep* (<window-label, e.g. "yesterday" or "Fri–Sun">)
 <N meetings auto-processed · M candidates written · K deduped · G grey-zone>
 Grey-zone meetings (consider manual extraction):   ← only if G > 0
 • <meeting title> — <granola_url>

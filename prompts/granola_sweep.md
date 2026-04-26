@@ -17,7 +17,10 @@ You are executing the **Granola Sweep** for the Flex Card project as a scheduled
 - You run in a remote Anthropic environment with the `YagoReeves/flex-card` repo cloned into your working directory. Use the native `Read` / `Write` / `Edit` / `Glob` / `Bash` tools.
 - The routine is configured with **"Allow unrestricted branch pushes"** so you may `git push origin main`.
 - **Today's date**: run `date -u +%Y-%m-%d` via Bash, store as `<TODAY>`.
-- **Yesterday's date**: `date -u -d "yesterday" +%Y-%m-%d`, store as `<YESTERDAY>`. This is the meetings window.
+- **Day of week**: run `date -u +%A`, store as `<DOW>`.
+- **Meetings window** — depends on `<DOW>`:
+  - **Monday**: window covers Friday + Saturday + Sunday (i.e. all meetings since the previous weekday's Sweep). Compute `<WINDOW_START> = date -u -d "last Friday" +%Y-%m-%d` and `<WINDOW_END> = date -u -d "yesterday" +%Y-%m-%d` (Sunday). This catches Friday meetings that happened after Thursday's Sweep last fired plus any rare weekend meetings.
+  - **Tuesday–Friday**: window is yesterday only. `<WINDOW_START> = <WINDOW_END> = date -u -d "yesterday" +%Y-%m-%d`.
 - **Execution mode**: LIVE unless wrapper passes `Mode: DRY_RUN`. DRY_RUN = compute the candidate list and counts, return them, but do NOT write to Notion, do NOT commit/push.
 
 ## Required reading
@@ -36,17 +39,20 @@ You are executing the **Granola Sweep** for the Flex Card project as a scheduled
 ### 1. Bootstrap
 
 - Run `date -u +%Y-%m-%d` → `<TODAY>`.
-- Run `date -u -d "yesterday" +%Y-%m-%d` → `<YESTERDAY>`.
+- Run `date -u +%A` → `<DOW>`.
+- Compute the meetings window based on `<DOW>` per the Runtime environment block above:
+  - **Monday**: `<WINDOW_START> = $(date -u -d "last Friday" +%Y-%m-%d)`, `<WINDOW_END> = $(date -u -d "yesterday" +%Y-%m-%d)` — covers Fri/Sat/Sun.
+  - **Tuesday–Friday**: `<WINDOW_START> = <WINDOW_END> = $(date -u -d "yesterday" +%Y-%m-%d)` — yesterday only.
 - Idempotent retry check: if `snapshots/granola_sweep_<TODAY>.json` already exists, exit early with `"Already swept today: snapshots/granola_sweep_<TODAY>.json"`. Do not re-process.
 - Run `git config user.email "flex-agent@meetcleo.com"` and `git config user.name "Flex Agent"` so commits are clearly attributable.
 
-### 2. Pull yesterday's meetings
+### 2. Pull meetings in the window
 
 Call `mcp__claude_ai_Granola__list_meetings` with:
 ```
 time_range: "custom"
-custom_start: "<YESTERDAY>"
-custom_end: "<YESTERDAY>"
+custom_start: "<WINDOW_START>"
+custom_end: "<WINDOW_END>"
 ```
 
 If the call fails or returns 0 meetings: skip to step 8 with empty arrays — write the artefact noting `meetings_scanned: 0` and exit cleanly.
@@ -134,7 +140,9 @@ Write `snapshots/granola_sweep_<TODAY>.json`:
 ```json
 {
   "date": "<TODAY>",
-  "meetings_window_date": "<YESTERDAY>",
+  "day_of_week": "<DOW>",
+  "meetings_window_start": "<WINDOW_START>",
+  "meetings_window_end": "<WINDOW_END>",
   "generated_at_utc": "<ISO8601>",
   "mode": "LIVE | DRY_RUN",
   "meetings_scanned": 0,

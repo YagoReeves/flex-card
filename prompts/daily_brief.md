@@ -50,10 +50,39 @@ Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action It
 - **Exclude auto-responders**: drop any thread where subject contains `OOO`, `Out of Office`, `Automatic reply`, or body opens with `I'm currently out of office` / `I am out of office` / similar.
 - If Gmail MCP isn't attached or returns auth errors, output: "Priority email scan unavailable — Gmail connector not attached to routine."
 
-**Slack**:
-- Watched channels: `#product-cleo-card`, `#collab-card-accourt`, `#proj-flex-card-design`, `#collab-card_ops_support`, `#collab-compliance-credit`.
-- For each: count of new messages in window, any `@`-mentions of Jago, one-line key-discussion summary. **Do not dump message content verbatim.**
-- Direct mentions of Jago anywhere Flex-adjacent also go here, even outside watched channels.
+**Slack — channels:**
+
+Treat these as fully Flex-relevant (no per-message filtering needed):
+- `#product-cleo-card`
+- `#collab-card-accourt`
+- `#proj-flex-card-design`
+- `#collab-card_ops_support`
+- `#collab-compliance-credit`
+- `#x-cleo-mq` (Marqeta cross-org channel — all content Flex-relevant)
+- `#x-cleo-mq-ic` (Marqeta + IC Payments cross-org channel — all content Flex-relevant)
+
+For each: count of new messages in window, any `@`-mentions of Jago, one-line key-discussion summary. **Do not dump message content verbatim.**
+
+Direct mentions of Jago anywhere Flex-adjacent also go here, even outside watched channels.
+
+**Slack — DMs (with Flex-relevance filter):**
+
+These people sometimes discuss non-Flex topics in DMs with Jago. **Apply strict Flex-relevance filtering** — only surface messages where:
+- Content mentions Flex / Marqeta / WebBank / Mastercard / Idemia / TabaPay / BNPL on Flex / Pay Later on Flex / sandbox / BIN / push provisioning / disputes / statements / a Flex workstream from `project_context.md` §5, OR
+- The thread is a clear continuation of a Flex topic discussed earlier this week, OR
+- The message links to a Flex Hub / Flex doc / Marqeta sandbox / WebBank Box.
+
+Default to **drop** when ambiguous — false positives in DMs erode trust faster than false negatives.
+
+DMs to watch (resolve email → Slack user ID via `slack_search_users` if needed):
+- `aarellano@marqeta.com` (Andres, Marqeta — typically all Flex-relevant)
+- `lea@meetcleo.com` (Lea Maalouf — Card squad, mostly Flex but not always)
+- `oladipo@meetcleo.com` (Ladi — broader scope, filter carefully)
+- `madelaine.ford@meetcleo.com` (Madelaine — broader scope, filter carefully)
+
+For each DM hit (after filtering): `@<name> — <one-line summary> — <thread link>`. Surface in the same `*Priority inbox*` Slack section under a `DMs:` sub-bullet. If no Flex-relevant DMs in window: omit the DM sub-bullet entirely (don't pad).
+
+If `slack_search_users` cannot resolve an email (deactivated user, MCP scope issue): note in the artefact under `slack_dms_unresolved` and continue.
 
 ### 4. Slack candidates → auto-write to Action Items DB (top 5)
 
@@ -153,9 +182,12 @@ Return **one markdown message** suitable for posting to Slack. Use Slack mrkdwn 
 Emails:
 • <sender> — <subject> — <snippet> — <link>
 ... or appropriate unavailable message
-Slack:
+Slack channels:
 • #channel — N new, <key discussion>. Mentions: <count>
 ...
+Slack DMs (Flex-relevant only):
+• @<name> — <one-line summary> — <thread link>
+... or omit this sub-bullet if no Flex-relevant DM activity
 
 *Added to Action Items DB*
 • <title> — from <author> in #<channel> — <Notion page link>
@@ -206,6 +238,12 @@ Schema:
     "email_status": "ok | unavailable",
     "slack": [
       {"channel": "#...", "new_count": 0, "key_discussion": "...", "mentions_jago": 0}
+    ],
+    "slack_dms": [
+      {"counterpart_email": "...", "counterpart_name": "...", "summary": "...", "thread_link": "...", "flex_relevance_signal": "keyword | continuation | link"}
+    ],
+    "slack_dms_unresolved": [
+      {"email": "...", "reason": "..."}
     ]
   },
   "slack_candidates_written": [

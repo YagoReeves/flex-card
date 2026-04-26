@@ -1,31 +1,32 @@
 # Flex Agent — Spec (v1)
 
-**Last updated**: 2026-04-25 · **Owner**: Jago Reeves · **Status**: Daily Brief + WebBank Sync routines both live and configured for Mon 27 Apr first fires
+**Last updated**: 2026-04-26 · **Owner**: Jago Reeves · **Status**: Daily Brief + WebBank Sync routines live; WebBank Mirror DB reconciled to canonical 94 rows after seed-parser bug recovery; Mon 27 Apr is first natural fire of new parser + push validation
 
 ## Pick up here next session
 
-**What's live:**
-- Daily Brief routine `trig_0168M4zWyESpqBw57f9PDXfp` — fires `53 7 * * 1-5` (08:53 BST). Wrapper-pattern prompt fetches `prompts/daily_brief.md` from working-dir clone of `YagoReeves/flex-card`.
-- WebBank Sync routine `trig_01V1a8NQ1SayN7kpnq1Q7Eh2` — fires `7 7 * * 1-5` (08:07 BST). Same wrapper pattern, fetches `prompts/webbank_sync.md`. Dry-run verified successful 2026-04-25.
-- WebBank Mirror DB populated (80 rows, initial state).
-- DST reminder routine `trig_01EreY3zZT6e7sVapd6g9LVU` — fires Mon 19 Oct 2026. Updated to remind on bumping both routine crons (Brief + Sync) by +1 UTC hour.
-- GitHub repo `https://github.com/YagoReeves/flex-card` — private, attached to both production routines as a working-directory source. Holds spec, prompts, snapshot history.
+**What's live and validated:**
+- Daily Brief routine `trig_0168M4zWyESpqBw57f9PDXfp` — fires `53 7 * * 1-5` (08:53 BST). Untouched 2026-04-26.
+- WebBank Sync routine `trig_01V1a8NQ1SayN7kpnq1Q7Eh2` — fires `7 7 * * 1-5` (08:07 BST). **Parser rewritten 2026-04-26** (handles multi-line cells, parties from Excel col 20 with canonical→Other mapping, upsert-by-code on Notion writes, sanity-check abort if <80 rows). Validated locally against 24 Apr cached + 26 Apr live Box outputs (94 rows each, matches openpyxl truth code-for-code). End-to-end remote validation deferred to Mon's natural fire because idempotent-exit blocks today's test.
+- **WebBank Mirror DB at canonical 94 rows** (was 80 from buggy seed → 82 after routine added DP11.1/.2 → 94 after manual recovery on 2026-04-26 added the 12 rows the seed missed: AP4, AQ5, BSA17–20, DD2, DP2, OR2, SV1, UW5, UW11). All have correct WebBank Status + Party.
+- **26 Apr snapshot committed** (`snapshots/webbank_checklist_2026-04-26.json`) with all 94 rows, parties populated. This is the baseline Mon's fire diffs against.
+- DST reminder routine `trig_01EreY3zZT6e7sVapd6g9LVU` — fires Mon 19 Oct 2026.
 
 **Next session priorities (in order):**
 
-1. **Verify Mon 27 Apr first fires** — confirm both routines fired correctly, posted to `#flex-agent-jago`, Sync's commit landed on `main`, Mirror DB updated as expected. Debug anything broken.
-2. **Build Job 2 — Meeting Action Item Extractor**. Manual-trigger routine (Jago kicks off after a meeting). Reads Granola transcript for the named meeting, extracts candidate action items with strict rules, posts draft to `#flex-agent-jago`. Approval flow per spec §"Job 2".
-3. **Build Job 4 — Weekly Cycle**. Two cron routines: Mon 09:00 (week-ahead) and Fri 17:00 (week-in-review). Same wrapper pattern, repo-attached, `prompts/weekly_monday.md` + `prompts/weekly_friday.md`.
-4. **End-to-end workflow verification**. After Jobs 2 + 4 are live, run a full week (or two) and validate that the system actually delivers the "superhuman PM" experience the spec is built for. Capture friction, missed signals, false positives.
+1. **Verify Mon 27 Apr 08:07 BST WebBank Sync fire** — the real end-to-end test of the parser rewrite + the toggle-cycle 403 fix attempt. Expected: 94 rows parsed, ~0 changes vs 26 Apr snapshot, **`git push origin main` succeeds**, Slack digest posts, Mirror DB unchanged. If push still 403s: delete + recreate the trigger with `allow_unrestricted_git_push` set at creation time (not via post-create update). Working hypothesis is the credential was provisioned at create-time without push scope and post-hoc toggle changes don't refresh it.
+2. **Verify Mon 27 Apr 08:53 BST Daily Brief fire** — first natural fire. Should reference the freshly-pushed 26 Apr WebBank diff (or 27 Apr's if Sync pushed). Confirm Slack post lands cleanly, Mirror DB context appears correctly.
+3. **Build Job 2 — Meeting Action Item Extractor**. Manual-trigger routine (Jago kicks off after a meeting). Reads Granola transcript for the named meeting, extracts candidate action items with strict rules, posts draft to `#flex-agent-jago`. Approval flow per spec §"Job 2".
+4. **Build Job 4 — Weekly Cycle**. Two cron routines: Mon 09:00 (week-ahead) and Fri 17:00 (week-in-review). Same wrapper pattern, repo-attached, `prompts/weekly_monday.md` + `prompts/weekly_friday.md`.
+5. **End-to-end workflow verification** after Jobs 2 + 4 are live. Run a full week (or two), capture friction, missed signals, false positives.
 
 **Open for Jago (manual, anytime):**
 - (In Notion UI) group the two Agent-owned DBs into a toggle section under Flex Hub's Central Memory — Notion API was blocking the auto-insert.
-- Spot-check a handful of Mirror DB rows against the Excel — we parsed 80 kept + 62 dropped, but WebBank's own Grand Total is 100; worth a sanity pass.
 
 **Deferred (revisit triggers noted):**
 - **2026-05-08**: human-in-loop graduation review. Which flows can move from draft-then-approve to auto-send? Brief is already auto-post (no approval gate by design); Sync is auto-write (option-c locked). Job 2 (Action Items) and Job 4 (Weekly Cycle) ship with approval gates first; revisit graduation after they've run for a couple of weeks.
 - **Approval Sweep** — blocked by remote-routine 1-hour minimum. Design revisit (hourly poll, webhook trigger, etc). Lower priority now that Sync auto-writes; only matters for Jobs 2 and 4 once they're live.
 - **Dashboard** — revisit after 4 weeks of usage. Possible Claude-Code-built web app in this repo.
+- **AD1–AD6 placeholder rows** — currently dropped by parser (empty name in Excel). Bring them in once WebBank populates a deliverable; parser will auto-include them on next fire.
 
 ## TL;DR
 
@@ -187,8 +188,8 @@ Unread messages in watched channels summarised in Daily Brief. Direct mentions e
 - All routines visible + editable at https://claude.ai/code/routines
 
 ### Phase 2 — Core jobs
-- [x] **WebBank Mirror DB initial population** — 80 rows seeded from Excel (2026-04-24 parse); 62 rows filtered as `Not Required`/`Existing - Not Req.`. Parser in Python, kept at `staging/webbank_parsed.json`. Schema extended with `DD`, `DP`, `IP` category options after first-pass revealed missing codes.
-- [x] **WebBank Checklist Daily Sync** routine — live. Cron `7 7 * * 1-5` (08:07 BST). Routine ID `trig_01V1a8NQ1SayN7kpnq1Q7Eh2`. Model: `claude-sonnet-4-6`. MCP connections: Slack, Notion, Box. Repo source: `YagoReeves/flex-card` with `allow_unrestricted_git_push: true`. Design: option-c (auto-write DB + digest to `#flex-agent-jago` only, no `#product-cleo-card`, no approval gate). On fire: Read prior snapshot from working dir, parse Excel via Box MCP, diff, update Mirror DB, write today's snapshot+diff JSONs, `git push origin main`, post digest. Dry-run completed 2026-04-25.
+- [x] **WebBank Mirror DB initial population** — seeded 2026-04-24 (80 rows; buggy due to seed-parser multi-line-cell handling). Reconciled to canonical **94 rows** on 2026-04-26 via local openpyxl parse + Notion MCP backfill of the 12 missed codes + 4 carryover patches. See 2026-04-26 change log entries for full recovery.
+- [x] **WebBank Checklist Daily Sync** routine — live with rewritten parser (2026-04-26). Cron `7 7 * * 1-5` (08:07 BST). Routine ID `trig_01V1a8NQ1SayN7kpnq1Q7Eh2`. Model: `claude-sonnet-4-6`. MCP connections: Slack, Notion, Box. Repo source: `YagoReeves/flex-card` with `allow_unrestricted_git_push: true`. Design: option-c (auto-write DB + digest to `#flex-agent-jago` only, no `#product-cleo-card`, no approval gate). On fire: Read prior snapshot from working dir, parse Excel via Box MCP using the robust parser embedded in `prompts/webbank_sync.md`, diff, upsert Mirror DB by code, write today's snapshot+diff JSONs, `git push origin main`, post digest. **Mon 27 Apr is first natural fire of the new parser + first push attempt since the 403 toggle-cycle fix attempt.**
 - [ ] Build **Post-Meeting Action Item Extractor** (manual trigger)
 - [ ] Build **Weekly Cycle** (Mon 09:00, Fri 17:00)
 
@@ -218,3 +219,8 @@ Unread messages in watched channels summarised in Daily Brief. Direct mentions e
 - **2026-04-25** — WebBank Sync routine `trig_01V1a8NQ1SayN7kpnq1Q7Eh2` created with cron `7 7 * * 1-5`. Mirror DB confirmed as live runtime state (queried via Notion MCP); repo holds point-in-time snapshot history (immutable JSON commits to `main`). Dry-run successful — first live fire scheduled Mon 27 Apr 08:07 BST.
 - **2026-04-25** — Daily Brief routine refactored to wrapper pattern: prompt now reads `prompts/daily_brief.md` from working-dir clone instead of carrying an inlined copy. WebBank diff slice updated to read `snapshots/webbank_diff_<today>.json` from working dir.
 - **2026-04-25** — DST reminder routine updated to remind on bumping both routine crons (Brief and Sync) by +1 UTC hour at the BST→GMT switch.
+- **2026-04-26** — **WebBank Sync first live fire (manual trigger) revealed two compounding bugs in the seed.** (1) Parser bug: routine produced 82 rows (80 seed carryover + DP11.1 + DP11.2) but the canonical truth from openpyxl on the binary `.xlsm` is 94 rows. Box MCP returns tab-separated text where multi-line cells (e.g. AQ5, AP4, UW11, UW12 Bank Expectation) split across lines — the naive line-by-line parser the model wrote each fire silently dropped 14 real rows because the trailing cells (Status, Notes, etc.) landed on continuation lines, not the row-start line. (2) Push bug: `git push origin main` to the routine-runtime proxy at `127.0.0.1:35923` returned 403 (`Permission to YagoReeves/flex-card.git denied to YagoReeves`) despite `allow_unrestricted_git_push: true` being set. Working hypothesis: toggle was added via API update *after* trigger creation, underlying GitHub-app credential never refreshed with broader push scope.
+- **2026-04-26** — **Recovery + parser rewrite.** Local `openpyxl` parse of the `.xlsm` produced the canonical 94-row baseline. Locally regenerated `snapshots/webbank_checklist_2026-04-26.json` and `webbank_diff_2026-04-26.json`, committed + pushed via SSH from this terminal (push works fine outside the routine env). Used Notion MCP to backfill the 12 missing rows in the Mirror DB (AP4, AQ5, BSA17–20, DD2, DP2, OR2, SV1, UW5, UW11), populated WebBank Status="Not Started" + Party from Excel col 20 with canonical→Other mapping. Patched 4 carryover rows (CM4, OR8, WB1, WB2) where the new mapping diverged from the seed's quirky behaviour (substring-match on "SP - Card Ops" → "Ops"; silent drop of "R&A"). Mirror DB now at canonical 94 rows.
+- **2026-04-26** — **Rewrote `prompts/webbank_sync.md` parser**. Detects row-start lines via regex `^\t\t[^\t]+\t[^\t]+\t`, coalesces continuation lines back into the parent row, then `'\n'.join(...)` + `.split('\t')` to preserve multi-line cell content while keeping trailing cells aligned. Header-row filter (`phase=='Phase'` or `code=='Process Item'`). Drops empty-name rows (per Jago — excludes AD1–AD6 placeholders that have codes but no deliverable yet). Parties parsing from col 20 (`Required Reviews`) with canonical→Other mapping (canonical: SP, Compliance, Credit, BSA, Legal, Ops, Product). Switched Notion writes from blind-create to **upsert-by-code** on the added branch (prevents duplicates if any future snapshot drift makes a code look "new"). Added sanity-check abort: if parse returns <80 rows, post a Slack failure digest and skip all writes/commits. Validated against both 24 Apr cached and 26 Apr live Box outputs (94 rows each, matches openpyxl truth code-for-code).
+- **2026-04-26** — Push 403 attempted-fix: toggled "Allow unrestricted branch pushes" off → save → on → save in routines UI at 16:15Z. Triggered an `updated_at` change + populated a new `outcomes.git_repository.git_info.branches` field, which is mildly suggestive of a credential refresh. Mon 27 Apr 08:07 BST natural fire is the validation. **If push still fails on Mon: delete + recreate the trigger with toggle set at creation time.** Prompt's existing failure handling means Mirror DB updates apply even if push fails — only snapshot history advancement is at risk.
+- **2026-04-26** — `RemoteTrigger update` API gotcha noted: v1↔v2 schema translator gives contradictory errors (`events[0]: event_type is required` vs `unknown field "event_type"`). Wrapper changes via API are unreliable; use the routines UI instead. `RemoteTrigger run` body `message` field is silently ignored — per-run override pattern doesn't work.

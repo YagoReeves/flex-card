@@ -73,7 +73,26 @@ The Brief auto-writes Slack candidates to the Action Items DB as `Status = Propo
 - Pull `top_risks` from this Monday's weekly artefact and check whether each has resolved, escalated, or unchanged.
 - If Notion access fails: skip the Central Memory section, keep the risk-movement check.
 
-### 7. Commitments for next week
+### 7. Stuck items (trend detection)
+
+Surface items that have **gone quiet** — distinct from "slipped" (overdue) items in input 3. Stuck = no movement in 14+ days while still notionally active.
+
+**Stuck action items** — query Action Items DB (`collection://52101c73-4538-4710-8327-797e8445dcc5`) for rows where:
+- `Status = Active`
+- AND `Created < <today> - 14 days`
+- AND NOT (`Due IS NOT NULL` AND `Due < <today>`) — exclude already-slipped items (those are in input 3)
+
+For each: title, owner, days-since-created, workstream. Cap at top 5 by oldest. If more, append `(+N more)`.
+
+**Stuck WebBank items** — diff today's `snapshots/webbank_checklist_<today>.json` vs `snapshots/webbank_checklist_<today - 14 days>.json` (use `Glob` to find the closest snapshot if exact date missing). For each item where `status` is unchanged across 14 days **and** is not in `Done` / `Removed`: code, name, status, parties. Cap at top 5 by code priority order.
+
+**Cold partner threads** (best-effort) — query Gmail for senders in `@webbank.com`, `@marqeta.com`, `@ic.group`, `@mastercard.com`, `@idemia.com`, `@tabapay.com`, where the most recent message in the thread is from Cleo (i.e. awaiting partner response) AND last activity > 7 days ago. For each: partner, subject, days-since-last-activity. Cap at 5. If Gmail MCP unavailable, skip this sub-section silently.
+
+If no stuck items in any sub-section: `_No stuck items detected this week._`
+
+These also feed into input 9 (Workstream synthesis) under "Blockers / risks" per workstream.
+
+### 8. Commitments for next week
 
 This is the most important output for continuity — next Monday's routine reads it.
 
@@ -87,12 +106,12 @@ For each: title, owner, source (action-item / WebBank / explicit), expected outc
 
 If <3 commitments materialise, output what you have and flag in the artefact `low_commitments_signal: true` — the team may not have alignment on next week.
 
-### 8. Workstream synthesis (for Weekly Progress Log)
+### 9. Workstream synthesis (for Weekly Progress Log)
 
 Bucket all gathered signal into the canonical 10-workstream spine from `project_context.md` §5. For **each workstream that has signal this week**, build a structured entry with three buckets:
 
 - **Progress this week** — items shipped (input 3), WebBank items that moved forward (input 4), decisions logged (input 6), explicit progress mentioned in daily briefs (input 1).
-- **Blockers / risks** — slipped items (input 3), newly Blocked WebBank items (input 4), risks escalated or unchanged from Monday (input 6), partner-approval delays surfaced this week.
+- **Blockers / risks** — slipped items (input 3), newly Blocked WebBank items (input 4), risks escalated or unchanged from Monday (input 6), stuck items (input 7), partner-approval delays surfaced this week.
 - **Next week** — commitments from input 7 tagged to this workstream.
 
 Rules:
@@ -135,6 +154,17 @@ _Draft week-in-review. Review, edit, publish to #product-cleo-card when ready._
 *Decisions + risk movements*
 • <decision/risk> — <state>
 ... or skip if nothing
+
+*:hourglass: Stuck items (no movement in 14d+)*
+_Action items:_
+• <title> — <owner> — <N> days since created — <workstream>
+... or "_None this week._"
+_WebBank items:_
+• <code> <name> — status unchanged: <status> — <N> days
+... or "_None this week._"
+_Cold partner threads (>7d awaiting response):_
+• <partner> — <subject> — <N> days
+... or omit if Gmail unavailable / nothing
 
 *Commitments for next week*
 • <title> — <owner> — <expected outcome>
@@ -218,6 +248,11 @@ After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the work
   "triage_queue_this_week": [{"title": "...", "source_channel": "#...", "days_in_queue": 0, "notion_page_url": "..."}],
   "decisions_this_week": [{"title": "...", "summary": "..."}],
   "risk_movements": [{"risk": "...", "state": "resolved | escalated | unchanged"}],
+  "stuck_items": {
+    "action_items": [{"title": "...", "owner": "...", "days_since_created": 0, "workstream": "..."}],
+    "webbank": [{"code": "...", "name": "...", "status": "...", "days_unchanged": 0}],
+    "cold_partner_threads": [{"partner": "...", "subject": "...", "days_since_last_activity": 0, "gmail_available": true}]
+  },
   "commitments_for_next_week": [
     {"title": "...", "owner": "...", "source": "action-item | webbank | explicit", "expected_outcome": "..."}
   ],

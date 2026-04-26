@@ -33,33 +33,103 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
 
 ### 2. Fetch and parse the Excel
 
-- Use Box MCP to download the checklist file at `https://app.box.com/file/2101567683726`. The file's text content is extractable via Box MCP even when `canDownload: false` (confirmed in the 2026-04-24 seed).
-- Parse with Python (`Bash` + `python3`). Reference schema — first `Read snapshots/webbank_checklist_<PREV>.json` from the working directory to confirm the expected output shape. The schema is:
+- Use Box MCP `get_file_content(file_id="2101567683726")` to fetch the checklist text. `canDownload: false` on the file is fine — text extraction works regardless. Large responses get saved to a tool-results file path; if so, `Read` that file and parse the JSON envelope (`[{"type":"text","text": "..."}]`) to get the text content.
+- Parse with the canonical Python implementation below. **Use it verbatim — do NOT rewrite the parser.** It was validated 2026-04-26 against both the seed (24 Apr) and live (26 Apr) Box outputs and produces 94 rows on each, matching `openpyxl` ground-truth on the binary file. The seed parser dropped 14 real rows due to multi-line cell mishandling — this implementation fixes that.
+  ```python
+  import json, re
+
+  def parse_checklist(box_text):
+      """
+      Robust WebBank Implementation Checklist parser.
+      Input: the 'text' field returned by Box MCP get_file_content.
+      Output: list of canonical row dicts.
+
+      Approach:
+        1. Slice out the 'Implementation Checklist' section.
+        2. Detect row-start lines (begin with '\\t\\t<phase>\\t<code>\\t...').
+           Coalesce all subsequent non-row-start lines back into the row that
+           started above them — these are continuation lines from multi-line cells.
+        3. JOIN coalesced row with '\\n', SPLIT by '\\t'. This preserves multi-line
+           content inside its cell AND keeps trailing cells (status, notes...) in
+           their correct positions on the LAST line of the row.
+        4. Apply drop rules.
+
+      Cell layout (Box cell index == openpyxl 1-based col for cols >= 2):
+        [2] Phase   [3] Code   [4] Name   [5] Bank Expectation
+        [6] Status  [7] Priority  [8] Product Type  [9] Notes
+        [10] Target Submission  [11] Actual Submission
+        [12] Waiting On  [13] Document Name  [14] Hyperlink
+      """
+      DROP_STATUS = ('not required', 'existing - not req.')
+      ROW_START_RE = re.compile(r'^\t\t[^\t]+\t[^\t]+\t')
+
+      start = box_text.find('Implementation Checklist')
+      if start < 0:
+          raise ValueError("Implementation Checklist section not found")
+      end = box_text.find('Internal Implementation', start)
+      if end < 0:
+          end = len(box_text)
+      section = box_text[start:end]
+
+      rows = []
+      current = []
+      for ln in section.split('\n'):
+          if ROW_START_RE.match(ln):
+              if current:
+                  rows.append('\n'.join(current))
+              current = [ln]
+          else:
+              if current:
+                  current.append(ln)
+      if current:
+          rows.append('\n'.join(current))
+
+      parsed = []
+      for idx, r in enumerate(rows, start=1):
+          cells = r.split('\t')
+          while len(cells) < 15:
+              cells.append('')
+          phase = cells[2].strip()
+          code = cells[3].strip()
+          name = cells[4].strip()
+          bank_guidance = cells[5].strip()
+          status = cells[6].strip()
+          notes = cells[9].strip()
+          hyperlink = cells[14].strip()
+
+          # Header row matches ROW_START_RE if read naively — filter explicitly.
+          if phase.lower() == 'phase' or code.lower() == 'process item':
+              continue
+          if any(s in status.lower() for s in DROP_STATUS):
+              continue
+          # Drop empty-code (true section headers) and empty-name placeholders
+          # (e.g. AD1–AD6 'Product Specific Requests' rows with codes but no
+          # deliverable yet — bring them back when WebBank populates a name).
+          if not code or not name:
+              continue
+
+          m = re.search(r'\(([A-Z]+)\)\s*$', phase)
+          category = m.group(1) if m else (re.match(r'^([A-Z]+)', code).group(1) if re.match(r'^([A-Z]+)', code) else 'Other')
+
+          parsed.append({
+              'line': idx,                      # parse-order index (Box text has no Excel row numbers)
+              'category': category,
+              'code': code,
+              'name': name,
+              'bank_guidance': bank_guidance,
+              'status': status,
+              'notes': notes,
+              'hyperlink': hyperlink,
+              'parties': [],                    # parties parsing deferred — see notes below
+          })
+      return parsed
   ```
-  {
-    "parsed_at": "<TODAY>",
-    "total": <int — total rows in source Excel>,
-    "kept": [
-      {
-        "line": <int — Excel row number>,
-        "category": "<2-letter code, e.g. AP, AQ, DD, DP, IP, Other>",
-        "code": "<full code, e.g. AP1, AQ11>",
-        "name": "<item name>",
-        "bank_guidance": "<text or empty>",
-        "status": "<text or empty>",
-        "notes": "<text or empty>",
-        "hyperlink": "<URL or empty>",
-        "parties": ["<role>", ...]
-      },
-      ...
-    ]
-  }
+- The output schema for `snapshots/webbank_checklist_<TODAY>.json` is:
   ```
-- **Keep / drop rules** (matched the 2026-04-24 seed: 80 kept, 62 dropped from a 142-row Excel):
-  - **Drop** rows whose `status` cell contains `Not Required` or `Existing - Not Req.` (case-insensitive).
-  - **Drop** rows that are pure section headers (no `code`).
-  - **Drop** rows with empty `name` AND empty `code`.
-  - **Keep** everything else.
+  { "parsed_at": "<TODAY>", "total": <coalesced row count>, "kept": [<rows from parse_checklist>], "dropped_count": <total - len(kept)> }
+  ```
+- **Sanity check before continuing**: the parser should return roughly 94 rows on a healthy run. If the result is materially smaller (say <80), abort: post a Slack failure digest with the row count and do not commit anything or update Notion. Do not silently proceed with a degraded parse.
+- **`parties` is intentionally empty for now.** The seed snapshot has populated `parties` arrays whose source column is unclear; reproducing that mapping is deferred. Diffing parties against the seed produces ~77 false positives, so the diff step (below) **must skip parties_changes** until we revisit.
 - The `code` is the canonical row key for diff matching and Notion upserts.
 
 ### 3. Diff against yesterday's snapshot
@@ -74,7 +144,7 @@ Otherwise, `Read snapshots/webbank_checklist_<PREV>.json`. Index both `<PREV>` a
 - **Note changes**: same code, `notes` value differs.
 - **Bank-guidance changes**: same code, `bank_guidance` value differs.
 - **Hyperlink changes**: same code, `hyperlink` value differs.
-- **Parties changes**: same code, `parties` set differs (treat as set, not list).
+- **Parties changes**: SKIP (the parser emits `parties: []` until parties parsing is revisited; diffing against historical non-empty seed values would produce ~77 spurious changes). Always emit `parties_changes: []` in the diff payload.
 
 Build a diff payload:
 ```
@@ -97,7 +167,7 @@ Empty arrays are fine. Total-change-count = sum of all array lengths.
 ### 4. Update the Notion Mirror DB
 
 - Query Mirror DB schema first via Notion MCP to confirm field names. Use whatever the DB actually has — don't assume.
-- For each **added** code: create a new page with parsed fields mapped to DB columns.
+- **Upsert by code, never blind-create.** For each **added** code from the diff: query the Mirror DB for an existing page where the code field matches. If found, treat it as a changed-code update (apply parsed fields to bring the existing page up to date). If not found, create a new page. This guarantees the routine is idempotent if any future snapshot drift makes a code look "new" — duplicates are unrecoverable in Notion without manual cleanup.
 - For each **removed** code: locate existing page, set its status equivalent to `Removed` (do **not** delete — preserve history).
 - For each **changed** code: locate existing page and update the changed fields.
 - For unchanged codes: do nothing.

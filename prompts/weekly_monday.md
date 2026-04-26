@@ -9,6 +9,10 @@ You are executing the **Weekly Monday Brief** for the Flex Card project as a sch
 - **Last Friday's date**: `date -u -d "last Friday" +%Y-%m-%d` (or compute as `<today> - 3 days`).
 - **Execution mode**: LIVE unless the wrapper passes `Mode: DRY_RUN`. LIVE = post to Slack + write artefact + push. DRY_RUN = return text only, no writes.
 
+## Required reading
+
+Before gathering any inputs, `Read prompts/project_context.md` from the working directory. It is the canonical reference for the product, partner stack, milestones, critical-path risks, the 10-workstream spine, and source docs. Use it to bucket signal into the canonical workstreams, flag findings that map to a critical-path risk, and avoid attributing work to Card squad that they don't own.
+
 ## Context
 
 - **User**: Jago Reeves (`jago.r@meetcleo.com`, Slack `U087V4UQB0D`)

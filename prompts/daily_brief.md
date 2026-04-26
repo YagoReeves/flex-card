@@ -8,6 +8,13 @@ You are executing the **Daily Morning Brief** for the Flex Card project as a sch
 - **Today's date**: run `date -u +%Y-%m-%d` via Bash before doing anything else. Use that result everywhere `<YYYY-MM-DD>` or "today" appears below.
 - **Execution mode**: LIVE unless the wrapper passes `Mode: DRY_RUN`. LIVE = post the brief to Slack via `slack_send_message`. DRY_RUN = return the brief text only, do not post.
 
+## Required reading
+
+Before gathering any inputs, `Read prompts/project_context.md` from the working directory. It is the canonical reference for the product, partner stack, milestones, critical-path risks, the 10-workstream spine, and source docs. Use it to:
+- Bucket signal into the canonical workstreams.
+- Flag findings that map to a critical-path risk (these surface in the Risks section below).
+- Avoid attributing work to Card squad that they don't own.
+
 ## Context
 
 - **User**: Jago Reeves (`jago.r@meetcleo.com`, Slack `U087V4UQB0D`)
@@ -85,7 +92,23 @@ Capture each write's resulting Notion page URL — these are surfaced in the Sla
 
 If none qualify, or all qualifying candidates were dedup-skipped, the Slack section reads: `_No new Slack candidates auto-added today._` (with skipped-count if any).
 
-### 5. WebBank checklist diff highlights
+### 5. Risks & things to be mindful of
+
+After gathering inputs 1-4 (and 6 below), synthesise up to 5 short risk lines that Jago should be mindful of today. **This is the "what could go wrong / what needs attention" section** — not a list of his to-dos.
+
+Sources, in priority order:
+- Items mapping to a **critical-path risk** in `project_context.md` §4 (product complexity, partner approval delays). Flag these explicitly with the risk number.
+- External-partner signals from inbox (WebBank/Marqeta/Mastercard/Idemia/TabaPay) that imply a delay, blocker, or scope change.
+- Action items overdue, especially those tagged to unfunded workstreams.
+- WebBank diff items newly Blocked or with a status regression.
+- Quiet workstreams — if a workstream that should be active has shown no signal in 5+ working days, surface as a "stalled?" flag.
+- Decisions or commitments from yesterday's meetings that haven't been actioned.
+
+Each risk line: one sentence, concrete, naming the workstream and (where possible) the partner or owner involved. Format: `<workstream>: <risk> — <why it matters or what to watch>`.
+
+If nothing qualifies: `_No risks flagged today._` Do not pad. False positives erode trust in this section.
+
+### 6. WebBank checklist diff highlights
 
 The WebBank Sync routine runs at 07:07 UTC (45 minutes before this Brief) and writes a diff summary to `snapshots/webbank_diff_<YYYY-MM-DD>.json` in this repo on `main`, then `git push`es. By the time you fire, your fresh clone of `main` should contain today's diff file.
 
@@ -108,6 +131,10 @@ Return **one markdown message** suitable for posting to Slack. Use Slack mrkdwn 
 • <title> — <owner> — <due> — <priority>
 ... or "_No active action items today._"
 :warning: <N> Proposed items > 3 days old — needs triage in Notion.   ← only if N > 0
+
+*:warning: Risks & things to be mindful of*
+• <workstream>: <risk> — <why it matters>
+... or "_No risks flagged today._"
 
 *Priority inbox*
 Emails:
@@ -168,6 +195,9 @@ Schema:
     {"actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "existing_page_url": "...", "reason": "fuzzy-match"}
   ],
   "proposed_queue_size_over_3_days": 0,
+  "risks_flagged": [
+    {"workstream": "...", "risk": "...", "why_it_matters": "...", "critical_path_risk_ref": "1 | 2 | null", "source": "inbox | action-item | webbank | meeting | quiet-workstream"}
+  ],
   "webbank_diff_summary": {
     "available": true,
     "added": 0,

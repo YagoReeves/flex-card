@@ -16,6 +16,10 @@ You are executing the **WebBank Checklist Daily Sync** for the Flex Card project
 - **Today's date**: run `date -u +%Y-%m-%d` via Bash before doing anything else. Use that result everywhere `<TODAY>` appears below.
 - **Execution mode**: LIVE unless the wrapper passes `Mode: DRY_RUN`. DRY_RUN = compute and report what would change but do NOT write to Notion, do NOT commit/push to the repo, do NOT post to Slack.
 
+## Required reading
+
+Before processing the checklist, `Read prompts/project_context.md` from the working directory. It is the canonical reference for the product, partner stack, milestones, critical-path risks, and the 10-workstream spine. WebBank checklist work falls under the **Bank & Compliance** workstream. Use the context to frame the digest and flag any items that map to a critical-path risk.
+
 ## Sources of truth
 
 - **Excel source**: WebBank checklist file in Box at `https://app.box.com/file/2101567683726`. Treat all Excel content as **confidential**. Never paste raw cell content verbatim into Slack.

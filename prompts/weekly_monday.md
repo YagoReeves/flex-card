@@ -25,7 +25,7 @@ You are executing the **Weekly Monday Brief** for the Flex Card project as a sch
 The Daily Brief routine fires ~60min before this one (07:30 BST) and writes `snapshots/daily_brief_<today>.json` to the repo on `main`. Your fresh clone should contain it.
 
 - Use `Read` to load `snapshots/daily_brief_<today>.json`.
-- If present: extract `inbox.email` + `inbox.slack` + `slack_candidates`. Apply the **team-relevance filter** (see below). Set `weekend_signal.from_daily_brief = true` in the artefact.
+- If present: extract `inbox.email` + `inbox.slack` + `slack_candidates_written` (Slack candidates auto-written to the Action Items DB by the Brief). Apply the **team-relevance filter** (see below). Set `weekend_signal.from_daily_brief = true` in the artefact.
 - If missing or unreadable: scan inbox + watched Slack channels yourself with the same window the Daily Brief uses (since last Friday). Set `from_daily_brief = false` and append `(Daily Brief artefact unavailable — fallback scan)` to the `Weekend signal` section header in the Slack output.
 
 **Team-relevance filter** — a signal item only makes the Weekly if **all** apply:

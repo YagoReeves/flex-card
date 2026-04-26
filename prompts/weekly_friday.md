@@ -54,13 +54,14 @@ Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action It
 - Output counts + up to 3 most material highlights (by name or code).
 - If Monday's snapshot missing: fall back to last Friday's. If that's missing too: skip the diff and note `_No baseline snapshot available — diff skipped this week._`.
 
-### 5. Late-capture Slack action items
+### 5. Triage queue: Proposed items added this week, still untriaged
 
-For each `slack_candidates` entry across this week's daily-brief artefacts:
-- Check the Action Items DB for a matching title (fuzzy match: same actionable phrase, or substantial keyword overlap).
-- If **not** matched: this candidate was never captured. Surface it as a last-chance entry.
-- Cap at 5 most recent uncaptured candidates. Each: actionable, source (channel + author), thread link, day-of-week raised.
-- If none uncaptured: `_All week's candidates were either captured or expired._`
+The Brief auto-writes Slack candidates to the Action Items DB as `Status = Proposed`. Jago triages them — assigning an owner (→ `Active`) or marking `Rejected` / deleting. Anything still in `Proposed` at end-of-week is awaiting triage.
+
+- Query Action Items DB (`collection://52101c73-4538-4710-8327-797e8445dcc5`) for rows where `Status = Proposed` AND `Created` between this Monday and today.
+- For each: title, source (Slack channel from the `Source` field), days-in-queue, Notion page link.
+- Cap at 5 most recent. If more, append `(+N more in queue)`.
+- If queue is empty: `_All Proposed items from this week have been triaged._`
 
 ### 6. Decisions + risk movements (Notion read-only)
 
@@ -107,9 +108,9 @@ _Draft week-in-review. Review, edit, publish to #product-cleo-card when ready._
 • Added / removed: +N / -N
 ... or fallback note
 
-*Late-capture candidates* (last chance — reply `capture N` to save)
-1. <actionable> — <author> in #channel — <thread link> — raised <day>
-... or "_No uncaptured candidates._"
+*Triage queue: Proposed items still untriaged*
+• <title> — from #<channel> — <N> days in queue — <Notion link>
+... or "_All Proposed items from this week have been triaged._"
 
 *Decisions + risk movements*
 • <decision/risk> — <state>
@@ -153,7 +154,7 @@ After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the work
     "removed": 0,
     "highlights": ["..."]
   },
-  "late_capture_candidates": [{"actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "day_raised": "..."}],
+  "triage_queue_this_week": [{"title": "...", "source_channel": "#...", "days_in_queue": 0, "notion_page_url": "..."}],
   "decisions_this_week": [{"title": "...", "summary": "..."}],
   "risk_movements": [{"risk": "...", "state": "resolved | escalated | unchanged"}],
   "commitments_for_next_week": [

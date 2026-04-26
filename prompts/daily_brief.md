@@ -26,12 +26,13 @@ You are executing the **Daily Morning Brief** for the Flex Card project as a sch
 - For each meeting: title, time (HH:MM local), attendees (summarise if > 5), and a prep pointer — prior Granola transcript of the same recurring meeting, a linked Notion page, or a Central Memory entry.
 - If no Flex-relevant meetings today, say so explicitly.
 
-### 2. Action items overdue or due today (Notion)
+### 2. Action items: active queue + triage queue (Notion)
 
-- Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action Items DB).
-- Filter: `Status = Active` AND (`Due <= today` OR `Due IS NULL` AND `Created > 7 days ago`).
-- List: title, owner, due date, priority.
-- If empty, say "No action items yet — DB created 2026-04-24."
+Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action Items DB).
+
+- **Active queue**: filter `Status = Active` AND (`Due <= today` OR (`Due IS NULL` AND `Created > 7 days ago`)). List: title, owner, due date, priority.
+- **Triage queue**: count rows where `Status = Proposed` AND `Created < today - 3 days`. If `> 0`, surface as a triage-nudge line (see output format). These are auto-added Slack candidates that Jago hasn't triaged — they need an owner assigned (→ Active) or to be deleted/marked Rejected.
+- If active queue empty: `_No active action items today._` (still show triage nudge if applicable).
 
 ### 3. Priority inbox hits (last 24h)
 
@@ -47,7 +48,7 @@ You are executing the **Daily Morning Brief** for the Flex Card project as a sch
 - For each: count of new messages in window, any `@`-mentions of Jago, one-line key-discussion summary. **Do not dump message content verbatim.**
 - Direct mentions of Jago anywhere Flex-adjacent also go here, even outside watched channels.
 
-### 4. Candidate Slack action items (top 5)
+### 4. Slack candidates → auto-write to Action Items DB (top 5)
 
 From the watched channels in the window, extract up to 5 candidates using **strict** criteria:
 - Explicit first-person commitment: "I'll do X by Y", "I'll own X", "I'll send this tomorrow"
@@ -60,9 +61,26 @@ For each candidate, rephrase into a **short imperative actionable** — concrete
 - "Can you pls price out card cost variants" → **"Price out card cost variants for Liney"**
 - "I'll work on refining our back-end timelines" → **"Refine back-end timelines + identify UAT-shaving levers"**
 
-For each include: actionable, source author, channel, thread permalink, assumed owner, assumed due (if stated). Number them `1.` to `5.`.
+**Dedup check before writing.** For each candidate, query the Action Items DB (`collection://52101c73-4538-4710-8327-797e8445dcc5`) for existing rows where:
+- `Status IN (Proposed, Active)`
+- AND `Created` within last 7 days
+- AND title fuzzy-matches the candidate (case-insensitive substring overlap, or ≥3 significant shared keywords). When in doubt, treat as new and write — over-aggressive matching risks dropping real items; Jago can dedup manually in Notion.
 
-If fewer than 5 qualify, show fewer. If none, say "No candidate Slack action items — nothing met strict criteria in the window."
+If a fuzzy match exists, skip the write and log it under `slack_candidates_skipped` in the artefact (with the existing page URL).
+
+**Write each surviving candidate as a `Proposed` row** in the Action Items DB:
+- **Title**: the imperative actionable
+- **Owner**: blank (Jago triages)
+- **Status**: `Proposed`
+- **Source**: `Slack — #<channel>`
+- **Notes**: `<author> in <thread_link>` plus assumed-due text if stated in source ("by Friday" etc.)
+- **Priority**: blank
+- **Due**: blank unless an explicit due date appears in the source message
+- **Created**: today
+
+Capture each write's resulting Notion page URL — these are surfaced in the Slack message and the artefact.
+
+If none qualify, or all qualifying candidates were dedup-skipped, the Slack section reads: `_No new Slack candidates auto-added today._` (with skipped-count if any).
 
 ### 5. WebBank checklist diff highlights
 
@@ -85,7 +103,8 @@ Return **one markdown message** suitable for posting to Slack. Use Slack mrkdwn 
 
 *Action items: overdue / due today*
 • <title> — <owner> — <due> — <priority>
-... or "No action items yet — DB created 2026-04-24."
+... or "_No active action items today._"
+:warning: <N> Proposed items > 3 days old — needs triage in Notion.   ← only if N > 0
 
 *Priority inbox*
 Emails:
@@ -95,10 +114,11 @@ Slack:
 • #channel — N new, <key discussion>. Mentions: <count>
 ...
 
-*Candidate Slack action items*
-1. <actionable imperative> — <author> in #channel — <thread link> — (owner: X, due: Y)
+*Added to Action Items DB*
+• <title> — from <author> in #<channel> — <Notion page link>
 ...
-Reply in thread: `capture 1, 3` to promote to Action Items DB draft.
+Skipped as dedup: N (already in queue)
+... or "_No new Slack candidates auto-added today._"
 
 *WebBank diff*
 <summary or "Not available — Sync hasn't run today.">
@@ -138,9 +158,13 @@ Schema:
       {"channel": "#...", "new_count": 0, "key_discussion": "...", "mentions_jago": 0}
     ]
   },
-  "slack_candidates": [
-    {"index": 1, "actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "assumed_owner": "...", "assumed_due": "<YYYY-MM-DD or null>"}
+  "slack_candidates_written": [
+    {"actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "notion_page_url": "...", "assumed_due": "<YYYY-MM-DD or null>"}
   ],
+  "slack_candidates_skipped": [
+    {"actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "existing_page_url": "...", "reason": "fuzzy-match"}
+  ],
+  "proposed_queue_size_over_3_days": 0,
   "webbank_diff_summary": {
     "available": true,
     "added": 0,

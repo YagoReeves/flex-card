@@ -68,15 +68,18 @@ For each candidate, rephrase into a **short imperative actionable** — concrete
 
 If a fuzzy match exists, skip the write and log it under `slack_candidates_skipped` in the artefact (with the existing page URL).
 
-**Write each surviving candidate as a `Proposed` row** in the Action Items DB:
-- **Title**: the imperative actionable
-- **Owner**: blank (Jago triages)
-- **Status**: `Proposed`
-- **Source**: `Slack — #<channel>`
-- **Notes**: `<author> in <thread_link>` plus assumed-due text if stated in source ("by Friday" etc.)
-- **Priority**: blank
-- **Due**: blank unless an explicit due date appears in the source message
-- **Created**: today
+**Write each surviving candidate as a `Proposed` row** in the Action Items DB. Schema mapping (verified 2026-04-26 against the live DB):
+- **Title** (text): the imperative actionable
+- **Status** (select): `Proposed`
+- **Source** (select, exact value): `Slack`
+- **Workstream** (select): infer one of `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Ops, Card Issuance, Credit Reporting, Fraud & Risk]` based on the candidate's content. When ambiguous, default to `Programme`.
+- **Source Link** (url): the Slack thread permalink
+- **Source Context** (text): `<author> in #<channel> on <day>: "<short verbatim quote>"` — keep quote under ~120 chars
+- **Notes** (text): suggested owner as a string (e.g. `Owner: Jago.`) plus any assumed-due text from the source (e.g. `Source mentions: "by Friday".`). Owner field itself stays empty — Jago tags the Notion person manually.
+- **Owner** (person): leave blank
+- **Priority** (select): leave blank
+- **Due** (date `date:Due:start`): only populate if an explicit due date appears in the source message; leave blank otherwise
+- **Created**: auto-set by Notion
 
 Capture each write's resulting Notion page URL — these are surfaced in the Slack message and the artefact.
 

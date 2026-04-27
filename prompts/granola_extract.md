@@ -140,7 +140,12 @@ Data source: `collection://33e5c63b-8745-8199-ab41-000bbbcaaf18`. Use `mcp__clau
 - **Source Link** (url): the Granola URL Jago provided.
 - **Source Context** (text): `<Meeting title>, <YYYY-MM-DD> — "<short verbatim quote>"` (quote ≤120 chars).
 - **Due Date** (date `date:Due Date:start`): populate only if there's an explicit decision-needed-by, risk-resolution-deadline, or commitment-due date in the source. Leave blank otherwise.
-- Page body: 1–2 short paragraphs expanding on the Summary if there's nuance worth retaining (context the title and Summary can't carry). Quote ≤120 chars rule still applies. Don't paste transcript chunks.
+- Page body: structured into **three fixed H2 sections in order**:
+  1. `## What this is` — concise statement of the entry's content (1–3 short paragraphs or bullets).
+  2. `## Why it matters` — the consequence or implication (why future-Cleo will care).
+  3. `## How we resolve this` — for Risks/Issues: path to closing it. For Decisions: how the decision plays out (delivery path, implementation, anchor dates). For Commitments: how it's honoured. For Ideas: conditions that would move it to action.
+- Optional one-line "Linked: …" reference at the bottom of body (not as its own H2 section) for cross-references to parent/child CM entries or Action Items.
+- **Tone**: externally-facing, professional, factual. The DB is read by Cleo colleagues, not just Jago. **Don't** coach the reader (*"Drive alignment with X"*, *"Reach out to Y and ensure Z"*) — they already know how. **Don't** add speculative "Watch for resolution path" / "If X then Y" branching sections. State facts and direction; trust the reader. Quote ≤120 chars rule still applies. Don't paste transcript chunks.
 
 **Don't dedup against the existing DB on the manual flow** — Jago is reviewing each entry explicitly. (The cron Sweep does dedup; manual flow doesn't.)
 

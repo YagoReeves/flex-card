@@ -162,7 +162,8 @@ For each CM candidate that survived 6b dedup, use `mcp__claude_ai_Notion__notion
 - **Source Link** (url): `https://notes.granola.ai/t/<meeting_id>`
 - **Source Context** (text): `<Meeting title>, <YYYY-MM-DD> — "<short verbatim quote>"` (quote ≤120 chars)
 - **Due Date** (date `date:Due Date:start`): only if explicit decision-deadline / commitment-due in source; else blank
-- Page body: 1–2 short paragraphs of context if Summary alone won't carry it; include `[critical-path-risk: N]` tag if Severity was set to High via the §4 mapping.
+- Page body: **three fixed H2 sections in order** — `## What this is` / `## Why it matters` / `## How we resolve this`. For Risks/Issues, "How we resolve this" describes the path to closure. For Decisions, it describes how the decision plays out (delivery path, implementation, anchor dates). For Commitments, how it's honoured. For Ideas, conditions that would move it to action. Optional one-line "Linked: …" reference at the bottom (not its own H2 section). Include `[critical-path-risk: N]` tag in the body if Severity was set to High via the §4 mapping.
+- **Tone**: externally-facing, professional, factual — read by Cleo colleagues. Don't coach the reader, don't add speculative branching sections, don't write in second-person imperatives. State facts and direction concisely.
 
 Capture each write's resulting Notion page URL — these go into the artefact under `central_memory_written`.
 

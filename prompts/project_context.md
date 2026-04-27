@@ -78,7 +78,7 @@ This is the canonical 10-workstream taxonomy used in the Flex Hub. **Bucket all 
 | 6 | **Money Movement** | Finance Ops + Payments | AFT/top-ups, EWA flows, DD routing (WebBank direct), OCT/offloads, ATM, ACH withdrawal, BillPay, reconciliation/settlement, TabaPay integration, Pinwheel re-engagement |
 | 7 | **Servicing & Operations** | Customer Ops | Disputes operational readiness (CS training, workflow, evidence handling), offboarding ops, live agent support, CS tooling, runbooks |
 | 8 | **Card Issuance & Fulfilment** | PMM + Banking Ops | **Physical card / plastics** (design, inventory, activation, reissuance — partners: Idemia, IC Payments, Mastercard), contactless, push provisioning to Apple/Google Wallet, virtual card issuance |
-| 9 | **Credit Reporting** | unowned (product/credit analyst hire underway) | Bureau reporting approach + ops, Metro 2 file generation/furnishing. **Decision (Ashutosh + Bash, 2026-04-27): build in-house, not Bloom.** Banking Ops has flagged some uncertainty; current business stance as of 2026-04-27 — revisit if pushback escalates. |
+| 9 | **Credit Reporting** | unowned (product/credit analyst hire underway) | Bureau reporting approach + ops, Metro 2 file generation/furnishing. **Decision (Ash, 2026-03-06): build in-house, not Bloom.** Banking Ops has flagged some uncertainty; current business stance — revisit if pushback escalates. |
 | 10 | **Fraud & Risk** | Fraud Infra | Fraud controls on AFT/OCT, ATM monitoring, velocity rules, SEON migration, chargeback management, ATO controls |
 
 ### Sub-workstreams (currently active priorities under Platform Foundations)

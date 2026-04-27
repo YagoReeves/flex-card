@@ -120,38 +120,46 @@ _Draft week-ahead. Review, edit, publish to #product-cleo-card when ready._
 • <commitment> — status now: <current state>
 ... or "_First weekly cycle — no prior review to reference._"
 
+─────────────────────────
+
 *This week's meetings*
-*Mon* — <title> @ HH:MM — <attendees>
-*Tue* — ...
+*_Mon_* — <title> @ HH:MM — <attendees>
+*_Tue_* — ...
 ... or "_No Flex meetings this week._"
 
+─────────────────────────
+
 *Action items by owner*
-*<Owner>*
-• <title> — <due> — <priority>
+*_<Owner>_*
+• <priority> — <title> — <due>
 ...
-*<Owner>*
+*_<Owner>_*
 ...
 ... or "_No active internally-owned action items._"
 
 *Awaiting partners* (Cleo waiting on)
-*<Partner>*
-• <title> — <due> — <days-since-last-nudged> — <priority>
+*_<Partner>_*
+• <priority> — <title> — <due> — <days-since-last-nudged>
 ...
-*<Partner>*
+*_<Partner>_*
 ...
 ... or "_No partner-owned items currently awaiting partner action._"
 
+─────────────────────────
+
 *Carrying memory*
-_Open High-severity Risks/Issues:_
+*_Open High-severity Risks/Issues:_*
 • <Entry> — <Category> — <Workstream> — <Partner or "—"> — <Notion link>
 ... or "_None._"
-_Decisions made last week:_
+*_Decisions made last week:_*
 • <Entry> — <Workstream> — <Notion link>
 ... or "_None._"
-_Standing partner commitments active:_
+*_Standing partner commitments active:_*
 • <Entry> — <Partner> — <Notion link>
 ... or "_None._"
 ... or whole section: "_Carrying memory: nothing high-signal to flag this week._"
+
+─────────────────────────
 
 *WebBank checklist state*
 • Total: N rows · Not Started: N · In Progress: N · Done: N · Blocked: N
@@ -159,9 +167,13 @@ _Standing partner commitments active:_
 • Status changes since last Friday: N (highlights: ...)
 _Due-date prioritisation pending internal review._
 
+─────────────────────────
+
 *Weekend signal* (team-relevant only)
 • <sender / channel> — <one-line summary> — <link>
 ... or "_No team-relevant weekend signal._"
+
+─────────────────────────
 
 *Top risks*
 • <risk>

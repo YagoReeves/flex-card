@@ -155,12 +155,17 @@ _Draft week-in-review. Review, edit, publish to #product-cleo-card when ready._
 • <title> — <owner> — closed <day>
 ... or "_Nothing closed this week._"
 
+─────────────────────────
+
 *Slipped this week*
 • <title> — <owner> — was due <date> — N days overdue
 ...
+
 *Carrying older slips*
 • <title> — <owner> — was due <date> — N days overdue
 ... or omit section if empty
+
+─────────────────────────
 
 *WebBank delta (vs Monday)*
 • Moved forward: N (highlights: ...)
@@ -168,34 +173,42 @@ _Draft week-in-review. Review, edit, publish to #product-cleo-card when ready._
 • Added / removed: +N / -N
 ... or fallback note
 
+─────────────────────────
+
 *Triage queue: Proposed items still untriaged*
 • <title> — from #<channel> — <N> days in queue — <Notion link>
 ... or "_All Proposed items from this week have been triaged._"
 
+─────────────────────────
+
 *Central Memory — this week*
-_Decisions + Commitments logged:_
+*_Decisions + Commitments logged:_*
 • <Entry> — <Category> — <Workstream> — <Partner or "—"> — <Notion link>
 ... or "_None this week._"
-_Risks + Issues logged or escalated:_
+*_Risks + Issues logged or escalated:_*
 • <Entry> — <Category> — <Severity> — <Workstream> — <Partner or "—"> — <Notion link>
 ... or "_None this week._"
-_Risks-from-Monday movement:_
+*_Risks-from-Monday movement:_*
 • <risk> — <resolved | escalated | unchanged>
 ... or "_No prior Monday risks to track._"
 
+─────────────────────────
+
 *:hourglass: Stuck items*
-_Internal action items (>14d, no movement):_
+*_Internal action items (>14d, no movement):_*
 • <title> — <owner> — <N> days since created — <workstream>
 ... or "_None this week._"
-_Partner-owned action items (>7d, no contact):_
+*_Partner-owned action items (>7d, no contact):_*
 • <title> — <partner> — <N> days since last nudged — <workstream>
 ... or "_None this week._"
-_WebBank items (>14d unchanged):_
+*_WebBank items (>14d unchanged):_*
 • <code> <name> — status unchanged: <status> — <N> days
 ... or "_None this week._"
-_Cold partner threads (>7d awaiting response):_
+*_Cold partner threads (>7d awaiting response):_*
 • <partner> — <subject> — <N> days
 ... or omit if Gmail unavailable / nothing
+
+─────────────────────────
 
 *Commitments for next week*
 • <title> — <owner> — <expected outcome>

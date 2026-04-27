@@ -191,39 +191,49 @@ Return **one markdown message** suitable for posting to Slack. Use Slack mrkdwn 
 • <title> — <time> — <attendees> — prep: <link or "none">
 ... or "No Flex-relevant meetings today."
 
+─────────────────────────
+
 *Action items: overdue / due today*
-• <title> — <owner> — <due> — <priority>
+• <priority> — <title> — <owner> — <due>
 ... or "_No active action items today._"
 
 *Awaiting partners* (Cleo waiting on)
-• <title> — <Partner Owner> — <due or "—"> — <days-since-last-nudged or "never nudged"> — <priority>
+• <priority> — <title> — <Partner Owner> — <due or "—"> — <days-since-last-nudged or "never nudged">
 ... or "_No partner items needing chase today._"
 
 :warning: <N> Proposed items > 3 days old — needs triage in Notion.   ← only if N > 0
 
+─────────────────────────
+
 *Central Memory*
-_Newly added today:_
+*_Newly added today:_*
 • <Entry> — <Category> — <Status> — <Workstream> — <Severity or "—"> — <Notion link>
 ... or "_None added today._"
-_High-severity untriaged:_
+*_High-severity untriaged:_*
 • <Entry> — <Category> — <Workstream> — <N> days since created — <Notion link>
 ... or "_None._"
 :warning: <N> Logged Central Memory entries > 3 days old — needs triage in Notion.   ← only if N > 0 (excludes High already shown above)
+
+─────────────────────────
 
 *:warning: Risks & things to be mindful of*
 • <workstream>: <risk> — <why it matters>
 ... or "_No risks flagged today._"
 
+─────────────────────────
+
 *Priority inbox*
-Emails:
+*_Emails:_*
 • <sender> — <subject> — <snippet> — <link>
 ... or appropriate unavailable message
-Slack channels:
+*_Slack channels:_*
 • #channel — N new, <key discussion>. Mentions: <count>
 ...
-Slack DMs (Flex-relevant only):
+*_Slack DMs (Flex-relevant only):_*
 • @<name> — <one-line summary> — <thread link>
 ... or omit this sub-bullet if no Flex-relevant DM activity
+
+─────────────────────────
 
 *Added to Action Items DB*
 • <title> — from <author> in #<channel> — <Notion page link>
@@ -231,12 +241,16 @@ Slack DMs (Flex-relevant only):
 Skipped as dedup: N (already in queue)
 ... or "_No new Slack candidates auto-added today._"
 
+─────────────────────────
+
 *Granola sweep* (<window-label, e.g. "yesterday" or "Fri–Sun">)
 <N meetings auto-processed · M candidates written · K deduped · G grey-zone>
 Grey-zone meetings (consider manual extraction):   ← only if G > 0
 • <meeting title> — <granola_url>
 ... up to 3
 ... or "_Granola sweep not available._"
+
+─────────────────────────
 
 *WebBank diff*
 <summary or "Not available — Sync hasn't run today.">

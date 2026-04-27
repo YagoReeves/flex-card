@@ -1,0 +1,184 @@
+{
+  "date": "2026-04-27",
+  "generated_at_utc": "2026-04-27T07:39:57Z",
+  "mode": "LIVE",
+  "slack_permalink": "https://cleo-team.slack.com/archives/C0AV07H9QPP/p1777275593165639",
+  "meetings": [
+    {
+      "title": "Flex Card X-Team Alignment",
+      "time_local": "16:00",
+      "attendees_summary": "Lea, Tylar, Maddie Ford, Maia, Ladi, Louise + Jago (organiser); John Box declined",
+      "prep_pointer": null
+    },
+    {
+      "title": "Cleo - New Product Implementation Call (Mon.)",
+      "time_local": "17:00",
+      "attendees_summary": "WebBank: Jenna Hansen, Cade Sorensen, Derek Carter, Ali Bowman, Miranda Luker, Amy Ofiara, Greg Long + 6 more; Cleo: ~15 including Dogan, Kenneth, Ashley, Maia, Jago, Lea, Ladi",
+      "prep_pointer": "Email thread RE: [EXTERNAL] Cleo 4/27 Agenda — WB focusing on Flex construct, JIT funding, product classification; LC Josh attending"
+    }
+  ],
+  "action_items_due": [],
+  "inbox": {
+    "email": [
+      {
+        "sender": "jwright@marqeta.com",
+        "subject": "Cleo <> Marqeta Update - 4/24/26",
+        "snippet": "Partial technical answers from Marqeta team; more responses pending",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19dc17cb88ded9ae",
+        "awaiting_jago_reply": true
+      },
+      {
+        "sender": "jmah@marqeta.com",
+        "subject": "Re: Cleo <> Marqeta",
+        "snippet": "Sandbox IPs whitelisted; Mastercard Passkeys timeline update from MQ product team",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19db683120585792",
+        "awaiting_jago_reply": true
+      },
+      {
+        "sender": "jenna.hansen@webbank.com",
+        "subject": "RE: [EXTERNAL] Cleo 4/27 Agenda",
+        "snippet": "WebBank confirmed business-as-usual for today's call; focusing on Flex product construct + JIT funding alignment; LC Josh attending",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19dc01dd11ddc57e",
+        "awaiting_jago_reply": false
+      },
+      {
+        "sender": "jwright@marqeta.com",
+        "subject": "Invitation: [External] Cleo<>Marqeta Product Deep Dive @ Wed 29 Apr & Thu 30 Apr 2026 16:00-17:00 BST",
+        "snippet": "Jared Wright invited Cleo to two Marqeta Product Deep Dive sessions Wed 29 + Thu 30 Apr 16:00-17:00 BST — needs accept/decline",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19dc17eb28576848",
+        "awaiting_jago_reply": false
+      },
+      {
+        "sender": "amy.ofiara@webbank.com",
+        "subject": "Cleo BNPL weekly update & reporting",
+        "snippet": "BNPL weekly checklist: completeness dropped to 95% (-2%); 100% in-progress",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19dc0f105cf99742",
+        "awaiting_jago_reply": false
+      }
+    ],
+    "email_status": "ok",
+    "slack": [
+      {
+        "channel": "#product-cleo-card",
+        "new_count": 2,
+        "key_discussion": "Ladi asked Jago to get Marqeta sandbox access timeline; eng squad still blocked",
+        "mentions_jago": 1
+      },
+      {
+        "channel": "#collab-compliance-credit",
+        "new_count": 1,
+        "key_discussion": "Jago posted WebBank's legal questions on product classification (hybrid/prepaid recharacterisation, Reg II, OC review) for team comment",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#proj-flex-card-design",
+        "new_count": 1,
+        "key_discussion": "Liney chasing Hannah VanderPoel for card carrier copy options",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#x-cleo-mq-ic",
+        "new_count": 1,
+        "key_discussion": "Dawson Lake joined the channel",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#collab-card-accourt",
+        "new_count": 0,
+        "key_discussion": null,
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#collab-card_ops_support",
+        "new_count": 0,
+        "key_discussion": null,
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#x-cleo-mq",
+        "new_count": 0,
+        "key_discussion": null,
+        "mentions_jago": 0
+      }
+    ],
+    "slack_dms": [
+      {
+        "counterpart_email": "oladipo@meetcleo.com",
+        "counterpart_name": "Ladi",
+        "summary": "Discussed WebBank's 'form over function' recharacterisation risk from Jenna's email; aligned it's the key threat to the product construct",
+        "thread_link": "https://cleo-team.slack.com/archives/D08NCJ33X6Y",
+        "flex_relevance_signal": "keyword"
+      }
+    ],
+    "slack_dms_unresolved": [
+      {
+        "email": "aarellano@marqeta.com",
+        "reason": "No matching Slack user found — possibly external Slack Connect user not resolvable via slack_search_users"
+      }
+    ]
+  },
+  "slack_candidates_written": [
+    {
+      "actionable": "Get sandbox access timeline from Marqeta",
+      "author": "Ladi",
+      "channel": "#product-cleo-card",
+      "thread_link": "https://cleo-team.slack.com/archives/C09RJRG0QUC/p1777021767",
+      "notion_page_url": "https://www.notion.so/34f5c63b874581a0875dffe44d009d7e",
+      "assumed_due": null
+    }
+  ],
+  "slack_candidates_skipped": [],
+  "proposed_queue_size_over_3_days": 0,
+  "granola_sweep_summary": {
+    "available": true,
+    "auto_processed_count": 0,
+    "candidates_written": 0,
+    "candidates_skipped": 0,
+    "grey_zone_count": 1,
+    "grey_zone_highlights": [
+      {
+        "title": "EWA C Sync",
+        "granola_url": "https://notes.granola.ai/t/2421495c-bfe9-4ffb-b639-478f169f6450"
+      }
+    ]
+  },
+  "risks_flagged": [
+    {
+      "workstream": "Bank & Compliance",
+      "risk": "WebBank LC Josh bringing product-classification challenge to today's call (debit/hybrid recharacterisation, Reg II)",
+      "why_it_matters": "Cleo entering without OC-backed legal position; risk of live scope challenge mid-call",
+      "critical_path_risk_ref": "2",
+      "source": "inbox"
+    },
+    {
+      "workstream": "Bank & Compliance",
+      "risk": "Tension between Colin Jones's 'we'll review and come back' stance and today's WebBank call proceeding on product construct",
+      "why_it_matters": "Jago needs to actively manage what Cleo can and can't confirm today to avoid locking in positions prematurely",
+      "critical_path_risk_ref": null,
+      "source": "inbox"
+    },
+    {
+      "workstream": "Platform Foundations / Marqeta migration",
+      "risk": "Sandbox still blocked for eng squad; no confirmed timeline from Marqeta",
+      "why_it_matters": "Marqeta product deep-dives Wed 29 + Thu 30 Apr are the next credible gate — any slip compounds BIN + plastics timelines",
+      "critical_path_risk_ref": "1",
+      "source": "inbox"
+    },
+    {
+      "workstream": "Card Issuance & Fulfilment",
+      "risk": "Mastercard BIN gated on Marqeta agreement, which is gated on ACH resolution — Idemia 3-month plastics lead time hasn't started",
+      "why_it_matters": "Further slippage risks pushing physical card delivery past the MLP window",
+      "critical_path_risk_ref": "1",
+      "source": "inbox"
+    }
+  ],
+  "webbank_diff_summary": {
+    "available": true,
+    "added": 0,
+    "removed": 0,
+    "status_changed": 0,
+    "note_changed": 0,
+    "highlights": []
+  },
+  "rendered_slack_text": ":robot_face: *[FLEX AGENT] Daily Brief — 2026-04-27*\n\n*Today's meetings*\n• Flex Card X-Team Alignment — 16:00 — Lea, Tylar, Maddie, Maia, Ladi, Louise + Jago (organiser) — prep: none\n• Cleo - New Product Implementation Call (Mon.) — 17:00 — WebBank (Jenna Hansen, Cade Sorensen, Derek Carter, Ali Bowman + 6 more WB) + Cleo squad (~15) — prep: email thread \"RE: [EXTERNAL] Cleo 4/27 Agenda\" — WB focusing on Flex construct, JIT funding + product classification; LC Josh attending\n\n*Action items: overdue / due today*\n_No active action items today._\n\n*:warning: Risks & things to be mindful of*\n• Bank & Compliance (Risk #2): WebBank LC Josh bringing product-classification challenge to today's call (debit/hybrid recharacterisation, Reg II) — Cleo entering without OC-backed legal position; risk of live scope challenge\n• Bank & Compliance: Tension between Colin Jones's \"we'll review and come back\" stance and today's WebBank call proceeding on product construct — Jago needs to actively manage what Cleo can and can't confirm today\n• Platform Foundations / Marqeta migration (Risk #1): Sandbox still blocked for eng squad; no confirmed timeline from MQ — Marqeta product deep-dives Wed 29 + Thu 30 Apr are the next credible gate\n• Card Issuance & Fulfilment (Risk #1): Mastercard BIN gated on Marqeta agreement (gated on ACH resolution) — Idemia 3-month plastics lead time hasn't started; further slippage risks pushing card delivery past MLP window\n\n*Priority inbox*\nEmails:\n• jwright@marqeta.com — Cleo <> Marqeta Update - 4/24/26 — Partial technical answers from MQ team; more responses pending — ⚠️ awaiting Jago reply\n• jmah@marqeta.com — Re: Cleo <> Marqeta — Sandbox IPs whitelisted; Mastercard Passkeys update from MQ product team — ⚠️ awaiting Jago reply\n• jenna.hansen@webbank.com — RE: [EXTERNAL] Cleo 4/27 Agenda — WB confirmed business-as-usual scope for today; focusing on product construct + JIT alignment; LC Josh attending\n• jwright@marqeta.com — Cleo<>Marqeta Product Deep Dive (x2 invites) — Sessions Wed 29 Apr + Thu 30 Apr 16:00–17:00 BST — needs accept/decline\n• amy.ofiara@webbank.com — Cleo BNPL weekly update & reporting — Completeness dropped to 95% (−2%); 100% in-progress\n\nSlack channels:\n• #product-cleo-card — 2 new, Ladi @Jago: \"Can MQ give us a timeline on when exactly we get sandbox access? squad still blocked\". Mentions: 1\n• #collab-compliance-credit — 1 new, Jago posted WebBank's legal questions on product classification (hybrid/prepaid recharacterisation, Reg II, OC review) for team comment. Mentions: 0\n• #proj-flex-card-design — 1 new, Liney chasing Hannah for card carrier copy options. Mentions: 0\n• #x-cleo-mq-ic — 1 new (Dawson Lake joined). Mentions: 0\n• #collab-card-accourt, #collab-card_ops_support, #x-cleo-mq — 0 new\n\nSlack DMs (Flex-relevant only):\n• @Ladi — Discussed WebBank's \"form over function\" recharacterisation risk from Jenna's email; aligned it's the key threat — https://cleo-team.slack.com/archives/D08NCJ33X6Y\n\n*Added to Action Items DB*\n• Get sandbox access timeline from Marqeta — from Ladi in #product-cleo-card — https://www.notion.so/34f5c63b874581a0875dffe44d009d7e\nSkipped as dedup: 0\n\n*Granola sweep* (Fri–Sun)\n0 meetings auto-processed · 0 candidates written · 0 deduped · 1 grey-zone\nGrey-zone meetings (consider manual extraction):\n• EWA C Sync — https://notes.granola.ai/t/2421495c-bfe9-4ffb-b639-478f169f6450\n\n*WebBank diff*\nNo changes — checklist stable at 94 items (0 added · 0 removed · 0 status changes · 0 note changes)."
+}

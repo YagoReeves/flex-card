@@ -1,0 +1,23 @@
+{
+  "date": "2026-04-27",
+  "day_of_week": "Monday",
+  "meetings_window_start": "2026-04-24",
+  "meetings_window_end": "2026-04-26",
+  "generated_at_utc": "2026-04-27T05:45:00Z",
+  "mode": "LIVE",
+  "meetings_scanned": 5,
+  "auto_processed_count": 0,
+  "grey_zone_count": 1,
+  "candidates_written": [],
+  "candidates_skipped": [],
+  "candidates_failed_to_write": [],
+  "grey_zone_meetings": [
+    {
+      "meeting_id": "2421495c-bfe9-4ffb-b639-478f169f6450",
+      "title": "EWA C Sync",
+      "date": "2026-04-24T16:13:00Z",
+      "granola_url": "https://notes.granola.ai/t/2421495c-bfe9-4ffb-b639-478f169f6450",
+      "attendees_summary": "Jago Reeves (jago.r@meetcleo.com)"
+    }
+  ]
+}

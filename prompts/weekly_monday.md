@@ -56,14 +56,23 @@ When in doubt, drop. False positives clutter the team's view; false negatives Ja
 - Group by day. For each meeting: title, day + time (Mon HH:MM), attendees-summary, prep-pointer if non-trivial.
 - If no Flex meetings all week, output `_No Flex meetings this week._`.
 
-### 4. Action items by owner (Notion)
+### 4. Action items by owner + awaiting partners (Notion)
 
 - Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action Items DB).
-- **Always query live at fire time.** Notion is the source of truth for title/owner/due — never reuse stale values from prior artefacts.
-- Filter: `Status = Active`.
-- Group by `Owner`. For each owner, list: title, due date (or `—`), priority. Sort within each owner: overdue first, then due-this-week, then no-due/later. Capture `notion_page_id` per row so the artefact lets next Friday re-resolve.
+- **Always query live at fire time.** Notion is the source of truth for title/owner/partner-owner/due — never reuse stale values from prior artefacts.
+- **Ownership convention** (also documented in `FLEX_AGENT_SPEC.md`): `Owner` set + `Partner Owner` null → internally owned. `Owner` null + `Partner Owner` set → partner-owned (Cleo waiting on partner). Both null → untriaged. Treat the two cleanly-owned cases as separate sections in the output.
+
+**Internal — Action items by owner**:
+- Filter: `Status = Active` AND `Owner IS NOT NULL` AND `Partner Owner IS NULL`.
+- Group by `Owner`. For each owner, list: title, due date (or `—`), priority. Sort within each owner: overdue first, then due-this-week, then no-due/later. Capture `notion_page_id` per row.
 - Tag overdue items with `:warning:`. Tag due-this-week with `:calendar:`.
-- If empty: `_No active action items — DB created 2026-04-24._`.
+- If empty: `_No active internally-owned action items._`.
+
+**Awaiting partners**:
+- Filter: `Status = Active` AND `Partner Owner IS NOT NULL` AND `Owner IS NULL`.
+- Group by `Partner Owner`. For each partner, list: title, due date (or `—`), days-since-last-nudged (`Last Nudged` field; `never nudged` if null), priority. Sort within each partner: overdue first, then no-due, then upcoming.
+- Capture `notion_page_id` per row.
+- If empty: `_No partner-owned items currently awaiting partner action._`.
 
 ### 5. WebBank checklist — aggregate state
 
@@ -108,7 +117,15 @@ _Draft week-ahead. Review, edit, publish to #product-cleo-card when ready._
 ...
 *<Owner>*
 ...
-... or "_No active action items._"
+... or "_No active internally-owned action items._"
+
+*Awaiting partners* (Cleo waiting on)
+*<Partner>*
+• <title> — <due> — <days-since-last-nudged> — <priority>
+...
+*<Partner>*
+...
+... or "_No partner-owned items currently awaiting partner action._"
 
 *WebBank checklist state*
 • Total: N rows · Not Started: N · In Progress: N · Done: N · Blocked: N
@@ -164,6 +181,9 @@ After posting to Slack, write `snapshots/weekly_monday_<today>.json` to the work
   },
   "action_items_by_owner": {
     "<Owner>": [{"notion_page_id": "...", "title": "...", "due": "<YYYY-MM-DD or null>", "priority": "...", "overdue": true}]
+  },
+  "awaiting_partners_by_partner": {
+    "<Partner Owner>": [{"notion_page_id": "...", "title": "...", "due": "<YYYY-MM-DD or null>", "days_since_last_nudged": 0, "last_nudged_null": false, "priority": "...", "overdue": true}]
   },
   "webbank_aggregate": {
     "total": 0,

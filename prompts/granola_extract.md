@@ -25,6 +25,7 @@ Apply **strict** criteria — false positives are worse than false negatives. A 
 - **Direct ask of a named person**: "@alice please send X", "Bob, can you update the doc by Friday".
 - **Agreed next-step that names an owner**: "we agreed Charlie will write up X".
 - **Future commitment to a deliverable** with a discoverable owner — even if owner is implicit ("I'll write up the doc and share Friday" → owner = speaker).
+- **Partner deliverable commitment**: an external partner agrees, is asked, or commits to deliver something to Cleo — e.g. "WebBank will send the Reg E template Friday", "Marqeta to provide sandbox access by 14 May", "Idemia to confirm plastics design feedback this week". Owner here is the **partner**, not a Cleo person — these get captured as **partner-owned** in Step 6.
 
 Reject:
 - Hypothetical / aspirational ("we should probably look at X").
@@ -34,9 +35,14 @@ Reject:
 
 For each surviving candidate, rephrase into a **short imperative actionable** — concrete, not a quote.
 
+**Partner-owned vs internally-owned framing** (matters for Step 6):
+- *"WebBank to send Reg E template"* — partner-owned (subject of the imperative is the partner; deliverable is theirs).
+- *"Get Reg E template from WebBank"* — internally-owned (subject is Cleo; action is a chase or follow-up).
+- The verb subject determines which side owns it. When partner-owned, **lead the imperative with the partner name** so the framing is unambiguous downstream.
+
 ## Step 4 — Propose to Jago
 
-Output a markdown table with columns: `#`, `Actionable`, `Suggested owner`, `Due`, `Source quote`. Number 1–N.
+Output a markdown table with columns: `#`, `Actionable`, `Owner side` (`Cleo` / partner name e.g. `WebBank`), `Suggested owner` (Cleo person if internally owned; `—` if partner-owned), `Due`, `Source quote`. Number 1–N.
 
 Below the table, list:
 - **Items considered but excluded** — borderline candidates with a one-line reason for exclusion. Lets Jago override if he disagrees.
@@ -66,11 +72,14 @@ Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5`. Use `mcp__clau
 - **Workstream** (select): infer from content — one of `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Operations, Card Issuance & Fulfilment, Credit Reporting, Fraud & Risk]`. Default to `Programme` when ambiguous.
 - **Source Link** (url): the Granola URL Jago provided
 - **Source Context** (text): `<Meeting title>, <YYYY-MM-DD> — "<short verbatim quote>"` (quote under ~120 chars)
-- **Notes** (text): `Owner: <name>.` followed by any context worth carrying (one short sentence). Owner field itself stays blank — Jago tags the Notion person manually.
-- **Owner** (person): leave blank
+- **Notes** (text): `Owner: <name>.` for internally owned, or `Partner contact: <name @ partner>.` for partner-owned (where applicable), followed by any context worth carrying (one short sentence).
+- **Owner** (person): leave blank — Jago tags the Notion person manually for internally-owned items.
+- **Partner Owner** (single-select): set to the partner name when the item is **partner-owned** per the framing rule in Step 3 — exact value from `[WebBank, Marqeta, Mastercard, Peach, Indebted, TabaPay, Pinwheel, Idemia, IC Payments, I2C]`. Leave blank for internally-owned items. **Mutually exclusive with `Owner` in the auto-flow** — set exactly one (or neither, if truly untriaged).
 - **Priority** (select): leave blank
 - **Due** (date `date:Due:start`): populate only if approved with a due date
 - **Created**: auto-set by Notion
+
+**Ownership convention**: every action item should reflect either (a) `Owner` set + `Partner Owner` null = internally owned, or (b) `Owner` null + `Partner Owner` set = partner-owned (Cleo waiting on partner). Both blank is allowed only for genuinely-untriaged items.
 
 ## Step 7 — Confirm back
 

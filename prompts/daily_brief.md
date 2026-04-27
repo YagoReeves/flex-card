@@ -33,15 +33,18 @@ Before gathering any inputs, `Read prompts/project_context.md` from the working 
 - For each meeting: title, time (HH:MM local), attendees (summarise if > 5), and a prep pointer — prior Granola transcript of the same recurring meeting, a linked Notion page, or a Central Memory entry.
 - If no Flex-relevant meetings today, say so explicitly.
 
-### 2. Action items: active queue + triage queue (Notion)
+### 2. Action items: active queue + awaiting partners + triage queue (Notion)
 
 Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action Items DB).
 
 **The live Notion DB is the source of truth.** Always query at fire time; never carry action-item title/owner/due forward from prior artefacts as if frozen. Capture `notion_page_id` for every row you reference so downstream routines (Weekly Monday/Friday) can re-resolve by ID.
 
-- **Active queue**: filter `Status = Active` AND (`Due <= today` OR (`Due IS NULL` AND `Created > 7 days ago`)). List: title, owner, due date, priority. Capture `notion_page_id` per row.
-- **Triage queue**: count rows where `Status = Proposed` AND `Created < today - 3 days`. If `> 0`, surface as a triage-nudge line (see output format). These are auto-added Slack candidates that Jago hasn't triaged — they need an owner assigned (→ Active) or to be deleted/marked Rejected.
-- If active queue empty: `_No active action items today._` (still show triage nudge if applicable).
+**Ownership convention** (also documented in `FLEX_AGENT_SPEC.md`): `Owner` set + `Partner Owner` null → internally owned (Cleo to deliver). `Owner` null + `Partner Owner` set → partner-owned (Cleo waiting on partner; chase via `Last Nudged`). Both null → untriaged.
+
+- **Active queue (internal)**: filter `Status = Active` AND `Owner IS NOT NULL` AND `Partner Owner IS NULL` AND (`Due <= today` OR (`Due IS NULL` AND `Created > 7 days ago`)). List: title, owner, due date, priority. Capture `notion_page_id` per row.
+- **Awaiting partners**: filter `Status = Active` AND `Partner Owner IS NOT NULL` AND `Owner IS NULL` AND (`Last Nudged IS NULL` OR `Last Nudged < today - 5 days` OR (`Due IS NOT NULL` AND `Due <= today + 3 days`)). Group by `Partner Owner`. For each: title, partner, due date (or `—`), days-since-last-nudged (or `never nudged` if `Last Nudged IS NULL`), priority. Capture `notion_page_id` per row. **Why**: surfaces partner-owned items that need chasing — by elapsed time since last contact (5+ days) OR upcoming/past due (3-day forward window).
+- **Triage queue**: count rows where `Status = Proposed` AND `Created < today - 3 days`. If `> 0`, surface as a triage-nudge line (see output format). These are auto-added candidates that Jago hasn't triaged — they need an `Owner` assigned (→ internally-owned) or `Partner Owner` assigned (→ partner-owned) or to be deleted/marked Rejected.
+- If active queue empty: `_No active action items today._` Same for awaiting partners: `_No partner items needing chase today._` Show triage nudge if applicable regardless.
 
 ### 3. Priority inbox hits (last 24h)
 
@@ -113,8 +116,9 @@ If a fuzzy match exists, skip the write and log it under `slack_candidates_skipp
 - **Workstream** (select): infer one of `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Operations, Card Issuance & Fulfilment, Credit Reporting, Fraud & Risk]` based on the candidate's content. Match `project_context.md` §5 for scope per workstream. When ambiguous, default to `Programme`.
 - **Source Link** (url): the Slack thread permalink
 - **Source Context** (text): `<author> in #<channel> on <day>: "<short verbatim quote>"` — keep quote under ~120 chars
-- **Notes** (text): suggested owner as a string (e.g. `Owner: Jago.`) plus any assumed-due text from the source (e.g. `Source mentions: "by Friday".`). Owner field itself stays empty — Jago tags the Notion person manually.
-- **Owner** (person): leave blank
+- **Notes** (text): suggested owner as a string (e.g. `Owner: Jago.`) for internally-owned candidates, or `Partner contact: <name @ partner>.` for partner-owned candidates, plus any assumed-due text from the source (e.g. `Source mentions: "by Friday".`).
+- **Owner** (person): leave blank — Jago tags the Notion person manually for internally-owned items.
+- **Partner Owner** (single-select): set to the partner name when the candidate is **partner-owned** (i.e. the imperative names the partner as the deliverer — e.g. *"WebBank to send Reg E template"* — vs *"Get Reg E template from WebBank"* which is internally-owned chase). Exact value from `[WebBank, Marqeta, Mastercard, Peach, Indebted, TabaPay, Pinwheel, Idemia, IC Payments, I2C]`. Leave blank for internally-owned. **Mutually exclusive with `Owner`** in the auto-flow.
 - **Priority** (select): leave blank
 - **Due** (date `date:Due:start`): only populate if an explicit due date appears in the source message; leave blank otherwise
 - **Created**: auto-set by Notion
@@ -174,6 +178,11 @@ Return **one markdown message** suitable for posting to Slack. Use Slack mrkdwn 
 *Action items: overdue / due today*
 • <title> — <owner> — <due> — <priority>
 ... or "_No active action items today._"
+
+*Awaiting partners* (Cleo waiting on)
+• <title> — <Partner Owner> — <due or "—"> — <days-since-last-nudged or "never nudged"> — <priority>
+... or "_No partner items needing chase today._"
+
 :warning: <N> Proposed items > 3 days old — needs triage in Notion.   ← only if N > 0
 
 *:warning: Risks & things to be mindful of*
@@ -232,6 +241,9 @@ Schema:
   ],
   "action_items_due": [
     {"notion_page_id": "...", "title": "...", "owner": "...", "due": "<YYYY-MM-DD or null>", "priority": "..."}
+  ],
+  "awaiting_partners": [
+    {"notion_page_id": "...", "title": "...", "partner_owner": "<WebBank|Marqeta|...>", "due": "<YYYY-MM-DD or null>", "days_since_last_nudged": 0, "last_nudged_null": false, "priority": "..."}
   ],
   "inbox": {
     "email": [

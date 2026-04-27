@@ -122,8 +122,9 @@ For each candidate that survived dedup, use `mcp__claude_ai_Notion__notion-creat
 - **Workstream** (select): infer from meeting title + content per `project_context.md` §5 — one of `[Programme, Card Product, BNPL Product, Bank & Compliance, Platform Foundations, Money Movement, Servicing & Operations, Card Issuance & Fulfilment, Credit Reporting, Fraud & Risk]`. Default to `Programme` when ambiguous.
 - **Source Link** (url): the Granola URL (`https://notes.granola.ai/t/<meeting_id>`)
 - **Source Context** (text): `<Meeting title>, <YYYY-MM-DD> — "<short verbatim quote>"` (quote ≤120 chars)
-- **Notes** (text): `Owner: <name>.` followed by any context worth carrying (one short sentence). Owner field itself stays blank — Jago tags the Notion person manually in Notion.
-- **Owner** (person): leave blank
+- **Notes** (text): `Owner: <name>.` for internally-owned candidates, or `Partner contact: <name @ partner>.` for partner-owned candidates (where the source named a partner contact), followed by any context worth carrying (one short sentence).
+- **Owner** (person): leave blank — Jago tags the Notion person manually for internally-owned items.
+- **Partner Owner** (single-select): set to the partner name when the candidate is **partner-owned** per the framing rule in `granola_extract.md` step 3 — exact value from `[WebBank, Marqeta, Mastercard, Peach, Indebted, TabaPay, Pinwheel, Idemia, IC Payments, I2C]`. Leave blank for internally-owned candidates. **Mutually exclusive with `Owner` in the auto-flow** — set exactly one. Both blank is allowed only when ownership is genuinely ambiguous from the source.
 - **Priority** (select): leave blank
 - **Due** (date `date:Due:start`): only populate if an explicit due date appears in the source quote; leave blank otherwise
 

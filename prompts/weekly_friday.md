@@ -43,10 +43,12 @@ Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action It
 
 **The live Notion DB is the source of truth.** Always query at fire time. Capture `notion_page_id` per row in the artefact so next Monday's continuity check can re-resolve by ID. When a row was raised earlier this week (visible in the daily-brief artefacts) and you want its current state, query by `notion_page_id` — never title-match against the old snapshot.
 
-- **Shipped this week**: filter `Status = Done` AND last-edited within this week's window. List title, owner, original due date.
-- **Slipped this week**: filter `Status = Active` AND `Due` between this Monday and today. List title, owner, due, days-overdue.
-- **Carrying slip from prior weeks**: filter `Status = Active` AND `Due < this Monday`. List title, owner, due, days-overdue. Only the top 5 by oldest-due — anything beyond gets `(+N more older slips)`.
+- **Shipped this week**: filter `Status = Done` AND last-edited within this week's window. List title, owner-or-partner (use `Owner` if set, else `Partner Owner`), original due date.
+- **Slipped this week**: filter `Status = Active` AND `Due` between this Monday and today. List title, owner-or-partner, due, days-overdue. **Tag partner-owned slips with `(awaiting <Partner>)` after the title** so Jago can see at a glance which slips are Cleo's vs partners'.
+- **Carrying slip from prior weeks**: filter `Status = Active` AND `Due < this Monday`. List title, owner-or-partner, due, days-overdue. Same `(awaiting <Partner>)` tagging on partner-owned slips. Only the top 5 by oldest-due — anything beyond gets `(+N more older slips)`.
 - If empty in any bucket: `_None this week._`
+
+**Ownership convention** (also documented in `FLEX_AGENT_SPEC.md`): `Owner` set + `Partner Owner` null → internally owned. `Owner` null + `Partner Owner` set → partner-owned (Cleo waiting on partner). Both null → untriaged. Use this to label rows correctly across all sub-sections.
 
 ### 4. WebBank checklist — net change over the week
 
@@ -79,12 +81,21 @@ The Brief auto-writes Slack candidates to the Action Items DB as `Status = Propo
 
 Surface items that have **gone quiet** — distinct from "slipped" (overdue) items in input 3. Stuck = no movement in 14+ days while still notionally active.
 
-**Stuck action items** — query Action Items DB (`collection://52101c73-4538-4710-8327-797e8445dcc5`) for rows where:
+**Stuck internal action items** — query Action Items DB (`collection://52101c73-4538-4710-8327-797e8445dcc5`) for rows where:
 - `Status = Active`
+- AND `Owner IS NOT NULL` AND `Partner Owner IS NULL` (internally owned)
 - AND `Created < <today> - 14 days`
 - AND NOT (`Due IS NOT NULL` AND `Due < <today>`) — exclude already-slipped items (those are in input 3)
 
 For each: title, owner, days-since-created, workstream. Cap at top 5 by oldest. If more, append `(+N more)`.
+
+**Stuck partner-owned action items** — same DB, rows where:
+- `Status = Active`
+- AND `Partner Owner IS NOT NULL` AND `Owner IS NULL` (partner-owned)
+- AND (`Last Nudged IS NULL` AND `Created < <today> - 7 days`) OR (`Last Nudged < <today> - 7 days`) — i.e. no contact for over a week
+- AND NOT (`Due IS NOT NULL` AND `Due < <today>`) — exclude already-slipped (those are in input 3)
+
+For each: title, partner, days-since-last-nudged (or days-since-created if never nudged), workstream. Cap at top 5 by oldest-stale. If more, append `(+N more)`. **Why**: partner items go stale faster than internal ones; 7-day no-contact threshold catches Cleo letting partners off the hook.
 
 **Stuck WebBank items** — diff today's `snapshots/webbank_checklist_<today>.json` vs `snapshots/webbank_checklist_<today - 14 days>.json` (use `Glob` to find the closest snapshot if exact date missing). For each item where `status` is unchanged across 14 days **and** is not in `Done` / `Removed`: code, name, status, parties. Cap at top 5 by code priority order.
 
@@ -157,11 +168,14 @@ _Draft week-in-review. Review, edit, publish to #product-cleo-card when ready._
 • <decision/risk> — <state>
 ... or skip if nothing
 
-*:hourglass: Stuck items (no movement in 14d+)*
-_Action items:_
+*:hourglass: Stuck items*
+_Internal action items (>14d, no movement):_
 • <title> — <owner> — <N> days since created — <workstream>
 ... or "_None this week._"
-_WebBank items:_
+_Partner-owned action items (>7d, no contact):_
+• <title> — <partner> — <N> days since last nudged — <workstream>
+... or "_None this week._"
+_WebBank items (>14d unchanged):_
 • <code> <name> — status unchanged: <status> — <N> days
 ... or "_None this week._"
 _Cold partner threads (>7d awaiting response):_
@@ -236,9 +250,9 @@ After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the work
   "rendered_slack_text": "<full markdown body>",
   "had_week_ahead_plan": true,
   "missing_daily_brief_days": [],
-  "shipped": [{"notion_page_id": "...", "title": "...", "owner": "...", "closed_day": "..."}],
-  "slipped_this_week": [{"notion_page_id": "...", "title": "...", "owner": "...", "due": "...", "days_overdue": 0}],
-  "carrying_older_slips": [{"notion_page_id": "...", "title": "...", "owner": "...", "due": "...", "days_overdue": 0}],
+  "shipped": [{"notion_page_id": "...", "title": "...", "owner": "<or null if partner-owned>", "partner_owner": "<or null if internally-owned>", "closed_day": "..."}],
+  "slipped_this_week": [{"notion_page_id": "...", "title": "...", "owner": "<or null>", "partner_owner": "<or null>", "due": "...", "days_overdue": 0}],
+  "carrying_older_slips": [{"notion_page_id": "...", "title": "...", "owner": "<or null>", "partner_owner": "<or null>", "due": "...", "days_overdue": 0}],
   "webbank_delta": {
     "baseline_date": "<this-monday or last-friday>",
     "moved_forward": 0,
@@ -252,6 +266,7 @@ After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the work
   "risk_movements": [{"risk": "...", "state": "resolved | escalated | unchanged"}],
   "stuck_items": {
     "action_items": [{"notion_page_id": "...", "title": "...", "owner": "...", "days_since_created": 0, "workstream": "..."}],
+    "partner_action_items": [{"notion_page_id": "...", "title": "...", "partner_owner": "...", "days_since_last_nudged": 0, "last_nudged_null": false, "workstream": "..."}],
     "webbank": [{"code": "...", "name": "...", "status": "...", "days_unchanged": 0}],
     "cold_partner_threads": [{"partner": "...", "subject": "...", "days_since_last_activity": 0, "gmail_available": true}]
   },

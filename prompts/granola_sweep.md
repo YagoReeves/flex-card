@@ -188,13 +188,17 @@ If DRY_RUN: skip the next git block.
 ### 9. Commit and push
 
 ```bash
-git pull --rebase origin main   # WebBank Sync may push around the same time
+# Land artefact on main: the sandbox starts on a claude/<session> branch, so
+# we have to switch onto main (synced to origin) before committing — otherwise
+# the commit goes to the session branch and `git push origin main` is a no-op.
+git fetch origin main
+git checkout -B main origin/main
 git add snapshots/granola_sweep_<TODAY>.json
 git commit -m "Granola Sweep <TODAY>: <auto_processed_count> meetings auto-processed, <candidates_written length> written, <grey_zone_count> grey-zone"
 git push origin main
 ```
 
-If `git push` returns 403: log the failure but **do not** retry destructively. The artefact remains in the routine clone for this fire only — Daily Brief's fallback path handles a missing artefact.
+If `git push` fails (auth, branch protection, non-FF): log the failure but do not retry destructively. The artefact remains in the routine clone for this fire only — Daily Brief's fallback path handles a missing artefact.
 
 ## Failure handling
 

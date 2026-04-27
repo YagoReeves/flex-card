@@ -178,13 +178,17 @@ After posting to Slack, write `snapshots/weekly_monday_<today>.json` to the work
 Then commit + push to `main`:
 
 ```
-git pull --rebase origin main
+# Land artefact on main: the sandbox starts on a claude/<session> branch, so
+# we have to switch onto main (synced to origin) before committing — otherwise
+# the commit goes to the session branch and `git push origin main` is a no-op.
+git fetch origin main
+git checkout -B main origin/main
 git add snapshots/weekly_monday_<today>.json
 git commit -m "Weekly Monday <today>: artefact log"
 git push origin main
 ```
 
-If `git push` returns 403: log + continue. Artefact remains in routine clone for this fire only; next Monday's continuity check would skip ahead but the routine still posted to Slack.
+If `git push` fails: log + continue. Artefact remains in routine clone for this fire only; next Monday's continuity check would skip ahead but the routine still posted to Slack.
 
 If DRY_RUN: skip artefact write + push entirely.
 

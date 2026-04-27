@@ -201,6 +201,11 @@ Empty arrays are fine. Total-change-count = sum of all array lengths.
 - If DRY_RUN: skip the next bash block — do not commit, do not push.
 - Otherwise:
   ```bash
+  # Land artefact on main: the sandbox starts on a claude/<session> branch, so
+  # we have to switch onto main (synced to origin) before committing — otherwise
+  # the commit goes to the session branch and `git push origin main` is a no-op.
+  git fetch origin main
+  git checkout -B main origin/main
   git add snapshots/webbank_checklist_<TODAY>.json snapshots/webbank_diff_<TODAY>.json
   git commit -m "WebBank Sync <TODAY>: <N> change(s) (added <a>, removed <r>, changed <c>)"
   git push origin main

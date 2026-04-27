@@ -280,13 +280,17 @@ Then commit + push to `main`:
 
 ```
 cd <working-dir>
-git pull --rebase origin main   # WebBank Sync runs ~30min before; pull its commit first
+# Land artefact on main: the sandbox starts on a claude/<session> branch, so
+# we have to switch onto main (synced to origin) before committing — otherwise
+# the commit goes to the session branch and `git push origin main` is a no-op.
+git fetch origin main
+git checkout -B main origin/main
 git add snapshots/daily_brief_<today>.json
 git commit -m "Daily Brief <today>: artefact log"
 git push origin main
 ```
 
-If `git push` returns 403 (the known credential-scope issue): log the failure but **do not** retry destructively. Continue and return the Slack permalink as normal — the artefact remains in the routine clone for this fire only. Weekly Monday's fallback path handles a missing artefact.
+If `git push` fails (auth, branch protection, non-FF): log the failure but do not retry destructively. Continue and return the Slack permalink as normal — the artefact remains in the routine clone for this fire only. Weekly Monday's fallback path handles a missing artefact.
 
 If DRY_RUN: skip the artefact write + push entirely.
 

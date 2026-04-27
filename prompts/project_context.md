@@ -108,5 +108,14 @@ People often misattribute these — don't bucket signal here against Card:
 - **Product Construct V2 (Web):** https://www.notion.so/Product-construct-V2-for-Web-2fe5c63b8745803ba54ae8a1ec83a369 — full feature-level construct (very long; sections cover Awareness/Onboarding, Card Issuance, Money Movement, Purchase Experience, Card/Account Management, Card Operations, Open Questions)
 - **Abridged construct doc (for WebBank):** https://www.notion.so/Abridged-doc-for-Web-3425c63b874580cd9ef7e92447c82d4b — compact version, source for §1 above
 - **WebBank Mirror DB** (agent-managed) — checklist tracker, lives in Flex Hub
-- **Action Items DB** (agent-managed) — Proposed/Confirmed action items, lives in Flex Hub
+- **Action Items DB** (agent-managed) — Proposed/Active action items, lives in Flex Hub. Trackable tasks with an owner (Cleo person via `Owner`, or partner via `Partner Owner`).
 - **Weekly Progress Log DB** (agent-managed) — one entry per week, structured by workstream, written by the Friday routine: `https://www.notion.so/ebef90dc293c4f6c8bc0a8dd370d93af`
+- **Central Memory DB** (agent-managed from 2026-04-27 evening) — Risks / Issues / Decisions / Commitments / Ideas, structured per Flex Hub spine: `https://www.notion.so/33e5c63b874580f5ac3bc4037708d19d`. Routine writes land as `Status = Logged`; Jago triages forward.
+
+## 8. Routing rule — Action Items vs Central Memory
+
+When extracting from any source (Granola, Slack, email):
+- **Trackable task with owner + near-term outcome** → Action Items DB.
+- **Risk / Issue / Decision / Standing partner commitment / Forward-looking idea** → Central Memory DB.
+- A single source quote can produce both. Don't drop one to capture the other.
+- Action Items stays focused on discrete deliverables; Central Memory holds the longer-half-life context.

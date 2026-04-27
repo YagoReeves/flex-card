@@ -16,6 +16,7 @@ Working directory for **Flex Card launch PMO + Flex Agent automation**. Pillar-l
   - Flex Action Items — `collection://52101c73-4538-4710-8327-797e8445dcc5`
   - WebBank Mirror — `collection://a31ff0cd-3aaa-434a-815d-0c8dcc8ba53f`
   - Flex — Weekly Progress Log — `collection://2d98ca42-9f65-4442-8ed2-0f97b0563429`
+  - Central Memory Flex Card — `collection://33e5c63b-8745-8199-ab41-000bbbcaaf18` (under its own "Central Memory (Agent-managed)" sub-page)
   - Flex Card Implementation Checklist (Banking Ops) — manual
 
 ## Canonical references
@@ -27,6 +28,7 @@ Working directory for **Flex Card launch PMO + Flex Agent automation**. Pillar-l
 
 - **Push-to-main pattern** for all routine prompts: `git fetch origin main && git checkout -B main origin/main && git add ... && git commit ... && git push origin main`. The cloud sandbox starts on a `claude/<session>` branch; without the explicit checkout, `git push origin main` is a no-op.
 - **Live Notion DB is source of truth for action items.** Snapshots are pointer indexes via `notion_page_id`. Routines re-resolve by ID before rendering, never by title-match (titles change in Notion; IDs are stable).
+- **Action Items vs Central Memory routing.** Trackable tasks with an owner → Action Items DB. Risks / Issues / Decisions / Standing partner commitments / Forward-looking ideas → Central Memory DB (`Status = Logged`, Jago triages forward). One source can produce both; don't drop either.
 - **WebBank Mirror DB write contract** — the Sync routine writes to: `code`, `name`, `status`, `notes` (WebBank-source notes from Excel col 9), `bank_guidance`, `hyperlink`, `parties`, `category`/`phase`. Don't reuse those exact property names for manual columns — collisions overwrite. Anything outside that set is invisible to the routine and persists across runs.
 
 ## Memory

@@ -44,7 +44,7 @@ When in doubt, drop. False positives clutter the team's view; false negatives Ja
 - Use `Read` to load `snapshots/weekly_friday_<last-friday>.json`.
 - If present: pull the `commitments_for_next_week` array (items the team flagged Friday as priorities for this week). For each, check current status:
   - Action items: each carryover entry carries a `notion_page_id`. Query the Action Items DB by ID and use the live row's title/owner/status/due — **not** the snapshot value. Title and owner can change in Notion; ID is stable. If a row no longer exists (deleted), fall back to the snapshot title and tag `(deleted in Notion)`. Only fall back to fuzzy title match if `notion_page_id` is missing (legacy entries pre-2026-04-27).
-  - WebBank items: cross-reference today's webbank snapshot (see input 4).
+  - WebBank items: cross-reference today's webbank snapshot (see input 6, WebBank checklist).
   - Other commitments: leave as-is, surface for Jago to verify.
 - Set `continuity.from_last_friday = true` and `continuity.last_friday_date = <date>` in the artefact.
 - If missing (first run, or last Friday's routine failed): set `from_last_friday = false`. In the Slack output, replace the "Carrying over from last week" section with: `_First weekly cycle — no prior review to reference._`
@@ -74,7 +74,21 @@ When in doubt, drop. False positives clutter the team's view; false negatives Ja
 - Capture `notion_page_id` per row.
 - If empty: `_No partner-owned items currently awaiting partner action._`.
 
-### 5. WebBank checklist — aggregate state
+### 5. Carrying memory (Notion — Central Memory)
+
+Data source: `collection://33e5c63b-8745-8199-ab41-000bbbcaaf18` (Central Memory Flex Card DB).
+
+**Read-only at this step** — Monday surfaces the high-signal entries the team should keep in mind for the week ahead.
+
+Three sub-queries:
+
+- **Open High-severity Risks/Issues**: filter `Status IN (Logged, In Progress)` AND `Severity = High` AND `Category IN (Risk, Issue)`. List: Entry, Category, Workstream, Partner (or `—`), Notion link. Sort: by Created descending (newest first). Cap 5; `(+N more)` if exceeded.
+- **Decisions made last week**: filter `Category = Decision` AND `Status = Decided` AND `Created` between (last Monday) and (last Sunday). List: Entry, Workstream, Notion link. Cap 5.
+- **Standing partner commitments active**: filter `Category = Commitment` AND `Status IN (Logged, In Progress)`. List: Entry, Partner, Notion link. Cap 5. **Why**: surfaces "we promised X to WebBank/Marqeta" rules so the team doesn't unintentionally violate them in the week ahead.
+
+If all three are empty: `_Carrying memory: nothing high-signal to flag this week._`
+
+### 6. WebBank checklist — aggregate state
 
 - Use `Glob` to find the latest `snapshots/webbank_checklist_*.json` (sort descending, take first).
 - Load it. Compute:
@@ -84,11 +98,11 @@ When in doubt, drop. False positives clutter the team's view; false negatives Ja
   - Items where status changed since last Friday's snapshot — diff against `snapshots/webbank_checklist_<last-friday>.json` if it exists.
 - No "due this week" — WebBank doesn't have due dates yet. Note this in the section: `_Due-date prioritisation pending internal review._`.
 
-### 6. Top risks
+### 7. Top risks
 
 Compile up to 5 risk lines, each one short. Sources, in priority order:
 - Action items overdue > 7 days (from input 4).
-- WebBank items in `Blocked` status (from input 5).
+- WebBank items in `Blocked` status (from input 6).
 - Items still listed in last Friday's `risks` array that haven't moved (from input 2).
 - Weekend signal items that escalate priority (from input 1) — e.g. WebBank/Marqeta blocker landed over weekend.
 
@@ -126,6 +140,18 @@ _Draft week-ahead. Review, edit, publish to #product-cleo-card when ready._
 *<Partner>*
 ...
 ... or "_No partner-owned items currently awaiting partner action._"
+
+*Carrying memory*
+_Open High-severity Risks/Issues:_
+• <Entry> — <Category> — <Workstream> — <Partner or "—"> — <Notion link>
+... or "_None._"
+_Decisions made last week:_
+• <Entry> — <Workstream> — <Notion link>
+... or "_None._"
+_Standing partner commitments active:_
+• <Entry> — <Partner> — <Notion link>
+... or "_None._"
+... or whole section: "_Carrying memory: nothing high-signal to flag this week._"
 
 *WebBank checklist state*
 • Total: N rows · Not Started: N · In Progress: N · Done: N · Blocked: N
@@ -184,6 +210,17 @@ After posting to Slack, write `snapshots/weekly_monday_<today>.json` to the work
   },
   "awaiting_partners_by_partner": {
     "<Partner Owner>": [{"notion_page_id": "...", "title": "...", "due": "<YYYY-MM-DD or null>", "days_since_last_nudged": 0, "last_nudged_null": false, "priority": "...", "overdue": true}]
+  },
+  "carrying_memory": {
+    "open_high_severity": [
+      {"notion_page_id": "...", "entry": "...", "category": "Risk|Issue", "workstream": "...", "partner": "<or null>", "notion_url": "..."}
+    ],
+    "decisions_last_week": [
+      {"notion_page_id": "...", "entry": "...", "workstream": "...", "notion_url": "..."}
+    ],
+    "standing_commitments_active": [
+      {"notion_page_id": "...", "entry": "...", "partner": "...", "notion_url": "..."}
+    ]
   },
   "webbank_aggregate": {
     "total": 0,

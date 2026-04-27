@@ -46,7 +46,23 @@ Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action It
 - **Triage queue**: count rows where `Status = Proposed` AND `Created < today - 3 days`. If `> 0`, surface as a triage-nudge line (see output format). These are auto-added candidates that Jago hasn't triaged — they need an `Owner` assigned (→ internally-owned) or `Partner Owner` assigned (→ partner-owned) or to be deleted/marked Rejected.
 - If active queue empty: `_No active action items today._` Same for awaiting partners: `_No partner items needing chase today._` Show triage nudge if applicable regardless.
 
-### 3. Priority inbox hits (last 24h)
+### 3. Central Memory (Notion)
+
+Data source: `collection://33e5c63b-8745-8199-ab41-000bbbcaaf18` (Central Memory Flex Card DB).
+
+**The live Notion DB is the source of truth.** Always query at fire time. Capture `notion_page_id` for any row referenced.
+
+Three queries, surfaced together:
+
+- **Newly Logged today** — filter `Status = Logged` AND `Created >= today (00:00 local)`. List: Entry, Category, Workstream, Severity (or `—`), Notion page link. These are entries the routines (Sweep / future Brief auto-write) added overnight or this morning. Cap 5; if more, append `(+N more)`.
+- **High-severity untriaged** — filter `Status = Logged` AND `Severity = High`, regardless of age. List: Entry, Category, Workstream, days-since-created, page link. **Why**: critical-path-mapped entries shouldn't sit in Logged for days; surface every day until triaged.
+- **Stale-untriaged nudge** — count rows where `Status = Logged` AND `Created < today - 3 days` AND `Severity != High` (since High is already surfaced above). If `> 0`, surface as a nudge line: `:warning: <N> Logged Central Memory entries > 3 days old — needs triage in Notion.`
+
+If all three are empty: `_Central Memory: nothing new or stuck._`
+
+The Brief itself does **not** auto-write to Central Memory — only Sweep + the manual extractor do. The Brief is read-only against this DB.
+
+### 4. Priority inbox hits (last 24h)
 
 **Email** (Gmail MCP):
 - Search threads from senders matching any of: `@webbank.com`, `@marqeta.com`, `@ic.group`, `@mastercard.com`, `@idemia.com`, `@tabapay.com`, `@accourt.com`, `@gvgroup.net`.
@@ -89,7 +105,7 @@ For each DM hit (after filtering): `@<name> — <one-line summary> — <thread l
 
 If `slack_search_users` cannot resolve an email (deactivated user, MCP scope issue): note in the artefact under `slack_dms_unresolved` and continue.
 
-### 4. Slack candidates → auto-write to Action Items DB (top 5)
+### 5. Slack candidates → auto-write to Action Items DB (top 5)
 
 From the watched channels in the window, extract up to 5 candidates using **strict** criteria:
 - Explicit first-person commitment: "I'll do X by Y", "I'll own X", "I'll send this tomorrow"
@@ -127,9 +143,9 @@ Capture each write's resulting Notion page URL **and page ID** — the URL is su
 
 If none qualify, or all qualifying candidates were dedup-skipped, the Slack section reads: `_No new Slack candidates auto-added today._` (with skipped-count if any).
 
-### 5. Risks & things to be mindful of
+### 6. Risks & things to be mindful of
 
-After gathering inputs 1-4 (and 6 below), synthesise up to 5 short risk lines that Jago should be mindful of today. **This is the "what could go wrong / what needs attention" section** — not a list of his to-dos.
+After gathering inputs 1-5 (and 7 below), synthesise up to 5 short risk lines that Jago should be mindful of today. **This is the "what could go wrong / what needs attention" section** — not a list of his to-dos.
 
 Sources, in priority order:
 - Items mapping to a **critical-path risk** in `project_context.md` §4 (product complexity, partner approval delays). Flag these explicitly with the risk number.
@@ -143,7 +159,7 @@ Each risk line: one sentence, concrete, naming the workstream and (where possibl
 
 If nothing qualifies: `_No risks flagged today._` Do not pad. False positives erode trust in this section.
 
-### 6. Granola sweep digest
+### 7. Granola sweep digest
 
 The Granola Sweep routine runs at 05:45 UTC (45 min before this Brief) and writes `snapshots/granola_sweep_<YYYY-MM-DD>.json` to the repo on `main`, then `git push`es. By the time you fire, your fresh clone of `main` should contain today's sweep artefact.
 
@@ -156,7 +172,7 @@ The Granola Sweep routine runs at 05:45 UTC (45 min before this Brief) and write
 - If the file does **not** exist for today: output `_Granola sweep not available — Sweep routine has not run today (or failed to push)._`. Do not error out.
 - If the file exists but `granola_unavailable: true`: output `_Granola MCP was unavailable to the Sweep routine — manual extraction may be needed._`.
 
-### 7. WebBank checklist diff highlights
+### 8. WebBank checklist diff highlights
 
 The WebBank Sync routine runs at 07:07 UTC (45 minutes before this Brief) and writes a diff summary to `snapshots/webbank_diff_<YYYY-MM-DD>.json` in this repo on `main`, then `git push`es. By the time you fire, your fresh clone of `main` should contain today's diff file.
 
@@ -184,6 +200,15 @@ Return **one markdown message** suitable for posting to Slack. Use Slack mrkdwn 
 ... or "_No partner items needing chase today._"
 
 :warning: <N> Proposed items > 3 days old — needs triage in Notion.   ← only if N > 0
+
+*Central Memory*
+_Newly Logged today:_
+• <Entry> — <Category> — <Workstream> — <Severity or "—"> — <Notion link>
+... or "_None added today._"
+_High-severity untriaged:_
+• <Entry> — <Category> — <Workstream> — <N> days since created — <Notion link>
+... or "_None._"
+:warning: <N> Logged Central Memory entries > 3 days old — needs triage in Notion.   ← only if N > 0 (excludes High already shown above)
 
 *:warning: Risks & things to be mindful of*
 • <workstream>: <risk> — <why it matters>
@@ -245,6 +270,15 @@ Schema:
   "awaiting_partners": [
     {"notion_page_id": "...", "title": "...", "partner_owner": "<WebBank|Marqeta|...>", "due": "<YYYY-MM-DD or null>", "days_since_last_nudged": 0, "last_nudged_null": false, "priority": "..."}
   ],
+  "central_memory": {
+    "newly_logged_today": [
+      {"notion_page_id": "...", "entry": "...", "category": "Risk|Issue|Decision|Commitment|Idea", "workstream": "...", "severity": "High|Medium|Low|null", "partner": "<or null>", "notion_url": "..."}
+    ],
+    "high_severity_untriaged": [
+      {"notion_page_id": "...", "entry": "...", "category": "...", "workstream": "...", "days_since_created": 0, "notion_url": "..."}
+    ],
+    "stale_untriaged_count": 0
+  },
   "inbox": {
     "email": [
       {"sender": "...", "subject": "...", "snippet": "...", "link": "...", "awaiting_jago_reply": true}

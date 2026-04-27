@@ -71,11 +71,19 @@ The Brief auto-writes Slack candidates to the Action Items DB as `Status = Propo
 - Cap at 5 most recent. If more, append `(+N more in queue)`.
 - If queue is empty: `_All Proposed items from this week have been triaged._`
 
-### 6. Decisions + risk movements (Notion read-only)
+### 6. Central Memory — this week (Notion read+write)
 
-- Quick scan of Central Memory Flex Card DB for entries created/edited this week (if Notion query supports it). List title + one-line summary.
-- Pull `top_risks` from this Monday's weekly artefact and check whether each has resolved, escalated, or unchanged.
-- If Notion access fails: skip the Central Memory section, keep the risk-movement check.
+Data source: `collection://33e5c63b-8745-8199-ab41-000bbbcaaf18` (Central Memory Flex Card DB).
+
+Three structured queries against entries with activity this week:
+
+**6a. Decisions + Commitments logged this week** — filter `Category IN (Decision, Commitment)` AND `Created` between this Monday and today. List: Entry, Category, Workstream, Severity (or `—`), Partner (or `—`), Notion link. Cap 8; `(+N more)` if exceeded. **Why**: gives a structured "what got decided / committed to this week" record that wasn't easy to surface before. Decisions feed into Workstream synthesis "Progress this week"; Commitments feed into "Next week" if `Due Date` falls in next week's window.
+
+**6b. Risks + Issues logged or escalated this week** — filter `Category IN (Risk, Issue)` AND (`Created` between this Monday and today OR `Severity = High` AND last-edited within this week). List: Entry, Category, Workstream, Severity, Partner (or `—`), Notion link. Cap 8. **Why**: surfaces both newly-flagged risks/issues and any pre-existing ones that were promoted to High this week. These feed into Workstream synthesis "Blockers / risks".
+
+**6c. Risks-from-last-Monday — movement check** — pull `top_risks` from this Monday's `weekly_monday_<this-monday>.json`. For each risk, check if a corresponding Central Memory entry exists (search by Workstream + keyword overlap on Entry title). State: `resolved` / `escalated` / `unchanged`. Brief one-line summary.
+
+If Notion access fails: skip 6a + 6b, keep 6c (artefact-based — works without Notion). Set `central_memory_notion_unavailable: true` in the artefact.
 
 ### 7. Stuck items (trend detection)
 
@@ -123,9 +131,9 @@ If <3 commitments materialise, output what you have and flag in the artefact `lo
 
 Bucket all gathered signal into the canonical 10-workstream spine from `project_context.md` §5. For **each workstream that has signal this week**, build a structured entry with three buckets:
 
-- **Progress this week** — items shipped (input 3), WebBank items that moved forward (input 4), decisions logged (input 6), explicit progress mentioned in daily briefs (input 1).
-- **Blockers / risks** — slipped items (input 3), newly Blocked WebBank items (input 4), risks escalated or unchanged from Monday (input 6), stuck items (input 7), partner-approval delays surfaced this week.
-- **Next week** — commitments from input 7 tagged to this workstream.
+- **Progress this week** — items shipped (input 3), WebBank items that moved forward (input 4), **Decisions logged this week (input 6a)**, explicit progress mentioned in daily briefs (input 1).
+- **Blockers / risks** — slipped items (input 3), newly Blocked WebBank items (input 4), **Risks/Issues logged or escalated (input 6b)**, risks unchanged from Monday (input 6c), stuck items (input 7), partner-approval delays surfaced this week.
+- **Next week** — commitments from input 8 tagged to this workstream, **plus Commitments (input 6a) with Due Date falling in next week's window**.
 
 Rules:
 - A bullet appears under exactly **one** workstream. If genuinely cross-cutting, default to the workstream most accountable for outcome.
@@ -164,9 +172,16 @@ _Draft week-in-review. Review, edit, publish to #product-cleo-card when ready._
 • <title> — from #<channel> — <N> days in queue — <Notion link>
 ... or "_All Proposed items from this week have been triaged._"
 
-*Decisions + risk movements*
-• <decision/risk> — <state>
-... or skip if nothing
+*Central Memory — this week*
+_Decisions + Commitments logged:_
+• <Entry> — <Category> — <Workstream> — <Partner or "—"> — <Notion link>
+... or "_None this week._"
+_Risks + Issues logged or escalated:_
+• <Entry> — <Category> — <Severity> — <Workstream> — <Partner or "—"> — <Notion link>
+... or "_None this week._"
+_Risks-from-Monday movement:_
+• <risk> — <resolved | escalated | unchanged>
+... or "_No prior Monday risks to track._"
 
 *:hourglass: Stuck items*
 _Internal action items (>14d, no movement):_
@@ -262,6 +277,18 @@ After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the work
     "highlights": ["..."]
   },
   "triage_queue_this_week": [{"notion_page_id": "...", "title": "...", "source_channel": "#...", "days_in_queue": 0, "notion_page_url": "..."}],
+  "central_memory_this_week": {
+    "decisions_and_commitments_logged": [
+      {"notion_page_id": "...", "entry": "...", "category": "Decision|Commitment", "workstream": "...", "severity": "High|Medium|Low|null", "partner": "<or null>", "due": "<YYYY-MM-DD or null>", "notion_url": "..."}
+    ],
+    "risks_and_issues_logged_or_escalated": [
+      {"notion_page_id": "...", "entry": "...", "category": "Risk|Issue", "workstream": "...", "severity": "High|Medium|Low", "partner": "<or null>", "notion_url": "...", "movement": "logged_this_week|escalated_to_high"}
+    ],
+    "risks_from_monday_movement": [
+      {"risk_text": "...", "state": "resolved|escalated|unchanged", "summary": "..."}
+    ],
+    "central_memory_notion_unavailable": false
+  },
   "decisions_this_week": [{"title": "...", "summary": "..."}],
   "risk_movements": [{"risk": "...", "state": "resolved | escalated | unchanged"}],
   "stuck_items": {

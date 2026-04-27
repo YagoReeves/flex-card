@@ -93,15 +93,19 @@ For each result, capture:
 
 If `summary` is empty / very short (<200 chars): the AI summary may be unreliable. Fall back to `mcp__claude_ai_Granola__get_meeting_transcript` for that single meeting and use the first ~5000 chars of the transcript instead. Note this in the artefact (`fallback_to_transcript: true`).
 
-### 5. Extract candidates per meeting
+### 5. Extract candidates per meeting (two streams)
 
-For each summary (or transcript fallback), apply the extraction rules from `prompts/granola_extract.md` step 3 — strict criteria, false-positives-are-worse-than-false-negatives. Cap at **3 candidates per meeting** (strictness over completeness; if more than 3 qualify, keep the 3 most clear-cut).
+For each summary (or transcript fallback), extract **two parallel candidate streams** following `prompts/granola_extract.md`:
 
-For each candidate, build a **rephrased imperative actionable** (concrete, not a quote) and capture the source quote (≤120 chars).
+**5a. Action Item candidates** — apply rules from extract.md Step 3 (strict imperative-with-owner-or-partner-deliverable). Cap **3 candidates per meeting**. Build a rephrased imperative actionable + source quote (≤120 chars).
 
-### 6. Dedup against Action Items DB
+**5b. Central Memory candidates** — apply rules from extract.md Step 3b. Cap **3 candidates per meeting**. Build Entry (~6 words), Summary (1–2 sentences), Category (`Risk` / `Issue` / `Decision` / `Commitment` / `Idea`), suggested Workstream + Severity + Partner per the rules, source quote (≤120 chars). Critical-path-risk mapping: if the entry maps to a critical-path risk in `project_context.md` §4, set `Severity = High` and tag `[critical-path-risk: 1]` or `[critical-path-risk: 2]` in the body. Otherwise leave Severity blank.
 
-For each candidate from step 5, query the Action Items DB:
+**Cross-stream rule**: a single source quote may produce one item in each stream (an Action Item *and* a Central Memory entry). Don't drop one to capture the other. But a discussion that's purely procedural (scheduling, meeting admin) qualifies for neither.
+
+### 6. Dedup — both streams
+
+**6a. Action Items dedup**. For each candidate from 5a, query the Action Items DB:
 ```sql
 SELECT * FROM "collection://52101c73-4538-4710-8327-797e8445dcc5"
 WHERE Status IN ('Proposed', 'Active')
@@ -112,7 +116,16 @@ A candidate is a **fuzzy match** to an existing row if the imperative title over
 
 For each fuzzy-match skip: log under `candidates_skipped` in the artefact (with the existing page URL for traceability).
 
-### 7. Write surviving candidates to Action Items DB
+**6b. Central Memory dedup**. For each CM candidate from 5b, query the Central Memory DB:
+```sql
+SELECT * FROM "collection://33e5c63b-8745-8199-ab41-000bbbcaaf18"
+WHERE Status IN ('Logged', 'In Progress')
+  AND Created > (date('now', '-14 days'))
+```
+
+Fuzzy-match same rules as 6a (case-insensitive substring on Entry, OR ≥3 significant shared keywords on Entry+Summary). Same "when in doubt, treat as new" stance. For each fuzzy-match skip: log under `central_memory_skipped` in the artefact.
+
+### 7a. Write surviving Action Items to the Action Items DB
 
 For each candidate that survived dedup, use `mcp__claude_ai_Notion__notion-create-pages` with parent `data_source_id = 52101c73-4538-4710-8327-797e8445dcc5`. Schema (verified live):
 
@@ -132,7 +145,30 @@ Capture each write's resulting Notion page URL — these go in the artefact.
 
 If a single candidate write fails: log it (`candidates_failed_to_write`) and continue. Do not abort the whole sweep.
 
-If DRY_RUN: skip all Notion writes. Build the candidate list and return it in the response.
+### 7b. Write surviving Central Memory entries to the Central Memory DB
+
+For each CM candidate that survived 6b dedup, use `mcp__claude_ai_Notion__notion-create-pages` with parent `data_source_id = 33e5c63b-8745-8199-ab41-000bbbcaaf18`. Schema (verified live 2026-04-27 evening):
+
+- **Entry** (title): the ~6-word entry title from 5b
+- **Summary** (text): 1–2 sentences capturing the content
+- **Next Step** (text): if obvious from source; else blank
+- **Category** (select, exact value): one of `[Risk, Issue, Decision, Commitment, Idea]`
+- **Workstream** (select): same 10-option list as Action Items DB
+- **Status** (status type, exact value): `Logged` — always
+- **Severity** (select): `High` only if mapped to critical-path risk per 5b; else leave blank
+- **Responsible** (person): leave blank — Jago tags manually
+- **Partner** (select, optional): partner name if entry is partner-specific; else blank. Exact value from `[WebBank, Marqeta, Mastercard, Peach, Indebted, TabaPay, Pinwheel, Idemia, IC Payments, I2C]`
+- **Source** (select, exact value): `Meeting`
+- **Source Link** (url): `https://notes.granola.ai/t/<meeting_id>`
+- **Source Context** (text): `<Meeting title>, <YYYY-MM-DD> — "<short verbatim quote>"` (quote ≤120 chars)
+- **Due Date** (date `date:Due Date:start`): only if explicit decision-deadline / commitment-due in source; else blank
+- Page body: 1–2 short paragraphs of context if Summary alone won't carry it; include `[critical-path-risk: N]` tag if Severity was set to High via the §4 mapping.
+
+Capture each write's resulting Notion page URL — these go into the artefact under `central_memory_written`.
+
+If a single CM write fails: log under `central_memory_failed_to_write` and continue. Do not abort the sweep.
+
+If DRY_RUN: skip all Notion writes (both streams). Build the full candidate list (action items + CM) and return it in the response.
 
 ### 8. Persist artefact
 
@@ -172,6 +208,27 @@ Write `snapshots/granola_sweep_<TODAY>.json`:
   "candidates_failed_to_write": [
     {"actionable": "...", "meeting_title": "...", "error": "..."}
   ],
+  "central_memory_written": [
+    {
+      "entry": "...",
+      "category": "Risk | Issue | Decision | Commitment | Idea",
+      "severity": "High | null",
+      "workstream": "...",
+      "partner": "<or null>",
+      "meeting_id": "...",
+      "meeting_title": "...",
+      "meeting_date": "<ISO8601>",
+      "granola_url": "...",
+      "notion_page_url": "...",
+      "critical_path_risk_ref": "1 | 2 | null"
+    }
+  ],
+  "central_memory_skipped": [
+    {"entry": "...", "category": "...", "meeting_title": "...", "existing_page_url": "...", "reason": "fuzzy-match"}
+  ],
+  "central_memory_failed_to_write": [
+    {"entry": "...", "category": "...", "meeting_title": "...", "error": "..."}
+  ],
   "grey_zone_meetings": [
     {
       "meeting_id": "...",
@@ -195,7 +252,7 @@ If DRY_RUN: skip the next git block.
 git fetch origin main
 git checkout -B main origin/main
 git add snapshots/granola_sweep_<TODAY>.json
-git commit -m "Granola Sweep <TODAY>: <auto_processed_count> meetings auto-processed, <candidates_written length> written, <grey_zone_count> grey-zone"
+git commit -m "Granola Sweep <TODAY>: <auto_processed_count> meetings · <candidates_written length> AI · <central_memory_written length> CM · <grey_zone_count> grey-zone"
 git push origin main
 ```
 
@@ -222,7 +279,7 @@ If `git push` fails (auth, branch protection, non-FF): log the failure but do no
 
 ## Final return value
 
-- **LIVE, success**: `"Sweep <TODAY>: <auto_processed_count> auto-processed, <candidates_written count> written, <candidates_skipped count> deduped, <grey_zone_count> grey-zone"`. No preamble.
+- **LIVE, success**: `"Sweep <TODAY>: <auto_processed_count> auto-processed · AI <candidates_written count>w/<candidates_skipped count>d · CM <central_memory_written count>w/<central_memory_skipped count>d · <grey_zone_count> grey-zone"`. No preamble.
 - **LIVE, idempotent retry**: `"Already swept today: snapshots/granola_sweep_<TODAY>.json"`.
 - **LIVE, artefact-write failure**: `"Sweep <TODAY>: FAILED · <permalink>"` (with the Slack permalink from the failure digest).
 - **DRY_RUN**: a structured JSON report of the candidate list (would-write) and grey-zone meetings, plus the counts. Do not post to Slack, do not write artefact.

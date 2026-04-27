@@ -150,8 +150,8 @@ If a single candidate write fails: log it (`candidates_failed_to_write`) and con
 For each CM candidate that survived 6b dedup, use `mcp__claude_ai_Notion__notion-create-pages` with parent `data_source_id = 33e5c63b-8745-8199-ab41-000bbbcaaf18`. Schema (verified live 2026-04-27 evening):
 
 - **Entry** (title): the ~6-word entry title from 5b
-- **Summary** (text): 1–2 sentences capturing the content
-- **Next Step** (text): if obvious from source; else blank
+- **Summary** (text): **Mandatory.** One to two sentences capturing what this is at a glance. The DB's list view should be readable without opening any page. Don't leave blank.
+- **Next Step** (text): **Mandatory.** Either (a) the immediate next action to progress this entry, or (b) for already-`Decided` / `Resolved` entries, the final decision/resolution. If genuinely unknown at sweep time, populate with `Awaiting triage`. Don't leave blank.
 - **Category** (select, exact value): one of `[Risk, Issue, Decision, Commitment, Idea]`
 - **Workstream** (select): same 10-option list as Action Items DB
 - **Status** (status type, exact value): `Logged` — always

@@ -54,7 +54,7 @@ Data source: `collection://33e5c63b-8745-8199-ab41-000bbbcaaf18` (Central Memory
 
 Three queries, surfaced together:
 
-- **Newly Logged today** — filter `Status = Logged` AND `Created >= today (00:00 local)`. List: Entry, Category, Workstream, Severity (or `—`), Notion page link. These are entries the routines (Sweep / future Brief auto-write) added overnight or this morning. Cap 5; if more, append `(+N more)`.
+- **Newly added today** — filter `Status IN (Logged, In Progress)` AND `Created >= today (00:00 local)`. List: Entry, Category, Workstream, Status, Severity (or `—`), Notion page link. These are entries added overnight or this morning by the routines, manual extractor, or directly by Jago. Includes `In Progress` items (e.g. pending Decisions written with Status pre-set). Cap 5; if more, append `(+N more)`.
 - **High-severity untriaged** — filter `Status = Logged` AND `Severity = High`, regardless of age. List: Entry, Category, Workstream, days-since-created, page link. **Why**: critical-path-mapped entries shouldn't sit in Logged for days; surface every day until triaged.
 - **Stale-untriaged nudge** — count rows where `Status = Logged` AND `Created < today - 3 days` AND `Severity != High` (since High is already surfaced above). If `> 0`, surface as a nudge line: `:warning: <N> Logged Central Memory entries > 3 days old — needs triage in Notion.`
 
@@ -202,8 +202,8 @@ Return **one markdown message** suitable for posting to Slack. Use Slack mrkdwn 
 :warning: <N> Proposed items > 3 days old — needs triage in Notion.   ← only if N > 0
 
 *Central Memory*
-_Newly Logged today:_
-• <Entry> — <Category> — <Workstream> — <Severity or "—"> — <Notion link>
+_Newly added today:_
+• <Entry> — <Category> — <Status> — <Workstream> — <Severity or "—"> — <Notion link>
 ... or "_None added today._"
 _High-severity untriaged:_
 • <Entry> — <Category> — <Workstream> — <N> days since created — <Notion link>
@@ -271,8 +271,8 @@ Schema:
     {"notion_page_id": "...", "title": "...", "partner_owner": "<WebBank|Marqeta|...>", "due": "<YYYY-MM-DD or null>", "days_since_last_nudged": 0, "last_nudged_null": false, "priority": "..."}
   ],
   "central_memory": {
-    "newly_logged_today": [
-      {"notion_page_id": "...", "entry": "...", "category": "Risk|Issue|Decision|Commitment|Idea", "workstream": "...", "severity": "High|Medium|Low|null", "partner": "<or null>", "notion_url": "..."}
+    "newly_added_today": [
+      {"notion_page_id": "...", "entry": "...", "category": "Risk|Issue|Decision|Commitment|Idea", "status": "Logged|In Progress", "workstream": "...", "severity": "High|Medium|Low|null", "partner": "<or null>", "notion_url": "..."}
     ],
     "high_severity_untriaged": [
       {"notion_page_id": "...", "entry": "...", "category": "...", "workstream": "...", "days_since_created": 0, "notion_url": "..."}

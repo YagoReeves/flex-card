@@ -128,8 +128,8 @@ Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5`. Use `mcp__clau
 Data source: `collection://33e5c63b-8745-8199-ab41-000bbbcaaf18`. Use `mcp__claude_ai_Notion__notion-create-pages` with one page per approved entry. Schema (verified live 2026-04-27 evening after field additions):
 
 - **Entry** (title): the approved short name (~6 words)
-- **Summary** (text): one to two sentences capturing what this is.
-- **Next Step** (text): if obvious from the source ("review with outside counsel", "monitor for partner reply"); else leave blank.
+- **Summary** (text): **Mandatory.** One to two sentences capturing what this is at a glance — Jago should be able to scan the DB list view and understand each entry without opening the page. Don't leave blank.
+- **Next Step** (text): **Mandatory.** Either (a) the immediate next action to progress this entry (e.g. *"Reach decision at Tuesday call"*, *"Monitor WebBank reply"*, *"Escalate to Jared"*), OR (b) for entries already at `Decided` / `Resolved` status, the final decision/resolution captured in shortform. If genuinely unknown at write time, populate with `Awaiting triage` rather than leaving blank.
 - **Category** (select, exact value): one of `[Risk, Issue, Decision, Commitment, Idea]`.
 - **Workstream** (select): same 10-option list as Action Items DB. Default to `Programme` if genuinely cross-cutting.
 - **Status** (status type, exact value): `Logged`. Always. Jago triages forward in Notion.

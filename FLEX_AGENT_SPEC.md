@@ -117,7 +117,7 @@ Non-goals for v1: custom dashboard, conversational Slack bot with its own identi
 - **Interactive session** (Claude in terminal). Same MCP access. Used for ad-hoc questions, investigations, and occasional manual-trigger commands (e.g. post-meeting action-item extraction).
 
 **Shared state:**
-- **GitHub repo** `https://github.com/YagoReeves/flex-card` (private, owner `YagoReeves`) — single source of truth for prompts, spec, and WebBank snapshot history. Both production routines have it attached as a working-dir source with `allow_unrestricted_git_push: true`, so they read prompts via native `Read` tool and the Sync `git push`es daily snapshot/diff JSONs to `main` directly. Local clone at `/Users/jago.r/Documents/flex_card/`.
+- **GitHub repo** `https://github.com/YagoReeves/flex-card` (private, owner `YagoReeves`) — single source of truth for prompts, spec, and WebBank snapshot history. Both production routines have it attached as a working-dir source with `allow_unrestricted_git_push: true`, so they read prompts via native `Read` tool and the Sync `git push`es daily snapshot/diff JSONs to `main` directly. Local clone at `/Users/jago.r/Documents/credit_pillar/flex_card/` (moved 2026-04-27 from `/Users/jago.r/Documents/flex_card/` when the wider `credit_pillar/` umbrella folder was introduced; cloud routines unaffected — they clone the GitHub remote fresh each fire).
 - **Notion** — Flex Hub workspace; Action Items DB + WebBank Mirror DB owned by the agent. Mirror DB is the live queryable state; Notion MCP is the routine's read/write surface for it.
 - **Local-only directories** (not used by routines, kept for human-side reference): `staging/` holds the original 2026-04-24 seed parse artifacts.
 - **Slack** — `#flex-agent-jago` (private channel) as the draft/review surface and the Sync's daily digest destination.
@@ -202,7 +202,7 @@ Plus: any `@`-mention of Jago anywhere Flex-adjacent. Lists grow as new partners
 - [x] Fix CLAUDE.md typo (Marketta → Marqeta)
 - [x] Write this spec
 - [x] Write memory pointer
-- [x] Create `staging/` and `snapshots/` directories in `/Users/jago.r/Documents/flex_card/`
+- [x] Create `staging/` and `snapshots/` directories in the local clone (now at `/Users/jago.r/Documents/credit_pillar/flex_card/` post 2026-04-27 move)
 - [x] Create private Slack channel `#flex-agent-jago`
 
 ### Phase 1 — Foundations

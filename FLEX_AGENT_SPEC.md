@@ -49,7 +49,7 @@
 *Then work down the audit backlog (next section).*
 
 **Open for Jago (manual, anytime):**
-- (In Notion UI) group the two Agent-owned DBs into a toggle section under Flex Hub's Central Memory — Notion API was blocking the auto-insert.
+- _(none)_
 
 **Audit backlog:**
 
@@ -106,7 +106,7 @@ Non-goals for v1: custom dashboard, conversational Slack bot with its own identi
 
 - **Human-in-loop, but at the right step.** Original design called for Slack-thread approval before every Notion write, gated by a 15-min approval sweep. Reality (as of 2026-04-26): Brief + Sync auto-write to Notion as `Proposed` rows; review happens in Notion (assign Owner → Active, or delete/`Rejected`). Weekly Mon/Fri post drafts; Jago manually edits + republishes onward. The principle is preserved (nothing reaches the team without Jago's review), but the *step* moved from Slack-thread to Notion-triage and manual-publish. Approval Sweep retired. Graduation review **2026-05-08** evaluates whether Weekly outputs can publish directly to `#product-cleo-card`.
 - **Slack is the review surface.** All drafts land in `#flex-agent-jago`. No Notion review pages.
-- **Notion hub stays human-curated.** The agent writes only to two new DBs it owns (Action Items, WebBank Mirror). Existing DBs (Central Memory, Timelines, Meeting Notes, Key Decision Log, Banking Ops Checklist) are read-only from the agent's perspective.
+- **Notion hub stays human-curated.** The agent writes only to three DBs it owns — Action Items, WebBank Mirror, and Weekly Progress Log — grouped under the **Agent-managed Databases** toggle on the Flex Hub page. Existing DBs (Central Memory, Timelines, Meeting Notes, Key Decision Log, Banking Ops Checklist) are read-only from the agent's perspective.
 - **Confidential content stays confidential.** Box/WebBank content summarised in-session only — never copied verbatim into Slack, Gmail, or unrestricted Notion pages.
 - **Stateless runs, shared state.** Scheduled jobs persist nothing between runs; all state lives in Notion + a local `staging/` folder.
 
@@ -209,7 +209,7 @@ Plus: any `@`-mention of Jago anywhere Flex-adjacent. Lists grow as new partners
 - [x] Inspect WebBank Excel structure via Box MCP (text extraction works despite `canDownload: false`)
 - [x] Create **Flex Action Items DB** in Notion — `https://www.notion.so/ca353d70ea9b417ca10c10fd1c391995` · data source `collection://52101c73-4538-4710-8327-797e8445dcc5`
 - [x] Create **WebBank Mirror DB** in Notion — `https://www.notion.so/f534187e1f12499bbad85bb9e52b6740` · data source `collection://a31ff0cd-3aaa-434a-815d-0c8dcc8ba53f`
-- [ ] **Manual (Jago, in Notion UI)**: group the two DBs under a new "Agent-owned DBs" toggle section below Central Memory on the Flex Hub page. Notion API validator blocked the automated edit.
+- [x] **Manual (Jago, in Notion UI)**: grouped the three Agent-managed DBs (Action Items, WebBank Mirror, Weekly Progress Log) under an **Agent-managed Databases** toggle on the Flex Hub page (closed 2026-04-27). Notion API had blocked the automated edit, so done by hand.
 - [x] Build **Daily Morning Brief** routine — live end-to-end. Cron `53 7 * * 1-5` (07:53 UTC = 08:53 Europe/London BST). Routine ID `trig_0168M4zWyESpqBw57f9PDXfp`. Model: `claude-sonnet-4-6`. MCP connections attached: Slack, Notion, Granola, Google-Calendar, Gmail. Repo source attached: `YagoReeves/flex-card` with `allow_unrestricted_git_push: true`. Wrapper-pattern prompt (Reads `prompts/daily_brief.md` from working dir).
 - [x] One-shot DST reminder routine to bump crons pre-GMT switch — `trig_01EreY3zZT6e7sVapd6g9LVU`, fires Mon 19 Oct 2026 (UK switches BST→GMT Sun 25 Oct). Reminds Jago to update both routine crons by +1 UTC hour.
 - [~] **Approval Sweep** — obsoleted 2026-04-26. Brief now auto-writes Slack candidates as `Status = Proposed` rows in the Action Items DB; Jago triages (assigns owner → `Active`, or deletes/`Rejected`). Weekly drafts are manually edited+published by Jago. Only Job 2 (Meeting Action Item Extractor) might revisit — likely also auto-writes Proposed rows when built.

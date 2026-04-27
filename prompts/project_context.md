@@ -59,7 +59,7 @@ UAT readiness by end of September 2026 is the squad's anchor commitment.
 
 Every Brief should weigh signal against these. If a finding maps to one of these risks, surface it explicitly.
 
-1. **Product complexity** — ACH solution between Marqeta and WebBank still being locked in. Marqeta agreement gated on ACH resolution. Mastercard CIS / BIN assignment gated on Marqeta agreement. Idemia plastics has a 3-month lead time post-BIN.
+1. **Bank & Compliance — product-classification challenge** — WebBank's Legal Counsel is raising debit/hybrid recharacterisation and Reg II concerns on the Flex product construct. Outside counsel review (Paul Hastings) outstanding. Cleo currently engaging without an OC-backed legal position — risk of scope challenge or material redesign.
 2. **Partner approval delays** — Flex is partner-heavy by design (5-way: WebBank + Mastercard + Marqeta + Idemia + TabaPay). Each of 19 MVP features needs approvals from one or more. Approval cycles are outside Cleo's direct control.
 
 ---
@@ -84,7 +84,7 @@ This is the canonical 10-workstream taxonomy used in the Flex Hub. **Bucket all 
 ### Sub-workstreams (currently active priorities under Platform Foundations)
 
 - **Marqeta migration / implementation** — codebase refactor, sandbox + production environments, JIT integration, API work, migration of existing CBC cardholders from I2C to Marqeta. Currently the largest live build.
-- **Mastercard BIN setup** — CIS project initiation and BIN assignment with Mastercard. Gates Idemia plastics and Push Provisioning. Currently a top blocker.
+- **Mastercard BIN setup** — CIS project initiation and BIN assignment with Mastercard. Gates Idemia plastics and Push Provisioning. Pending confirmed timeline and plan from Mastercard/WebBank.
 
 Treat these two as workstreams in their own right when surfacing signal — they're large enough that lumping them into "Platform Foundations" loses resolution.
 

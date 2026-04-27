@@ -1,0 +1,143 @@
+{
+  "date": "2026-04-27",
+  "generated_at_utc": "2026-04-27T08:14:39Z",
+  "mode": "LIVE",
+  "slack_permalink": "https://cleo-team.slack.com/archives/C0AV07H9QPP/p1777278879756179",
+  "rendered_slack_text": ":robot_face: *[FLEX AGENT] Weekly Monday — week of 2026-04-27*\n_Draft week-ahead. Review, edit, publish to #product-cleo-card when ready._\n\n*Carrying over from last week*\n_First weekly cycle — no prior review to reference._\n\n*This week's meetings*\n*Mon* — Flex Card X-Team Alignment @ 16:30 — Maia, Lea, Tylar, Maddie Ford, John B, Louise, Ladi + Jago (organiser)\n*Mon* — Cleo New Product Implementation Call @ 17:00 — WebBank (Jenna Hansen, Derek Carter, Cade Sorensen, Ali Bowman + 8 more WB) + Cleo squad (~15) — prep: WB focusing on product construct + JIT funding; LC Josh attending for product-classification discussion\n*Wed* — [External] Cleo<>Marqeta Product Deep Dive @ 16:00 — Marqeta (Jared Wright, J. Mah + 8 more) + Cleo eng squad (Ladi, Lea, Alex.M, Gavin, Charly + more)\n*Thu* — Cleo New Product Implementation Call (Thurs.) @ 15:30 — WebBank + Cleo squad\n*Thu* — [External] Cleo<>Marqeta Product Deep Dive @ 16:00 — Marqeta + Cleo eng squad\n\n*Action items by owner*\n*Jago*\n• Chase outside counsel's analysis on Flex Card product classification — — — P0\n• Get sandbox access timeline from Marqeta — — — P0\n• Push Marqeta for 2x weekly 2-hour live sessions for next few weeks — — — P0\n• Set up weekly 3-way recurring (Jago + Ladi + Lea) on WebBank + Marqeta — — — P1\n*Ladi*\n• Share multi-use card options doc with Jago + Dogan — — — P2\n\n*WebBank checklist state*\n• Total: 94 rows · Not Started: 91 · In Review: 3 · Done: 0 · Blocked: 0\n• Party leaders: SP (~48), Compliance (~44), BSA (~22), Other (~18), Credit (~11)\n• Status changes since last Friday: 2 (DP11.1 Flex Card ACH Bill Pay + DP11.2 Flex Card ACH Direct Deposit — both added at In Review); +14 net new items added to checklist since 2026-04-24\n_Due-date prioritisation pending internal review._\n\n*Weekend signal* (team-relevant only)\n• jwright@marqeta.com — Cleo <> Marqeta Update 4/24/26 — Partial MQ technical answers received; more responses pending — ⚠️ awaiting Jago reply — https://mail.google.com/mail/u/0/#inbox/19dc17cb88ded9ae\n• jmah@marqeta.com — Re: Cleo <> Marqeta — Sandbox IPs whitelisted; Mastercard Passkeys timeline update from MQ product team — ⚠️ awaiting Jago reply — https://mail.google.com/mail/u/0/#inbox/19db683120585792\n• jenna.hansen@webbank.com — RE: Cleo 4/27 Agenda — WB confirmed scope for today's Mon call; LC Josh attending — https://mail.google.com/mail/u/0/#inbox/19dc01dd11ddc57e\n• jwright@marqeta.com — Marqeta Product Deep Dive invites (x2) — Wed 29 + Thu 30 Apr 16:00–17:00 BST — needs accept/decline — https://mail.google.com/mail/u/0/#inbox/19dc17eb28576848\n\n*Top risks*\n• Bank & Compliance (CP Risk #2): WB LC Josh raising product-classification challenge today (debit/hybrid recharacterisation, Reg II) — Cleo entering without OC-backed legal position\n• Bank & Compliance: Outside counsel analysis outstanding — no response yet from Colin Jones; P0 action item unresolved\n• Platform Foundations / Marqeta (CP Risk #1): Eng sandbox still blocked; no confirmed timeline — Marqeta deep-dives Wed/Thu are the next credible gate\n• Card Issuance & Fulfilment (CP Risk #1): Mastercard BIN gated on Marqeta agreement (gated on ACH resolution) — Idemia 3-month plastics lead time hasn't started",
+  "weekend_signal": {
+    "from_daily_brief": true,
+    "daily_brief_date": "2026-04-27",
+    "team_relevant_emails": [
+      {
+        "sender": "jwright@marqeta.com",
+        "subject": "Cleo <> Marqeta Update - 4/24/26",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19dc17cb88ded9ae"
+      },
+      {
+        "sender": "jmah@marqeta.com",
+        "subject": "Re: Cleo <> Marqeta",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19db683120585792"
+      },
+      {
+        "sender": "jenna.hansen@webbank.com",
+        "subject": "RE: [EXTERNAL] Cleo 4/27 Agenda",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19dc01dd11ddc57e"
+      },
+      {
+        "sender": "jwright@marqeta.com",
+        "subject": "Invitation: [External] Cleo<>Marqeta Product Deep Dive @ Wed 29 Apr & Thu 30 Apr 2026 16:00-17:00 BST",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19dc17eb28576848"
+      }
+    ],
+    "team_relevant_slack": []
+  },
+  "continuity": {
+    "from_last_friday": false,
+    "last_friday_date": "2026-04-24",
+    "carryover_items": []
+  },
+  "meetings_by_day": {
+    "Mon": [
+      {
+        "title": "Flex Card X-Team Alignment",
+        "time_local": "16:30",
+        "attendees_summary": "Maia, Lea, Tylar, Maddie Ford, John B, Louise, Ladi + Jago (organiser)",
+        "prep_pointer": null
+      },
+      {
+        "title": "Cleo New Product Implementation Call (Mon.)",
+        "time_local": "17:00",
+        "attendees_summary": "WebBank (Jenna Hansen, Derek Carter, Cade Sorensen, Ali Bowman + 8 more WB) + Cleo squad (~15)",
+        "prep_pointer": "WB focusing on product construct + JIT funding; LC Josh attending for product-classification discussion"
+      }
+    ],
+    "Tue": [],
+    "Wed": [
+      {
+        "title": "[External] Cleo<>Marqeta Product Deep Dive",
+        "time_local": "16:00",
+        "attendees_summary": "Marqeta (Jared Wright, J. Mah + 8 more) + Cleo eng squad (Ladi, Lea, Alex.M, Gavin, Charly + more)",
+        "prep_pointer": null
+      }
+    ],
+    "Thu": [
+      {
+        "title": "Cleo New Product Implementation Call (Thurs.)",
+        "time_local": "15:30",
+        "attendees_summary": "WebBank + Cleo squad",
+        "prep_pointer": null
+      },
+      {
+        "title": "[External] Cleo<>Marqeta Product Deep Dive",
+        "time_local": "16:00",
+        "attendees_summary": "Marqeta + Cleo eng squad",
+        "prep_pointer": null
+      }
+    ],
+    "Fri": []
+  },
+  "action_items_by_owner": {
+    "Jago": [
+      {
+        "title": "Chase outside counsel's analysis on Flex Card product classification",
+        "due": null,
+        "priority": "P0",
+        "overdue": false
+      },
+      {
+        "title": "Get sandbox access timeline from Marqeta",
+        "due": null,
+        "priority": "P0",
+        "overdue": false
+      },
+      {
+        "title": "Push Marqeta for 2x weekly 2-hour live sessions for next few weeks",
+        "due": null,
+        "priority": "P0",
+        "overdue": false
+      },
+      {
+        "title": "Set up weekly 3-way recurring (Jago + Ladi + Lea) on WebBank + Marqeta",
+        "due": null,
+        "priority": "P1",
+        "overdue": false
+      }
+    ],
+    "Ladi": [
+      {
+        "title": "Share multi-use card options doc with Jago + Dogan",
+        "due": null,
+        "priority": "P2",
+        "overdue": false
+      }
+    ]
+  },
+  "webbank_aggregate": {
+    "total": 94,
+    "by_status": {
+      "Not Started": 91,
+      "In Review": 3,
+      "Done": 0,
+      "Blocked": 0
+    },
+    "by_party_top5": {
+      "SP": 48,
+      "Compliance": 44,
+      "BSA": 22,
+      "Other": 18,
+      "Credit": 11
+    },
+    "status_changes_since_last_friday": 2,
+    "highlights": [
+      "DP11.1 Flex Card ACH Bill Pay — added at In Review",
+      "DP11.2 Flex Card ACH Direct Deposit — added at In Review",
+      "+14 net new items added to checklist since 2026-04-24"
+    ]
+  },
+  "top_risks": [
+    "Bank & Compliance (CP Risk #2): WB LC Josh raising product-classification challenge today (debit/hybrid recharacterisation, Reg II) — Cleo entering without OC-backed legal position",
+    "Bank & Compliance: Outside counsel analysis outstanding — no response yet from Colin Jones; P0 action item unresolved",
+    "Platform Foundations / Marqeta (CP Risk #1): Eng sandbox still blocked; no confirmed timeline — Marqeta deep-dives Wed/Thu are the next credible gate",
+    "Card Issuance & Fulfilment (CP Risk #1): Mastercard BIN gated on Marqeta agreement (gated on ACH resolution) — Idemia 3-month plastics lead time hasn't started"
+  ]
+}

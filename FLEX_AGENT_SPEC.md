@@ -31,6 +31,7 @@
 
 *Today (2026-04-27) — already validated:*
 - ✅ Granola Sweep, WebBank Sync, Daily Brief — all three re-fired manually after the morning fix; commits `88699a1`, `2ced6d4`, `16e35ec` landed directly on `origin/main`, no side branches.
+- ✅ **Action-item ID-based re-resolve** — Daily Brief, Weekly Monday, Weekly Friday now persist `notion_page_id` for every action-item reference in their artefacts. Weekly Monday's continuity check switched from title-match to ID-match against last Friday's `commitments_for_next_week`, fixing a stale-render bug where Notion edits (title/owner) didn't propagate downstream. Live Notion DB is the source of truth for title/owner/status/due — snapshots are pointer indexes only. Manual Notion additions by Jago are unaffected (queries are source-agnostic — filter by Status, group by Owner). Schema change is forward-compatible: legacy entries without `notion_page_id` fall back to fuzzy title match.
 
 *Today (2026-04-27) — still to fire naturally:*
 1. **~09:00 BST Weekly Monday fire** — first cycle. Cron temporarily bumped to `0 8 * * 1` (09:00 BST) for today only to avoid colliding with morning fix-and-validate work; **revert to `30 7 * * 1` (08:30 BST) post-fire**. First-cycle behaviour: `had_week_ahead_plan = false`, no carry-over from prior Friday. Watch artefact lands on `main`.

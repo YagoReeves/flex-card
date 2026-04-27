@@ -41,6 +41,8 @@ Before gathering any inputs, `Read prompts/project_context.md` from the working 
 
 Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action Items DB).
 
+**The live Notion DB is the source of truth.** Always query at fire time. Capture `notion_page_id` per row in the artefact so next Monday's continuity check can re-resolve by ID. When a row was raised earlier this week (visible in the daily-brief artefacts) and you want its current state, query by `notion_page_id` — never title-match against the old snapshot.
+
 - **Shipped this week**: filter `Status = Done` AND last-edited within this week's window. List title, owner, original due date.
 - **Slipped this week**: filter `Status = Active` AND `Due` between this Monday and today. List title, owner, due, days-overdue.
 - **Carrying slip from prior weeks**: filter `Status = Active` AND `Due < this Monday`. List title, owner, due, days-overdue. Only the top 5 by oldest-due — anything beyond gets `(+N more older slips)`.
@@ -102,7 +104,7 @@ Compile up to 7 commitments. Sources, in priority order:
 - Explicit commitments made during the week — captured Slack actionables with stated due-next-week, decisions logged in Central Memory.
 - Slipped items being carried over with a fresh commitment to close.
 
-For each: title, owner, source (action-item / WebBank / explicit), expected outcome by next Friday.
+For each: title, owner, source (action-item / WebBank / explicit), expected outcome by next Friday. **For action-item-sourced commitments, capture `notion_page_id`** so next Monday re-resolves by ID rather than fuzzy-matching titles (which break when titles get edited in Notion).
 
 If <3 commitments materialise, output what you have and flag in the artefact `low_commitments_signal: true` — the team may not have alignment on next week.
 
@@ -234,9 +236,9 @@ After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the work
   "rendered_slack_text": "<full markdown body>",
   "had_week_ahead_plan": true,
   "missing_daily_brief_days": [],
-  "shipped": [{"title": "...", "owner": "...", "closed_day": "..."}],
-  "slipped_this_week": [{"title": "...", "owner": "...", "due": "...", "days_overdue": 0}],
-  "carrying_older_slips": [{"title": "...", "owner": "...", "due": "...", "days_overdue": 0}],
+  "shipped": [{"notion_page_id": "...", "title": "...", "owner": "...", "closed_day": "..."}],
+  "slipped_this_week": [{"notion_page_id": "...", "title": "...", "owner": "...", "due": "...", "days_overdue": 0}],
+  "carrying_older_slips": [{"notion_page_id": "...", "title": "...", "owner": "...", "due": "...", "days_overdue": 0}],
   "webbank_delta": {
     "baseline_date": "<this-monday or last-friday>",
     "moved_forward": 0,
@@ -245,16 +247,16 @@ After posting to Slack, write `snapshots/weekly_friday_<today>.json` to the work
     "removed": 0,
     "highlights": ["..."]
   },
-  "triage_queue_this_week": [{"title": "...", "source_channel": "#...", "days_in_queue": 0, "notion_page_url": "..."}],
+  "triage_queue_this_week": [{"notion_page_id": "...", "title": "...", "source_channel": "#...", "days_in_queue": 0, "notion_page_url": "..."}],
   "decisions_this_week": [{"title": "...", "summary": "..."}],
   "risk_movements": [{"risk": "...", "state": "resolved | escalated | unchanged"}],
   "stuck_items": {
-    "action_items": [{"title": "...", "owner": "...", "days_since_created": 0, "workstream": "..."}],
+    "action_items": [{"notion_page_id": "...", "title": "...", "owner": "...", "days_since_created": 0, "workstream": "..."}],
     "webbank": [{"code": "...", "name": "...", "status": "...", "days_unchanged": 0}],
     "cold_partner_threads": [{"partner": "...", "subject": "...", "days_since_last_activity": 0, "gmail_available": true}]
   },
   "commitments_for_next_week": [
-    {"title": "...", "owner": "...", "source": "action-item | webbank | explicit", "expected_outcome": "..."}
+    {"notion_page_id": "<or null if non-action-item>", "title": "...", "owner": "...", "source": "action-item | webbank | explicit", "expected_outcome": "..."}
   ],
   "low_commitments_signal": false,
   "workstream_log_entries": {

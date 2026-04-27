@@ -43,7 +43,7 @@ When in doubt, drop. False positives clutter the team's view; false negatives Ja
 
 - Use `Read` to load `snapshots/weekly_friday_<last-friday>.json`.
 - If present: pull the `commitments_for_next_week` array (items the team flagged Friday as priorities for this week). For each, check current status:
-  - Action items: query the Action Items DB by title to see if status changed.
+  - Action items: each carryover entry carries a `notion_page_id`. Query the Action Items DB by ID and use the live row's title/owner/status/due — **not** the snapshot value. Title and owner can change in Notion; ID is stable. If a row no longer exists (deleted), fall back to the snapshot title and tag `(deleted in Notion)`. Only fall back to fuzzy title match if `notion_page_id` is missing (legacy entries pre-2026-04-27).
   - WebBank items: cross-reference today's webbank snapshot (see input 4).
   - Other commitments: leave as-is, surface for Jago to verify.
 - Set `continuity.from_last_friday = true` and `continuity.last_friday_date = <date>` in the artefact.
@@ -59,8 +59,9 @@ When in doubt, drop. False positives clutter the team's view; false negatives Ja
 ### 4. Action items by owner (Notion)
 
 - Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action Items DB).
+- **Always query live at fire time.** Notion is the source of truth for title/owner/due — never reuse stale values from prior artefacts.
 - Filter: `Status = Active`.
-- Group by `Owner`. For each owner, list: title, due date (or `—`), priority. Sort within each owner: overdue first, then due-this-week, then no-due/later.
+- Group by `Owner`. For each owner, list: title, due date (or `—`), priority. Sort within each owner: overdue first, then due-this-week, then no-due/later. Capture `notion_page_id` per row so the artefact lets next Friday re-resolve.
 - Tag overdue items with `:warning:`. Tag due-this-week with `:calendar:`.
 - If empty: `_No active action items — DB created 2026-04-24._`.
 
@@ -152,7 +153,7 @@ After posting to Slack, write `snapshots/weekly_monday_<today>.json` to the work
   "continuity": {
     "from_last_friday": true,
     "last_friday_date": "<YYYY-MM-DD>",
-    "carryover_items": [{"commitment": "...", "current_status": "..."}]
+    "carryover_items": [{"notion_page_id": "<or null if non-action-item commitment>", "commitment": "...", "current_status": "..."}]
   },
   "meetings_by_day": {
     "Mon": [{"title": "...", "time_local": "HH:MM", "attendees_summary": "...", "prep_pointer": "..."}],
@@ -162,7 +163,7 @@ After posting to Slack, write `snapshots/weekly_monday_<today>.json` to the work
     "Fri": [...]
   },
   "action_items_by_owner": {
-    "<Owner>": [{"title": "...", "due": "<YYYY-MM-DD or null>", "priority": "...", "overdue": true}]
+    "<Owner>": [{"notion_page_id": "...", "title": "...", "due": "<YYYY-MM-DD or null>", "priority": "...", "overdue": true}]
   },
   "webbank_aggregate": {
     "total": 0,

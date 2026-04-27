@@ -37,7 +37,9 @@ Before gathering any inputs, `Read prompts/project_context.md` from the working 
 
 Data source: `collection://52101c73-4538-4710-8327-797e8445dcc5` (Flex Action Items DB).
 
-- **Active queue**: filter `Status = Active` AND (`Due <= today` OR (`Due IS NULL` AND `Created > 7 days ago`)). List: title, owner, due date, priority.
+**The live Notion DB is the source of truth.** Always query at fire time; never carry action-item title/owner/due forward from prior artefacts as if frozen. Capture `notion_page_id` for every row you reference so downstream routines (Weekly Monday/Friday) can re-resolve by ID.
+
+- **Active queue**: filter `Status = Active` AND (`Due <= today` OR (`Due IS NULL` AND `Created > 7 days ago`)). List: title, owner, due date, priority. Capture `notion_page_id` per row.
 - **Triage queue**: count rows where `Status = Proposed` AND `Created < today - 3 days`. If `> 0`, surface as a triage-nudge line (see output format). These are auto-added Slack candidates that Jago hasn't triaged — they need an owner assigned (→ Active) or to be deleted/marked Rejected.
 - If active queue empty: `_No active action items today._` (still show triage nudge if applicable).
 
@@ -117,7 +119,7 @@ If a fuzzy match exists, skip the write and log it under `slack_candidates_skipp
 - **Due** (date `date:Due:start`): only populate if an explicit due date appears in the source message; leave blank otherwise
 - **Created**: auto-set by Notion
 
-Capture each write's resulting Notion page URL — these are surfaced in the Slack message and the artefact.
+Capture each write's resulting Notion page URL **and page ID** — the URL is surfaced in the Slack message and artefact; the ID is persisted in the artefact so downstream routines can re-resolve by ID.
 
 If none qualify, or all qualifying candidates were dedup-skipped, the Slack section reads: `_No new Slack candidates auto-added today._` (with skipped-count if any).
 
@@ -229,7 +231,7 @@ Schema:
     {"title": "...", "time_local": "HH:MM", "attendees_summary": "...", "prep_pointer": "<link or null>"}
   ],
   "action_items_due": [
-    {"title": "...", "owner": "...", "due": "<YYYY-MM-DD or null>", "priority": "..."}
+    {"notion_page_id": "...", "title": "...", "owner": "...", "due": "<YYYY-MM-DD or null>", "priority": "..."}
   ],
   "inbox": {
     "email": [
@@ -247,7 +249,7 @@ Schema:
     ]
   },
   "slack_candidates_written": [
-    {"actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "notion_page_url": "...", "assumed_due": "<YYYY-MM-DD or null>"}
+    {"actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "notion_page_id": "...", "notion_page_url": "...", "assumed_due": "<YYYY-MM-DD or null>"}
   ],
   "slack_candidates_skipped": [
     {"actionable": "...", "author": "...", "channel": "#...", "thread_link": "...", "existing_page_url": "...", "reason": "fuzzy-match"}

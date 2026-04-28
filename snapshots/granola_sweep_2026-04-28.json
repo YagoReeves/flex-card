@@ -1,0 +1,64 @@
+{
+  "date": "2026-04-28",
+  "day_of_week": "Tuesday",
+  "meetings_window_start": "2026-04-27",
+  "meetings_window_end": "2026-04-27",
+  "generated_at_utc": "2026-04-28T05:48:08Z",
+  "mode": "LIVE",
+  "meetings_scanned": 6,
+  "auto_processed_count": 1,
+  "grey_zone_count": 0,
+  "candidates_written": [
+    {
+      "actionable": "Colin to engage external counsel on Flex wallet/Reg E classification this week",
+      "meeting_id": "543379aa-2fd9-41d4-8471-cfb7ef03c917",
+      "meeting_title": "Flex Card X-Team Alignment",
+      "meeting_date": "2026-04-27T16:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/543379aa-2fd9-41d4-8471-cfb7ef03c917-008umkv4",
+      "workstream": "Bank & Compliance",
+      "notion_page_url": "https://www.notion.so/3505c63b8745815a8935c81d269d11c4",
+      "fallback_to_transcript": false
+    }
+  ],
+  "candidates_skipped": [
+    {
+      "actionable": "Escalate Marqeta migration timeline with Jared",
+      "meeting_title": "Flex Card X-Team Alignment",
+      "existing_page_url": "https://www.notion.so/34e5c63b87458105a52eeeeb5ea66780",
+      "reason": "fuzzy-match"
+    },
+    {
+      "actionable": "Tylar to finalise plastics timeline this week",
+      "meeting_title": "Flex Card X-Team Alignment",
+      "existing_page_url": "https://www.notion.so/34f5c63b8745815f869ddb0c5c71c2c8",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "candidates_failed_to_write": [],
+  "central_memory_written": [],
+  "central_memory_skipped": [
+    {
+      "entry": "Flex wallet/Reg E product-classification risk",
+      "category": "Risk",
+      "meeting_title": "Flex Card X-Team Alignment",
+      "existing_page_url": "https://www.notion.so/34f5c63b8745810885aed9cafe6062e2",
+      "reason": "fuzzy-match"
+    },
+    {
+      "entry": "Marqeta migration timeline (14 May) blocking Card squad",
+      "category": "Issue",
+      "meeting_title": "Flex Card X-Team Alignment",
+      "existing_page_url": "https://www.notion.so/34f5c63b8745811eafb8fd2017886ac2",
+      "reason": "fuzzy-match"
+    },
+    {
+      "entry": "Credit-policy structure (2 vs 3 policies) pending decision",
+      "category": "Decision",
+      "meeting_title": "Flex Card X-Team Alignment",
+      "existing_page_url": "https://www.notion.so/34f5c63b8745811ea2e1eb13491b97df",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "central_memory_failed_to_write": [],
+  "grey_zone_meetings": []
+}

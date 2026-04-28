@@ -1,0 +1,28 @@
+{
+  "today": "2026-04-28",
+  "prev": "2026-04-27",
+  "totals": {
+    "kept_today": 94,
+    "kept_prev": 94
+  },
+  "added": [],
+  "removed": [],
+  "status_changes": [],
+  "note_changes": [
+    {
+      "code": "DD6",
+      "name": "Outgoing ACH & Outgoing ACH - ACH Totals File (2 separate files)",
+      "from": "",
+      "to": "Marqeta to provide"
+    },
+    {
+      "code": "DD7",
+      "name": "Outgoing Returns ACH & Outgoing Returns ACH - ACH Totals File (2 separate files)",
+      "from": "",
+      "to": "Marqeta to provide"
+    }
+  ],
+  "bank_guidance_changes": [],
+  "hyperlink_changes": [],
+  "parties_changes": []
+}

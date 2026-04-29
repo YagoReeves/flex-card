@@ -1,6 +1,6 @@
 # Flex Card — Project Context
 
-Working directory for **Flex Card launch PMO + Flex Agent automation**. Pillar-level context lives one level up at `~/Documents/credit_pillar/CLAUDE.md`. Don't duplicate it.
+Working directory for **Flex Card launch PMO + Flex Agent automation**. Pillar-level context lives one level up at `~/Documents/cleo/credit_pillar/CLAUDE.md`. Don't duplicate it.
 
 ## What lives here
 
@@ -30,7 +30,8 @@ Working directory for **Flex Card launch PMO + Flex Agent automation**. Pillar-l
 - **Live Notion DB is source of truth for action items.** Snapshots are pointer indexes via `notion_page_id`. Routines re-resolve by ID before rendering, never by title-match (titles change in Notion; IDs are stable).
 - **Action Items vs Central Memory routing.** Trackable tasks with an owner → Action Items DB. Risks / Issues / Decisions / Standing partner commitments / Forward-looking ideas → Central Memory DB (`Status = Logged`, Jago triages forward). One source can produce both; don't drop either.
 - **WebBank Mirror DB write contract** — the Sync routine writes to: `code`, `name`, `status`, `notes` (WebBank-source notes from Excel col 9), `bank_guidance`, `hyperlink`, `parties`, `category`/`phase`. Don't reuse those exact property names for manual columns — collisions overwrite. Anything outside that set is invisible to the routine and persists across runs.
+- **WebBank Mirror archive lifecycle** — rows that WebBank flags `Not Required` / `Existing - Not Req.`, or that disappear from the checklist entirely, are **archived** (Notion `archived: true`), not status-flagged. The upsert searches both active and archived pages by code, so if WebBank re-flags a row as required the original page is un-archived and refreshed (no duplicate). Don't manually delete rows from the Mirror DB — archive instead, or the next sync will recreate them as new pages and lose the audit trail.
 
 ## Memory
 
-Auto-memory directory is symlinked at the new path key: `~/.claude/projects/-Users-jago-r-Documents-credit-pillar-flex-card` → `~/.claude/projects/-Users-jago-r-Documents-flex-card`. New sessions opened in this folder resolve to the same memory store. Hard-rename later if cleanup is wanted.
+Auto-memory directory has been chained through symlinks across two folder moves. The real store lives at `~/.claude/projects/-Users-jago-r-Documents-flex-card`. Symlinks point at it from `…-credit-pillar-flex-card` (after the flex_card → credit_pillar move) and `…-cleo-credit-pillar-flex-card` (after the credit_pillar → cleo move). New sessions opened in this folder resolve to the same memory store. Hard-rename later if cleanup is wanted.

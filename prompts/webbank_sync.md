@@ -38,7 +38,7 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
 ### 2. Fetch and parse the Excel
 
 - Use Box MCP `get_file_content(file_id="2101567683726")` to fetch the checklist text. `canDownload: false` on the file is fine — text extraction works regardless. Large responses get saved to a tool-results file path; if so, `Read` that file and parse the JSON envelope (`[{"type":"text","text": "..."}]`) to get the text content.
-- Parse with the canonical Python implementation below. **Use it verbatim — do NOT rewrite the parser.** It was validated 2026-04-26 against both the seed (24 Apr) and live (26 Apr) Box outputs and produces 94 rows on each, matching `openpyxl` ground-truth on the binary file. The seed parser dropped 14 real rows due to multi-line cell mishandling — this implementation fixes that.
+- Parse with the canonical Python implementation below. **Use it verbatim — do NOT rewrite the parser.** It was validated 2026-04-26 against both the seed (24 Apr) and live (26 Apr) Box outputs and produces 94 kept rows on each, matching `openpyxl` ground-truth on the binary file. The seed parser dropped 14 real rows due to multi-line cell mishandling — this implementation fixes that. Extended 2026-04-29 to also surface rows dropped for `Not Required` / `Existing - Not Req.` status so the diff can distinguish "marked Not Required" from "disappeared from checklist" (see step 3 + step 4 archive logic).
   ```python
   import json, re
 
@@ -105,6 +105,7 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
           rows.append('\n'.join(current))
 
       parsed = []
+      dropped_not_required = []
       for idx, r in enumerate(rows, start=1):
           cells = r.split('\t')
           while len(cells) < 25:
@@ -122,6 +123,10 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
           if phase.lower() == 'phase' or code.lower() == 'process item':
               continue
           if any(s in status.lower() for s in DROP_STATUS):
+              # Track separately so the diff can mark these as "now Not Required"
+              # rather than "disappeared". Only track real rows (non-empty code+name).
+              if code and name:
+                  dropped_not_required.append({'code': code, 'name': name, 'status': status})
               continue
           # Drop empty-code (true section headers) and empty-name placeholders
           # (e.g. AD1–AD6 'Product Specific Requests' rows with codes but no
@@ -143,13 +148,20 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
               'hyperlink': hyperlink,
               'parties': parties,
           })
-      return parsed
+      return {'kept': parsed, 'dropped_not_required': dropped_not_required}
   ```
 - The output schema for `snapshots/webbank_checklist_<TODAY>.json` is:
   ```
-  { "parsed_at": "<TODAY>", "total": <coalesced row count>, "kept": [<rows from parse_checklist>], "dropped_count": <total - len(kept)> }
+  {
+    "parsed_at": "<TODAY>",
+    "total": <coalesced row count>,
+    "kept": [<rows from parse_checklist['kept']>],
+    "dropped_not_required": [<rows from parse_checklist['dropped_not_required']>],
+    "dropped_count": <total - len(kept)>
+  }
   ```
-- **Sanity check before continuing**: the parser should return roughly 94 rows on a healthy run. If the result is materially smaller (say <80), abort: post a Slack failure digest with the row count and do not commit anything or update Notion. Do not silently proceed with a degraded parse.
+- **Sanity check before continuing**: the parser should return roughly 94 kept rows on a healthy run. If `kept` is materially smaller (say <80), abort: post a Slack failure digest with the row count and do not commit anything or update Notion. Do not silently proceed with a degraded parse.
+- **Backwards-compat note**: snapshots written before 2026-04-29 do NOT have `dropped_not_required`. When reading `<PREV>`, treat a missing field as `[]`.
 - **`parties` is read from Excel col 20 ("Required Reviews")** with a canonical→Other mapping. Excel may list non-canonical names (MRM, LC/Board, VP-New Products, Finance, IT, VM, etc.) — these collapse to a single `Other` entry. Canonical names (SP, Compliance, Credit, BSA, Legal, Ops, Product) pass through unchanged. The mapping matches the seed parser's behaviour, so re-parsing existing rows produces stable values.
 - The `code` is the canonical row key for diff matching and Notion upserts.
 
@@ -157,11 +169,12 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
 
 If `<PREV>` is null, skip — see step 6.
 
-Otherwise, `Read snapshots/webbank_checklist_<PREV>.json`. Index both `<PREV>` and today's parse by `code`. Compute:
+Otherwise, `Read snapshots/webbank_checklist_<PREV>.json`. Index both `<PREV>.kept` and `<TODAY>.kept` by `code`. Index `<TODAY>.dropped_not_required` by `code` (treat missing field as `[]` for legacy snapshots — see backwards-compat note in step 2). Compute:
 
-- **Added**: codes present today, absent in `<PREV>`.
-- **Removed**: codes present in `<PREV>`, absent today.
-- **Status changes**: same code, `status` value differs.
+- **Added**: codes in `<TODAY>.kept`, absent in `<PREV>.kept`.
+- **Marked Not Required**: codes in `<PREV>.kept`, absent in `<TODAY>.kept`, present in `<TODAY>.dropped_not_required`. (Row still on the checklist but WebBank has flagged it Not Required / Existing - Not Req.)
+- **Disappeared**: codes in `<PREV>.kept`, absent in `<TODAY>.kept`, AND absent in `<TODAY>.dropped_not_required`. (Row genuinely gone from the checklist — rare; flag for investigation.)
+- **Status changes**: same code in both `kept` lists, `status` value differs.
 - **Note changes**: same code, `notes` value differs.
 - **Bank-guidance changes**: same code, `bank_guidance` value differs.
 - **Hyperlink changes**: same code, `hyperlink` value differs.
@@ -174,7 +187,8 @@ Build a diff payload:
   "prev": "<PREV>",
   "totals": {"kept_today": N, "kept_prev": M},
   "added": [{"code": ..., "name": ..., "category": ...}, ...],
-  "removed": [{"code": ..., "name": ..., "category": ...}, ...],
+  "marked_not_required": [{"code": ..., "name": ..., "category": ..., "status": "<from parser drop>"}, ...],
+  "disappeared": [{"code": ..., "name": ..., "category": ...}, ...],
   "status_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
   "note_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
   "bank_guidance_changes": [{"code": ..., "name": ...}, ...],
@@ -188,8 +202,13 @@ Empty arrays are fine. Total-change-count = sum of all array lengths.
 ### 4. Update the Notion Mirror DB
 
 - Query Mirror DB schema first via Notion MCP to confirm field names. Use whatever the DB actually has — don't assume.
-- **Upsert by code, never blind-create.** For each **added** code from the diff: query the Mirror DB for an existing page where the code field matches. If found, treat it as a changed-code update (apply parsed fields to bring the existing page up to date). If not found, create a new page. This guarantees the routine is idempotent if any future snapshot drift makes a code look "new" — duplicates are unrecoverable in Notion without manual cleanup.
-- For each **removed** code: locate existing page, set its status equivalent to `Removed` (do **not** delete — preserve history).
+- **Upsert by code, never blind-create. Search BOTH active and archived pages.** For each **added** code from the diff: query the Mirror DB for any page (active or archived) where the code field matches.
+  - If an active page is found → apply parsed fields to bring it up to date (treat as a changed-code update).
+  - If an archived page is found → un-archive it (`archived: false`) and apply parsed fields. This is the recovery path when WebBank re-flags a previously Not-Required row as required.
+  - If no page is found → create a new page.
+
+  This guarantees the routine is idempotent and that re-required rows recover their original page (and any manual annotations on it) rather than spawning a duplicate.
+- For each **marked_not_required** code AND each **disappeared** code: locate existing page in the Mirror DB by code and **archive the page** (`archived: true`). Do NOT delete — Notion archive is recoverable, deletion is not. Do NOT attempt to write a status value like `Removed` (the `WebBank Status` select doesn't have that option; archiving is the canonical signal).
 - For each **changed** code: locate existing page and update the changed fields.
 - For unchanged codes: do nothing.
 - If DRY_RUN: skip all writes; just count what would change.
@@ -240,9 +259,14 @@ Diff vs <PREV>: *<total> change(s)* across <N> tracked items.
 • <code> — <name>
 ... (truncate to top 5 with "(+X more)" if longer)
 
-*Removed (<r>)*:
+*Archived — Not Required (<n>)*:
 • <code> — <name>
 ...
+
+*Archived — Disappeared from checklist (<d>)* :warning: investigate
+• <code> — <name>
+...
+(omit this section entirely if zero)
 
 *Status changes (<s>)*:
 • <code> — <name>: `<old>` → `<new>`
@@ -266,7 +290,7 @@ Use Slack mrkdwn formatting throughout.
 
 If LIVE: call `slack_send_message` with `channel="C0AV07H9QPP"` and the digest text. Return only `"Posted: <permalink>"`.
 
-If DRY_RUN: return the digest text wrapped in a code block, plus a structured summary of `{added, removed, status_changes, note_changes, bank_guidance_changes, hyperlink_changes, parties_changes}` counts. Do not post to Slack.
+If DRY_RUN: return the digest text wrapped in a code block, plus a structured summary of `{added, marked_not_required, disappeared, status_changes, note_changes, bank_guidance_changes, hyperlink_changes, parties_changes}` counts. Do not post to Slack.
 
 ## Constraints
 

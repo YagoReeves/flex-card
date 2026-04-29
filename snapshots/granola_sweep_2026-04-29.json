@@ -1,0 +1,81 @@
+{
+  "date": "2026-04-29",
+  "day_of_week": "Wednesday",
+  "meetings_window_start": "2026-04-28",
+  "meetings_window_end": "2026-04-28",
+  "generated_at_utc": "2026-04-29T05:49:07Z",
+  "mode": "LIVE",
+  "meetings_scanned": 5,
+  "auto_processed_count": 1,
+  "grey_zone_count": 0,
+  "candidates_written": [
+    {
+      "actionable": "Link WebBank Box example files to each DD tracker item",
+      "meeting_id": "13d1d1c3-2287-4704-a672-1e3c1fa5db6b",
+      "meeting_title": "Jago <> Louise Reporting Items Review Flex",
+      "meeting_date": "2026-04-28T12:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/13d1d1c3-2287-4704-a672-1e3c1fa5db6b",
+      "workstream": "Bank & Compliance",
+      "notion_page_url": "https://app.notion.com/p/3515c63b8745818e8308c1701a27a3e5",
+      "fallback_to_transcript": false
+    },
+    {
+      "actionable": "Chase WebBank for DIVA sandbox access to unblock DD reporting review",
+      "meeting_id": "13d1d1c3-2287-4704-a672-1e3c1fa5db6b",
+      "meeting_title": "Jago <> Louise Reporting Items Review Flex",
+      "meeting_date": "2026-04-28T12:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/13d1d1c3-2287-4704-a672-1e3c1fa5db6b",
+      "workstream": "Bank & Compliance",
+      "notion_page_url": "https://app.notion.com/p/3515c63b874581fa873dddbe6333c8a5",
+      "fallback_to_transcript": false
+    }
+  ],
+  "candidates_skipped": [
+    {
+      "actionable": "Post NACHA file OR5 question in main channel (tag Ladi / product-tech)",
+      "meeting_title": "Jago <> Louise Reporting Items Review Flex",
+      "existing_page_url": "https://app.notion.com/3505c63b87458155be4de2c413f2063a",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "candidates_failed_to_write": [],
+  "central_memory_written": [
+    {
+      "entry": "OR5 purchase-funding file scoped to BNPL only",
+      "category": "Decision",
+      "severity": null,
+      "workstream": "Bank & Compliance",
+      "partner": "WebBank",
+      "meeting_id": "13d1d1c3-2287-4704-a672-1e3c1fa5db6b",
+      "meeting_title": "Jago <> Louise Reporting Items Review Flex",
+      "meeting_date": "2026-04-28T12:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/13d1d1c3-2287-4704-a672-1e3c1fa5db6b",
+      "notion_page_url": "https://app.notion.com/p/3515c63b874581f5bc18ccc410b4bc0a",
+      "critical_path_risk_ref": null
+    },
+    {
+      "entry": "OR5 NACHA file reference for Flex Card unclear",
+      "category": "Risk",
+      "severity": null,
+      "workstream": "Bank & Compliance",
+      "partner": "WebBank",
+      "meeting_id": "13d1d1c3-2287-4704-a672-1e3c1fa5db6b",
+      "meeting_title": "Jago <> Louise Reporting Items Review Flex",
+      "meeting_date": "2026-04-28T12:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/13d1d1c3-2287-4704-a672-1e3c1fa5db6b",
+      "notion_page_url": "https://app.notion.com/p/3515c63b8745813b8abdc2cbb5c086cc",
+      "critical_path_risk_ref": null
+    }
+  ],
+  "central_memory_skipped": [
+    {
+      "entry": "Flex Card reporting blocked by wallet architecture decision",
+      "category": "Risk",
+      "meeting_title": "Jago <> Louise Reporting Items Review Flex",
+      "existing_page_url": "https://app.notion.com/3505c63b874581c4b2ccef7f53112dbf",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "central_memory_failed_to_write": [],
+  "grey_zone_meetings": []
+}

@@ -1,0 +1,50 @@
+{
+  "today": "2026-04-29",
+  "prev": "2026-04-28",
+  "totals": {
+    "kept_today": 91,
+    "kept_prev": 94
+  },
+  "added": [],
+  "removed": [
+    {
+      "code": "OR4",
+      "name": "Auto Pay Enrollment (at Origination)",
+      "category": "OR"
+    },
+    {
+      "code": "WB11",
+      "name": "Transactions",
+      "category": "WB"
+    },
+    {
+      "code": "WB12",
+      "name": "Credit Policy Adherence Monitoring Results Report - Results of any ongoing credit policy adherence controls in place, including any audits, transaction testing, independent validation, or other monitoring activities.",
+      "category": "WB"
+    }
+  ],
+  "status_changes": [],
+  "note_changes": [
+    {
+      "code": "OR7",
+      "name": "Processing Procedure and Reports",
+      "from": "",
+      "to": "4.28.26: Related to setting up a new processor (Marqeta)"
+    },
+    {
+      "code": "UW8",
+      "name": "Validate APR Calculation (Incl. MAPR if applicable to Product)",
+      "from": "",
+      "to": "4.28.2026: May need to validate APY"
+    },
+    {
+      "code": "VM1",
+      "name": "Vendor Management Program/Policy - Includes: Vendor Management Program/Policy, Critical Vendor Risk Assessment(s) for e. Critical Vendor, Vendor Inventory (updated as needed), Due Diligence Questionnaire for e. Critical Vendor, Monitoring & Testing Plan(s)",
+      "from": "*Marqeta",
+      "to": "*Marqeta being added.\n4.28.26: Need VM inventory"
+    }
+  ],
+  "bank_guidance_changes": [],
+  "hyperlink_changes": [],
+  "parties_changes": []
+}

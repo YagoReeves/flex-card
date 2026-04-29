@@ -1,0 +1,258 @@
+{
+  "date": "2026-04-29",
+  "generated_at_utc": "2026-04-29T06:38:19Z",
+  "mode": "LIVE",
+  "slack_permalink": "https://cleo-team.slack.com/archives/C0AV07H9QPP/p1777445255089949",
+  "meetings": [
+    {
+      "title": "Tom & Cleo Team Modelling Session",
+      "time_local": "14:00",
+      "attendees_summary": "GV Group (Thomas Layman + Vinod Alpuri, gvgroup.net) + Olivia, John B, Ash B, Ladi (opt), Jago (opt/tent)",
+      "prep_pointer": "https://docs.google.com/spreadsheets/d/1WbdabXkf_dcmxzXtd2OpvmmV42DWqsBy/edit?gid=927551491#gid=927551491"
+    },
+    {
+      "title": "Credit/Cards Product Circle",
+      "time_local": "15:30",
+      "attendees_summary": "~13 Credit & Cards PMs (Ash B, Ladi, Dogan, Philip R, Jago, Oladipo, Rachel L, John B, Gavin, others — bi-weekly)",
+      "prep_pointer": "https://www.notion.so/meetcleo/Flex-Hub-2ef5c63b874580d4a6dfcdc14c2edbc2"
+    },
+    {
+      "title": "Product Launch Milestones / Gates (Pay Later & Flex)",
+      "time_local": "17:00",
+      "attendees_summary": "Jago + Oscar H",
+      "prep_pointer": null
+    },
+    {
+      "title": "[External] Cleo<>Marqeta Product Deep Dive",
+      "time_local": "22:00",
+      "attendees_summary": "24-person Cleo+Marqeta group (~11 MQ incl. jwright, nmodi, aarellano, dhermanson, jmah, fcjones; ~13 Cleo incl. ladi, lea, madelaine.ford, jago, alex.m, angela, charly, jordan.m, keeb.m, olivia.p)",
+      "prep_pointer": "https://cleo-team.slack.com/archives/C09RJRG0QUC/p1777369899"
+    }
+  ],
+  "action_items_due": [
+    {
+      "notion_page_id": "34e5c63b-8745-8105-a52e-eeeb5ea66780",
+      "title": "Push Marqeta for 2x weekly 2-hour live sessions for next few weeks",
+      "owner": "Jago",
+      "due": "2026-04-28",
+      "priority": "P0"
+    }
+  ],
+  "awaiting_partners": [
+    {
+      "notion_page_id": "34f5c63b-8745-814a-928c-ecf12c1a7f5b",
+      "title": "WebBank to confirm BSA / Reg E / Reg DD / Reg CC drop-offs after FCC scoping session",
+      "partner_owner": "WebBank",
+      "due": "2026-05-01",
+      "days_since_last_nudged": null,
+      "last_nudged_null": true,
+      "priority": "P1"
+    },
+    {
+      "notion_page_id": "34f5c63b-8745-81af-a557-d7b65d790271",
+      "title": "WebBank to apply P1/P2/P3 priority ratings across the Flex Card implementation checklist",
+      "partner_owner": "WebBank",
+      "due": "2026-05-01",
+      "days_since_last_nudged": null,
+      "last_nudged_null": true,
+      "priority": "P1"
+    },
+    {
+      "notion_page_id": "3505c63b-8745-81be-bdd3-f14e68fd372d",
+      "title": "Marqeta to confirm whether sandbox access (~14 May) includes reporting-layer visibility",
+      "partner_owner": "Marqeta",
+      "due": "2026-05-01",
+      "days_since_last_nudged": null,
+      "last_nudged_null": true,
+      "priority": "P1"
+    },
+    {
+      "notion_page_id": "34f5c63b-8745-811e-b716-f9c7e8493dfe",
+      "title": "WebBank to share templates for net-new policies & procedures (Reg CC, Reg DD, Reg E)",
+      "partner_owner": "WebBank",
+      "due": "2026-05-01",
+      "days_since_last_nudged": null,
+      "last_nudged_null": true,
+      "priority": "P2"
+    }
+  ],
+  "central_memory": {
+    "newly_added_today": [
+      {
+        "notion_page_id": "3515c63b-8745-813b-8abd-c2cbb5c086cc",
+        "entry": "OR5 NACHA file reference for Flex Card unclear",
+        "category": "Risk",
+        "status": "Logged",
+        "workstream": "Bank & Compliance",
+        "severity": null,
+        "partner": "WebBank",
+        "notion_url": "https://app.notion.com/3515c63b8745813b8abdc2cbb5c086cc"
+      },
+      {
+        "notion_page_id": "3515c63b-8745-81f5-bc18-ccc410b4bc0a",
+        "entry": "OR5 purchase-funding file scoped to BNPL only",
+        "category": "Decision",
+        "status": "Logged",
+        "workstream": "Bank & Compliance",
+        "severity": null,
+        "partner": "WebBank",
+        "notion_url": "https://app.notion.com/3515c63b874581f5bc18ccc410b4bc0a"
+      }
+    ],
+    "high_severity_untriaged": [],
+    "stale_untriaged_count": 1
+  },
+  "inbox": {
+    "email": [],
+    "email_status": "ok",
+    "slack": [
+      {
+        "channel": "#product-cleo-card",
+        "new_count": 2,
+        "key_discussion": "Jago posted action items roundup + solicited Marqeta agenda topics for tonight's Product Deep Dive",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#collab-card-accourt",
+        "new_count": 6,
+        "key_discussion": "GV Group project tracker follow-up outstanding (Olivia chasing Jago/Ladi/Lea); Tom Layman office visit today for 2-4pm modelling session + informal lunch",
+        "mentions_jago": 1
+      },
+      {
+        "channel": "#collab-compliance-credit",
+        "new_count": 1,
+        "key_discussion": "Dogan querying Maia on BNPL auto-pay restriction during repayment retry window — compliance/consent language implications",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#x-cleo-mq-ic",
+        "new_count": 1,
+        "key_discussion": "Ashley Jacobson joined channel",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#proj-flex-card-design",
+        "new_count": 0,
+        "key_discussion": null,
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#collab-card_ops_support",
+        "new_count": 0,
+        "key_discussion": null,
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#x-cleo-mq",
+        "new_count": 0,
+        "key_discussion": null,
+        "mentions_jago": 0
+      }
+    ],
+    "slack_dms": [
+      {
+        "counterpart_email": "lea@meetcleo.com",
+        "counterpart_name": "Lea Maalouf",
+        "summary": "WebBank implementation checklist ownership resolved; Banking Ops + Legal & Compliance set as joint owners for CO1/CO9 line items",
+        "thread_link": "https://cleo-team.slack.com/archives/D08LLTL7GBH",
+        "flex_relevance_signal": "keyword"
+      },
+      {
+        "counterpart_email": "oladipo@meetcleo.com",
+        "counterpart_name": "Ladi Oladitan",
+        "summary": "3-way weekly (Jago+Ladi+Lea, Mondays, WebBank+Marqeta focus) confirmed; Ladi working on multi-use card options doc today (was delayed by other priorities)",
+        "thread_link": "https://cleo-team.slack.com/archives/D08NCJ33X6Y",
+        "flex_relevance_signal": "keyword"
+      }
+    ],
+    "slack_dms_unresolved": [
+      {
+        "email": "aarellano@marqeta.com",
+        "reason": "User not found via slack_search_users — likely on Marqeta Slack workspace or deactivated in cleo-team workspace"
+      }
+    ]
+  },
+  "slack_candidates_written": [
+    {
+      "actionable": "Provide outstanding information to GV Group tracker",
+      "author": "Olivia",
+      "channel": "#collab-card-accourt",
+      "thread_link": "https://cleo-team.slack.com/archives/C0AMAQ4JN5C/p1777369899",
+      "notion_page_id": "3515c63b-8745-81c9-be69-e2a1e9905f26",
+      "notion_page_url": "https://app.notion.com/p/3515c63b874581c9be69e2a1e9905f26",
+      "assumed_due": null
+    }
+  ],
+  "slack_candidates_skipped": [
+    {
+      "actionable": "Squad leads to verify implementation-checklist owner tagging",
+      "author": "Jago Reeves",
+      "channel": "#product-cleo-card",
+      "thread_link": "https://cleo-team.slack.com/archives/C09RJRG0QUC/p1777367848",
+      "existing_page_url": "https://app.notion.com/34f5c63b874581119490e3fd2f245c21",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "proposed_queue_size_over_3_days": 0,
+  "granola_sweep_summary": {
+    "available": true,
+    "auto_processed_count": 1,
+    "candidates_written": 2,
+    "candidates_skipped": 1,
+    "grey_zone_count": 0,
+    "grey_zone_highlights": []
+  },
+  "risks_flagged": [
+    {
+      "workstream": "Bank & Compliance",
+      "risk": "Reg E rebuttal for Flex wallet due Fri 1 May — 3 days out",
+      "why_it_matters": "Must land before Tuesday's WebBank product-construct call; Cleo still engaging without OC-backed legal position",
+      "critical_path_risk_ref": "1",
+      "source": "action-item"
+    },
+    {
+      "workstream": "Bank & Compliance",
+      "risk": "3 WebBank deliverables all due 1 May (FCC drop-offs, Reg templates, priority ratings) — none nudged yet",
+      "why_it_matters": "Escalation window closing today; all three needed before Tuesday call",
+      "critical_path_risk_ref": "2",
+      "source": "action-item"
+    },
+    {
+      "workstream": "Platform Foundations",
+      "risk": "Marqeta sandbox P0 overdue by 1 day; 14 May target unconfirmed to include reporting layer",
+      "why_it_matters": "Card squad build entirely gated; surface for escalation at tonight's Marqeta Product Deep Dive (22:00 BST)",
+      "critical_path_risk_ref": "2",
+      "source": "action-item"
+    },
+    {
+      "workstream": "Bank & Compliance",
+      "risk": "WebBank checklist dropped OR4 (Auto Pay Enrollment at Origination) + WB11 + WB12 overnight",
+      "why_it_matters": "Need to verify these are intentional removals and not silent scope changes before Tuesday's call",
+      "critical_path_risk_ref": null,
+      "source": "webbank"
+    },
+    {
+      "workstream": "Bank & Compliance",
+      "risk": "OR5 NACHA reference logged as unresolved today — potential unscoped build if applicable",
+      "why_it_matters": "Need internal clarity from Ladi/product-tech before raising with WebBank on Tuesday to avoid mischaracterising on a partner call",
+      "critical_path_risk_ref": null,
+      "source": "meeting"
+    }
+  ],
+  "webbank_diff_summary": {
+    "available": true,
+    "added": 0,
+    "removed": 3,
+    "status_changed": 0,
+    "note_changed": 3,
+    "highlights": [
+      "Removed: OR4 — Auto Pay Enrollment (at Origination)",
+      "Removed: WB11 — Transactions",
+      "Removed: WB12 — Credit Policy Adherence Monitoring Results Report",
+      "Note added to OR7 (Processing Procedure and Reports): '4.28.26: Related to setting up a new processor (Marqeta)'",
+      "Note added to UW8 (Validate APR Calculation): '4.28.2026: May need to validate APY'",
+      "Note updated on VM1 (Vendor Management Program/Policy): added '4.28.26: Need VM inventory'"
+    ]
+  },
+  "rendered_slack_text": ":robot_face: *[FLEX AGENT] Daily Brief — 2026-04-29*\n\n*Today's meetings*\n• Tom & Cleo Team Modelling Session — 14:00 BST — GV Group (T. Layman + V. Alpuri, gvgroup.net) + Olivia, John B, Ash B, Ladi (opt), Jago (opt/tent) — prep: GV Group project tracker has outstanding Cleo info requests; see #collab-card-accourt thread from yesterday\n• Credit/Cards Product Circle — 15:30 BST — ~13 Credit & Cards PMs (Ash B, Ladi, Dogan, Philip R, Jago +others, bi-weekly) — prep: Flex Hub\n• Product Launch Milestones / Gates (Pay Later & Flex) — 17:00 BST — Jago + Oscar H — prep: none identified ⚠️ invite not accepted\n• [External] Cleo<>Marqeta Product Deep Dive — 22:00 BST (16:00 CDT) — 24-person Cleo+Marqeta group (~11 MQ incl. jwright, nmodi, aarellano; ~13 Cleo incl. ladi, lea, madelaine, jago) — prep: agenda topics solicited in #product-cleo-card yesterday; MQ agenda not yet circulated\n\n─────────────────────────\n\n*Action items: overdue / due today*\n• P0 — Push Marqeta for 2x weekly 2-hour live sessions — Jago — due 2026-04-28 ⚠️ *overdue*\n\n*Awaiting partners* (Cleo waiting on)\n• P1 — WebBank to confirm BSA/Reg E/Reg DD/Reg CC drop-offs after FCC scoping — WebBank — due 2026-05-01 — never nudged\n• P1 — WebBank to apply P1/P2/P3 priority ratings across Flex checklist — WebBank — due 2026-05-01 — never nudged\n• P1 — Marqeta to confirm reporting-layer visibility in ~14 May sandbox — Marqeta — due 2026-05-01 — never nudged\n• P2 — WebBank to share Reg CC/DD/E policy templates — WebBank — due 2026-05-01 — never nudged\n\n─────────────────────────\n\n*Central Memory*\n*_Newly added today:_*\n• OR5 NACHA file reference for Flex Card unclear — Risk — Logged — Bank & Compliance — — \n• OR5 purchase-funding file scoped to BNPL only — Decision — Logged — Bank & Compliance — —\n*_High-severity untriaged:_*\n_None._\n:warning: 1 Logged Central Memory entry > 3 days old — needs triage in Notion.\n\n─────────────────────────\n\n*:warning: Risks & things to be mindful of*\n• Bank & Compliance (Risk #1): Reg E rebuttal for Flex wallet due Fri 1 May — must land before Tuesday's WebBank product-construct call; Cleo engaging without OC-backed position\n• Bank & Compliance: 3 WebBank partner deliverables all due 1 May (FCC drop-offs, Reg templates, priority ratings) — none nudged yet; consider a nudge email today before the window closes\n• Platform Foundations: Marqeta sandbox P0 overdue by 1 day; 14 May target unconfirmed to include reporting layer — Card squad build entirely gated; escalation point for tonight's Product Deep Dive\n• Bank & Compliance: WebBank checklist dropped OR4 (Auto Pay Enrollment at Origination) + WB11 + WB12 overnight — verify these are intentional removals, not silent scope changes, before Tuesday's call\n• Bank & Compliance: OR5 NACHA reference logged as unresolved today — potential unscoped build; get internal clarity from Ladi/product-tech before raising with WebBank on Tuesday\n\n─────────────────────────\n\n*Priority inbox*\n*_Emails:_*\nNo new partner emails in last 24 hours. (GV Group project tracker from 22 Apr still has outstanding Cleo info requests — flagged via Slack below.)\n*_Slack channels:_*\n• #product-cleo-card — 2 new, action items roundup + Marqeta agenda solicitation (Jago). Mentions: 0\n• #collab-card-accourt — 6 new, GV Group tracker follow-up outstanding + Tom Layman office visit logistics for today. Mentions: 1 (@Jago tagged by Olivia re outstanding tracker info)\n• #collab-compliance-credit — 1 new, Dogan querying Maia on BNPL auto-pay restriction during repayment retry window (compliance/consent language check). Mentions: 0\n• #x-cleo-mq-ic — 1 new, Ashley Jacobson joined channel. Mentions: 0\n• #proj-flex-card-design, #collab-card_ops_support, #x-cleo-mq — 0 new messages\n*_Slack DMs (Flex-relevant only):_*\n• @Lea — WebBank checklist ownership resolved; Banking Ops + Legal & Compliance set as joint owners for CO1/CO9\n• @Ladi — 3-way weekly (Jago+Ladi+Lea, Mondays, WebBank+Marqeta) confirmed; multi-use card options doc in progress today (was delayed)\n\n─────────────────────────\n\n*Added to Action Items DB*\n• Provide outstanding information to GV Group tracker — from Olivia in #collab-card-accourt\nSkipped as dedup: 1 (squad leads checklist verification — already active)\n\n─────────────────────────\n\n*Granola sweep* (yesterday)\n1 meeting auto-processed · 2 candidates written · 1 deduped · 0 grey-zone\n\n─────────────────────────\n\n*WebBank diff*\n3 removed: OR4 (Auto Pay Enrollment at Origination), WB11 (Transactions), WB12 (Credit Policy Adherence Monitoring). 3 note changes: OR7 (Marqeta as new processor noted), UW8 (APY validation flagged), VM1 (vendor management inventory needed). No status changes. Total: 91 items (was 94)."
+}

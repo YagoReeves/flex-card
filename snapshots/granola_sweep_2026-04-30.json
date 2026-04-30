@@ -1,0 +1,66 @@
+{
+  "date": "2026-04-30",
+  "day_of_week": "Thursday",
+  "meetings_window_start": "2026-04-29",
+  "meetings_window_end": "2026-04-29",
+  "generated_at_utc": "2026-04-30T05:48:00Z",
+  "mode": "LIVE",
+  "meetings_scanned": 4,
+  "auto_processed_count": 1,
+  "grey_zone_count": 0,
+  "candidates_written": [],
+  "candidates_skipped": [
+    {
+      "actionable": "Marqeta to send step-by-step implementation guide",
+      "meeting_title": "[External] Cleo<>Marqeta Product Deep Dive",
+      "existing_page_url": "https://app.notion.com/3515c63b874581fa9ab7eb875c635bc9",
+      "reason": "fuzzy-match"
+    },
+    {
+      "actionable": "Marqeta to confirm whether reporting layer included in May 14 sandbox",
+      "meeting_title": "[External] Cleo<>Marqeta Product Deep Dive",
+      "existing_page_url": "https://app.notion.com/3505c63b874581bebdd3f14e68fd372d",
+      "reason": "fuzzy-match"
+    },
+    {
+      "actionable": "Schedule 2x weekly 2-hour live sessions with Marqeta",
+      "meeting_title": "[External] Cleo<>Marqeta Product Deep Dive",
+      "existing_page_url": "https://app.notion.com/34e5c63b87458105a52eeeeb5ea66780",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "candidates_failed_to_write": [],
+  "central_memory_written": [
+    {
+      "entry": "WebBank-Marqeta triparty coordination format unplanned",
+      "category": "Idea",
+      "severity": null,
+      "workstream": "Programme",
+      "partner": null,
+      "meeting_id": "e34e8dc0-3a19-4505-8152-4be1cccefb28",
+      "meeting_title": "[External] Cleo<>Marqeta Product Deep Dive",
+      "meeting_date": "2026-04-29T10:00:00Z",
+      "granola_url": "https://notes.granola.ai/t/e34e8dc0-3a19-4505-8152-4be1cccefb28",
+      "notion_page_url": "https://app.notion.com/p/3525c63b8745818c9639e7d4de0bad97",
+      "critical_path_risk_ref": null
+    }
+  ],
+  "central_memory_skipped": [
+    {
+      "entry": "May 14 sandbox access cannot be expedited",
+      "category": "Risk",
+      "meeting_title": "[External] Cleo<>Marqeta Product Deep Dive",
+      "existing_page_url": "https://app.notion.com/34f5c63b8745811eafb8fd2017886ac2",
+      "reason": "fuzzy-match"
+    },
+    {
+      "entry": "BNPL secondary-credential-only constraint is permanent",
+      "category": "Decision",
+      "meeting_title": "[External] Cleo<>Marqeta Product Deep Dive",
+      "existing_page_url": "https://app.notion.com/3515c63b874581bc80ece9a829a7c0e6",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "central_memory_failed_to_write": [],
+  "grey_zone_meetings": []
+}

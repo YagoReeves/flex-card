@@ -1,0 +1,55 @@
+{
+  "today": "2026-04-30",
+  "prev": "2026-04-29",
+  "totals": {
+    "kept_today": 89,
+    "kept_prev": 91
+  },
+  "added": [],
+  "marked_not_required": [
+    {
+      "code": "BSA11",
+      "name": "BSA Independent Audit Report/Annual System and Model Validation",
+      "category": "BSA",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "BSA14",
+      "name": "FCC Point of Contact",
+      "category": "BSA",
+      "status": "Existing - Not Req."
+    }
+  ],
+  "disappeared": [],
+  "status_changes": [
+    {
+      "code": "BSA7",
+      "name": "Annual Training Plan - includes system/platform, report and plan.",
+      "from": "",
+      "to": "Existing - In Review"
+    }
+  ],
+  "note_changes": [
+    {
+      "code": "BSA9",
+      "name": "List or other identification of specialized training (specific to new risk of the New Product)",
+      "from": "See FCC New Product Questionnaire",
+      "to": "See FCC New Product Questionnaire\n4.29.2026: Key FCC personnel to be trained on deposit added risk/money laundering fraud."
+    },
+    {
+      "code": "BSA17",
+      "name": "Enhanced Monitoring Program Risk Asessment",
+      "from": "",
+      "to": "4.29.2026:David M. to provide matrices/risk assessments"
+    },
+    {
+      "code": "RF3",
+      "name": "Red Flags / External Fraud Report",
+      "from": "See FCC New Product Questionnaire",
+      "to": "See FCC New Product Questionnaire\n4.29.2026: David M. to provide an updated template."
+    }
+  ],
+  "bank_guidance_changes": [],
+  "hyperlink_changes": [],
+  "parties_changes": []
+}

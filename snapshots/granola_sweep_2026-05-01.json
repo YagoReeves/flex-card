@@ -1,0 +1,209 @@
+{
+  "date": "2026-05-01",
+  "day_of_week": "Friday",
+  "meetings_window_start": "2026-04-30",
+  "meetings_window_end": "2026-04-30",
+  "generated_at_utc": "2026-05-01T05:54:49Z",
+  "mode": "LIVE",
+  "meetings_scanned": 7,
+  "auto_processed_count": 3,
+  "grey_zone_count": 0,
+  "candidates_written": [
+    {
+      "actionable": "Compile updated WebBank concerns and share with outside counsel before Tuesday call",
+      "meeting_id": "507f739d-3093-43ae-8f5d-2457287b293e",
+      "meeting_title": "Flex Card WB Comments Sync",
+      "meeting_date": "2026-04-30T16:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/507f739d-3093-43ae-8f5d-2457287b293e",
+      "workstream": "Bank & Compliance",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581e18133d0f5140050cd",
+      "fallback_to_transcript": false
+    },
+    {
+      "actionable": "Hold credit reporting process design meeting with risk modelling team (1 May)",
+      "meeting_id": "507f739d-3093-43ae-8f5d-2457287b293e",
+      "meeting_title": "Flex Card WB Comments Sync",
+      "meeting_date": "2026-04-30T16:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/507f739d-3093-43ae-8f5d-2457287b293e",
+      "workstream": "Credit Reporting",
+      "notion_page_url": "https://app.notion.com/p/3535c63b8745815688d0fcb98ab9453f",
+      "fallback_to_transcript": false
+    },
+    {
+      "actionable": "Provide Ali Bowman (WebBank) with key Cleo contacts for PLV line items 7–9",
+      "meeting_id": "1ae512a0-7220-48ce-9446-662a28b07b17",
+      "meeting_title": "Cleo - New Product Implementation Call (Thurs.)",
+      "meeting_date": "2026-04-30T08:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/1ae512a0-7220-48ce-9446-662a28b07b17",
+      "workstream": "Bank & Compliance",
+      "notion_page_url": "https://app.notion.com/p/3535c63b8745813bbc49d7e83f968a08",
+      "fallback_to_transcript": false
+    },
+    {
+      "actionable": "Schedule ACH and card rails risk assessment working session with WebBank",
+      "meeting_id": "1ae512a0-7220-48ce-9446-662a28b07b17",
+      "meeting_title": "Cleo - New Product Implementation Call (Thurs.)",
+      "meeting_date": "2026-04-30T08:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/1ae512a0-7220-48ce-9446-662a28b07b17",
+      "workstream": "Bank & Compliance",
+      "notion_page_url": "https://app.notion.com/p/3535c63b87458104aac3f94148e347a5",
+      "fallback_to_transcript": false
+    },
+    {
+      "actionable": "WebBank to complete UW 10 and UW 12 AAN/email template review and approve",
+      "meeting_id": "1ae512a0-7220-48ce-9446-662a28b07b17",
+      "meeting_title": "Cleo - New Product Implementation Call (Thurs.)",
+      "meeting_date": "2026-04-30T08:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/1ae512a0-7220-48ce-9446-662a28b07b17",
+      "workstream": "Bank & Compliance",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581e7b3b3cbb85b122a1d",
+      "fallback_to_transcript": false
+    },
+    {
+      "actionable": "Populate product launch gates tracker (Column J: status + Notion links) by end of next week",
+      "meeting_id": "9bd285f4-9a63-4f21-b517-63b71ffec56a",
+      "meeting_title": "Product Launch Milestones / Gates (Pay Later & Flex)",
+      "meeting_date": "2026-04-30T11:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/9bd285f4-9a63-4f21-b517-63b71ffec56a",
+      "workstream": "Programme",
+      "notion_page_url": "https://app.notion.com/p/3535c63b87458122a359da7bfc8f2746",
+      "fallback_to_transcript": false
+    },
+    {
+      "actionable": "Add Tiering project (Sabian, Pay Later) to product launch gates tracker",
+      "meeting_id": "9bd285f4-9a63-4f21-b517-63b71ffec56a",
+      "meeting_title": "Product Launch Milestones / Gates (Pay Later & Flex)",
+      "meeting_date": "2026-04-30T11:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/9bd285f4-9a63-4f21-b517-63b71ffec56a",
+      "workstream": "BNPL Product",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581c0bb3ec423b34ab10b",
+      "fallback_to_transcript": false
+    }
+  ],
+  "candidates_skipped": [
+    {
+      "actionable": "Engage Kelly Gray for Metro 2 consulting support on credit reporting",
+      "meeting_title": "Flex Card WB Comments Sync",
+      "existing_page_url": "https://app.notion.com/3505c63b874581a4903bca3b8f6c542f",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "candidates_failed_to_write": [],
+  "central_memory_written": [
+    {
+      "entry": "WebBank fund flow structure: wallet claim vs reversal",
+      "category": "Risk",
+      "severity": "High",
+      "workstream": "Bank & Compliance",
+      "partner": "WebBank",
+      "meeting_id": "507f739d-3093-43ae-8f5d-2457287b293e",
+      "meeting_title": "Flex Card WB Comments Sync",
+      "meeting_date": "2026-04-30T16:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/507f739d-3093-43ae-8f5d-2457287b293e",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581dd8834c972d630867e",
+      "critical_path_risk_ref": "1"
+    },
+    {
+      "entry": "BNPL Builder subscription fee: cost-of-credit disclosure risk",
+      "category": "Risk",
+      "severity": "High",
+      "workstream": "Bank & Compliance",
+      "partner": "WebBank",
+      "meeting_id": "507f739d-3093-43ae-8f5d-2457287b293e",
+      "meeting_title": "Flex Card WB Comments Sync",
+      "meeting_date": "2026-04-30T16:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/507f739d-3093-43ae-8f5d-2457287b293e",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581e9ad7dce446af16a1e",
+      "critical_path_risk_ref": "1"
+    },
+    {
+      "entry": "WebBank implementation contact: Rachel Wright → KG",
+      "category": "Issue",
+      "severity": null,
+      "workstream": "Bank & Compliance",
+      "partner": "WebBank",
+      "meeting_id": "507f739d-3093-43ae-8f5d-2457287b293e",
+      "meeting_title": "Flex Card WB Comments Sync",
+      "meeting_date": "2026-04-30T16:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/507f739d-3093-43ae-8f5d-2457287b293e",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581ae90eed66c193dcc14",
+      "critical_path_risk_ref": null
+    },
+    {
+      "entry": "Mastercard initial implementation call: next Wednesday",
+      "category": "Commitment",
+      "severity": null,
+      "workstream": "Platform Foundations",
+      "partner": "Mastercard",
+      "meeting_id": "1ae512a0-7220-48ce-9446-662a28b07b17",
+      "meeting_title": "Cleo - New Product Implementation Call (Thurs.)",
+      "meeting_date": "2026-04-30T08:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/1ae512a0-7220-48ce-9446-662a28b07b17",
+      "notion_page_url": "https://app.notion.com/p/3535c63b8745814a830fe9939a7477b1",
+      "critical_path_risk_ref": null
+    },
+    {
+      "entry": "ACH rail AML risk flagged for Flex Card by WebBank",
+      "category": "Risk",
+      "severity": null,
+      "workstream": "Fraud & Risk",
+      "partner": "WebBank",
+      "meeting_id": "1ae512a0-7220-48ce-9446-662a28b07b17",
+      "meeting_title": "Cleo - New Product Implementation Call (Thurs.)",
+      "meeting_date": "2026-04-30T08:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/1ae512a0-7220-48ce-9446-662a28b07b17",
+      "notion_page_url": "https://app.notion.com/p/3535c63b8745817fa56cecd3bb1b1d96",
+      "critical_path_risk_ref": null
+    },
+    {
+      "entry": "Current Reg E policy requires Flex-specific updates",
+      "category": "Issue",
+      "severity": null,
+      "workstream": "Bank & Compliance",
+      "partner": "WebBank",
+      "meeting_id": "1ae512a0-7220-48ce-9446-662a28b07b17",
+      "meeting_title": "Cleo - New Product Implementation Call (Thurs.)",
+      "meeting_date": "2026-04-30T08:30:00Z",
+      "granola_url": "https://notes.granola.ai/t/1ae512a0-7220-48ce-9446-662a28b07b17",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581ac9058fd4c41e18cad",
+      "critical_path_risk_ref": null
+    },
+    {
+      "entry": "September UAT and March 2027 launch timeline at risk",
+      "category": "Risk",
+      "severity": "High",
+      "workstream": "Programme",
+      "partner": null,
+      "meeting_id": "9bd285f4-9a63-4f21-b517-63b71ffec56a",
+      "meeting_title": "Product Launch Milestones / Gates (Pay Later & Flex)",
+      "meeting_date": "2026-04-30T11:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/9bd285f4-9a63-4f21-b517-63b71ffec56a",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581f4bac4c732775d65c1",
+      "critical_path_risk_ref": "2"
+    },
+    {
+      "entry": "Flex card squad hires at risk from headcount reduction",
+      "category": "Risk",
+      "severity": null,
+      "workstream": "Programme",
+      "partner": null,
+      "meeting_id": "9bd285f4-9a63-4f21-b517-63b71ffec56a",
+      "meeting_title": "Product Launch Milestones / Gates (Pay Later & Flex)",
+      "meeting_date": "2026-04-30T11:45:00Z",
+      "granola_url": "https://notes.granola.ai/t/9bd285f4-9a63-4f21-b517-63b71ffec56a",
+      "notion_page_url": "https://app.notion.com/p/3535c63b87458129b353df08ba6ee418",
+      "critical_path_risk_ref": null
+    }
+  ],
+  "central_memory_skipped": [
+    {
+      "entry": "Marqeta implementation 2-week slip to May 14",
+      "category": "Issue",
+      "meeting_title": "Product Launch Milestones / Gates (Pay Later & Flex)",
+      "existing_page_url": "https://app.notion.com/34f5c63b8745811eafb8fd2017886ac2",
+      "reason": "fuzzy-match"
+    }
+  ],
+  "central_memory_failed_to_write": [],
+  "grey_zone_meetings": []
+}

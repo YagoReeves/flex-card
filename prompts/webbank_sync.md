@@ -116,7 +116,9 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
           bank_guidance = cells[5].strip()
           status = cells[6].strip()
           notes = cells[9].strip()
-          hyperlink = cells[14].strip()
+          target_submission = cells[10].strip()
+          bank_draft_name = cells[13].strip()
+          bank_draft_url = cells[14].strip()
           parties = parse_parties(cells[20])
 
           # Header row matches ROW_START_RE if read naively — filter explicitly.
@@ -145,7 +147,9 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
               'bank_guidance': bank_guidance,
               'status': status,
               'notes': notes,
-              'hyperlink': hyperlink,
+              'target_submission': target_submission,
+              'bank_draft_name': bank_draft_name,
+              'bank_draft_url': bank_draft_url,
               'parties': parties,
           })
       return {'kept': parsed, 'dropped_not_required': dropped_not_required}
@@ -153,6 +157,7 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
 - The output schema for `snapshots/webbank_checklist_<TODAY>.json` is:
   ```
   {
+    "schema_version": 2,
     "parsed_at": "<TODAY>",
     "total": <coalesced row count>,
     "kept": [<rows from parse_checklist['kept']>],
@@ -161,7 +166,7 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
   }
   ```
 - **Sanity check before continuing**: the parser should return roughly 94 kept rows on a healthy run. If `kept` is materially smaller (say <80), abort: post a Slack failure digest with the row count and do not commit anything or update Notion. Do not silently proceed with a degraded parse.
-- **Backwards-compat note**: snapshots written before 2026-04-29 do NOT have `dropped_not_required`. When reading `<PREV>`, treat a missing field as `[]`.
+- **Backwards-compat notes**: (a) snapshots without `dropped_not_required` (written before 2026-04-29) — treat as `[]`. (b) snapshots without `schema_version` or with `schema_version` < 2 use `hyperlink` instead of `bank_draft_url`/`bank_draft_name` and do not have `target_submission`. On the **first fire after this prompt update**, if `<PREV>` has no `schema_version` or `schema_version` < 2: skip the diff entirely, treat this as a baseline fire, post `"Schema upgraded to v2 — baseline rebuilt with <N> kept rows. No diff available for this fire."` as the Slack digest, and write the v2 snapshot. One-day diff loss is acceptable.
 - **`parties` is read from Excel col 20 ("Required Reviews")** with a canonical→Other mapping. Excel may list non-canonical names (MRM, LC/Board, VP-New Products, Finance, IT, VM, etc.) — these collapse to a single `Other` entry. Canonical names (SP, Compliance, Credit, BSA, Legal, Ops, Product) pass through unchanged. The mapping matches the seed parser's behaviour, so re-parsing existing rows produces stable values.
 - The `code` is the canonical row key for diff matching and Notion upserts.
 
@@ -177,7 +182,8 @@ Otherwise, `Read snapshots/webbank_checklist_<PREV>.json`. Index both `<PREV>.ke
 - **Status changes**: same code in both `kept` lists, `status` value differs.
 - **Note changes**: same code, `notes` value differs.
 - **Bank-guidance changes**: same code, `bank_guidance` value differs.
-- **Hyperlink changes**: same code, `hyperlink` value differs.
+- **Bank-draft changes**: same code, `bank_draft_name` OR `bank_draft_url` differs (either field changing counts as one combined entry).
+- **Bank-due changes**: same code, `target_submission` value differs.
 - **Parties changes**: same code, `parties` set differs (treat as set, not list).
 
 Build a diff payload:
@@ -192,7 +198,8 @@ Build a diff payload:
   "status_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
   "note_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
   "bank_guidance_changes": [{"code": ..., "name": ...}, ...],
-  "hyperlink_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
+  "bank_draft_changes": [{"code": ..., "name": ...}, ...],
+  "bank_due_changes": [{"code": ..., "name": ..., "from": "<old>", "to": "<new>"}, ...],
   "parties_changes": [{"code": ..., "name": ..., "from": [...], "to": [...]}, ...]
 }
 ```
@@ -201,7 +208,24 @@ Empty arrays are fine. Total-change-count = sum of all array lengths.
 
 ### 4. Update the Notion Mirror DB
 
-- Query Mirror DB schema first via Notion MCP to confirm field names. Use whatever the DB actually has — don't assume.
+**Authoritative property mapping — use these exact Notion property names. Do not infer from schema.**
+
+| Parsed field | Notion property | Write logic |
+|---|---|---|
+| `category` | `Category` | Select value |
+| `code` | `Item Code` | Title — set on create only; never update an existing page's title |
+| `name` | `Document Name` | Plain text |
+| `bank_guidance` + `notes` | `Bank Guidance` | Concatenate with sections: `**Bank Expectation**: <bank_guidance>` + blank line + `**Notes**: <notes>`. Omit a section entirely if its source cell is empty. If both empty, write empty string. |
+| `status` | `WebBank Status` | Map to nearest select option: `Not Started / In Progress / Submitted / In Review / Approved / Complete / Pending / Exception / Awaiting`. Use `Not Started` if no match. |
+| `target_submission` | `Bank Due` | Parse as ISO date (YYYY-MM-DD). Null if blank or unparseable — do not write anything rather than writing a bad value. |
+| `bank_draft_name` + `bank_draft_url` | `Bank Draft` | Inline markdown: `[<bank_draft_name>](<bank_draft_url>)`. If `bank_draft_name` empty, use URL as link text. If `bank_draft_url` empty, plain text only. If both empty, write empty string. |
+| `parties` | `Party` | Multi-select array |
+
+**DO NOT write to these properties — they are internal-only and may contain manual Cleo entries:**
+`Internal Notes`, `Internal Priority`, `Internal Status`, `Cleo Team`, `Internal Owner`, `Internal Due`, `Internal Draft`
+
+**Also do not write to:** `Last Diff Summary`, `Last Diff Change` (written separately by this routine), `Created by` (system-managed), `Link to Draft` (deprecated — leave untouched).
+
 - **Upsert by code, never blind-create. Search BOTH active and archived pages.** For each **added** code from the diff: query the Mirror DB for any page (active or archived) where the code field matches.
   - If an active page is found → apply parsed fields to bring it up to date (treat as a changed-code update).
   - If an archived page is found → un-archive it (`archived: false`) and apply parsed fields. This is the recovery path when WebBank re-flags a previously Not-Required row as required.
@@ -209,7 +233,7 @@ Empty arrays are fine. Total-change-count = sum of all array lengths.
 
   This guarantees the routine is idempotent and that re-required rows recover their original page (and any manual annotations on it) rather than spawning a duplicate.
 - For each **marked_not_required** code AND each **disappeared** code: locate existing page in the Mirror DB by code and **archive the page** (`archived: true`). Do NOT delete — Notion archive is recoverable, deletion is not. Do NOT attempt to write a status value like `Removed` (the `WebBank Status` select doesn't have that option; archiving is the canonical signal).
-- For each **changed** code: locate existing page and update the changed fields.
+- For each **changed** code: locate existing page and update only the Box-mapped fields that changed (per the diff). Do not rewrite unchanged fields, and never touch internal-only fields.
 - For unchanged codes: do nothing.
 - If DRY_RUN: skip all writes; just count what would change.
 
@@ -280,8 +304,13 @@ Diff vs <PREV>: *<total> change(s)* across <N> tracked items.
 • <code> — <name> (guidance updated)
 ...
 
+*Bank Due changes (<bd>)*:
+• <code> — <name>: `<old>` → `<new>`
+...
+(omit this section if zero)
+
 *Other (<x>)*:
-• Hyperlink/parties changes: <count>
+• Bank Draft / parties changes: <count>
 
 Snapshot: `snapshots/webbank_checklist_<TODAY>.json` · Diff: `snapshots/webbank_diff_<TODAY>.json`
 ```
@@ -290,7 +319,7 @@ Use Slack mrkdwn formatting throughout.
 
 If LIVE: call `slack_send_message` with `channel="C0AV07H9QPP"` and the digest text. Return only `"Posted: <permalink>"`.
 
-If DRY_RUN: return the digest text wrapped in a code block, plus a structured summary of `{added, marked_not_required, disappeared, status_changes, note_changes, bank_guidance_changes, hyperlink_changes, parties_changes}` counts. Do not post to Slack.
+If DRY_RUN: return the digest text wrapped in a code block, plus a structured summary of `{added, marked_not_required, disappeared, status_changes, note_changes, bank_guidance_changes, bank_draft_changes, bank_due_changes, parties_changes}` counts. Do not post to Slack.
 
 ## Constraints
 

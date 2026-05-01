@@ -96,7 +96,7 @@ If all three are empty: `_Carrying memory: nothing high-signal to flag this week
   - Counts by `WebBank Status` (Not Started / In Progress / Done / Blocked / etc — whatever's in the data).
   - Counts by `Party` (top 5).
   - Items where status changed since last Friday's snapshot — diff against `snapshots/webbank_checklist_<last-friday>.json` if it exists.
-- No "due this week" — WebBank doesn't have due dates yet. Note this in the section: `_Due-date prioritisation pending internal review._`.
+  - Items due this week: filter `kept` rows where `target_submission` parses as an ISO date falling within Mon–Fri of the current week. List as: `<code> — <name> — due <date>`, sorted ascending. If none, omit this sub-section.
 
 ### 7. Top risks
 

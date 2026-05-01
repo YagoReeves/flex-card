@@ -177,7 +177,8 @@ The Granola Sweep routine runs at 05:45 UTC (45 min before this Brief) and write
 The WebBank Sync routine runs at 07:07 UTC (45 minutes before this Brief) and writes a diff summary to `snapshots/webbank_diff_<YYYY-MM-DD>.json` in this repo on `main`, then `git push`es. By the time you fire, your fresh clone of `main` should contain today's diff file.
 
 - Use the `Read` tool to read `snapshots/webbank_diff_<today>.json` from the working directory.
-- If the file exists, summarise: counts of added / removed / status-changed / note-changed items, plus up to 3 most material changes by name.
+- If the file exists, summarise: counts of added / archived / status-changed / note-changed / bank-draft-changed items, plus up to 3 most material changes by name. **Also check `bank_due_changes`** — if any item's `Bank Due` moved into the next 14 days, call it out by name as a deadline flag.
+- If the file contains `"schema_upgrade"` as the top-level digest signal (first fire after v2 migration), output `_WebBank Sync upgraded to schema v2 today — no diff available for this fire._`
 - If the file does **not** exist for today: output "WebBank diff not available — Sync routine has not run today (or failed to push)." Do not error out — proceed with the rest of the brief.
 
 ## Output format
@@ -329,9 +330,11 @@ Schema:
   "webbank_diff_summary": {
     "available": true,
     "added": 0,
-    "removed": 0,
+    "archived": 0,
     "status_changed": 0,
     "note_changed": 0,
+    "bank_draft_changed": 0,
+    "bank_due_changed": 0,
     "highlights": ["..."]
   },
   "rendered_slack_text": "<the full markdown body posted to Slack>"

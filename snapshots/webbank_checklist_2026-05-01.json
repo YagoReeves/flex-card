@@ -1,0 +1,1604 @@
+{
+  "parsed_at": "2026-05-01",
+  "total": 160,
+  "kept": [
+    {
+      "line": 6,
+      "category": "AQ",
+      "code": "AQ5",
+      "name": "Marketing Materials - Includes: Dealer/Contractor/Retailer Materials, Paid Content or API Partner Materials , Digital (including website), Apple App Store Page, Google Play Store Page, Digital (Landing Page), Social Media, Email, Print, Direct Mail, Press Release, TV/Radio/Other, All Website Screenshots (FAQ's, Contact, About Us, etc.)",
+      "bank_guidance": "All materials need to include true lender language and the WebBank disclosure.\n\nBank team needs to review and approve final versions of collateral prior to distribution. This process needs to be outlined in the Marketing Procedures.",
+      "status": "",
+      "notes": "Post Launch Validation Testing",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 12,
+      "category": "AQ",
+      "code": "AQ11",
+      "name": "3rd Party Agreements/ Contracts",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "Triparty (Marqeta, WebBank, Cleo) and ACH Origination Agreement, Tabapay?",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Legal",
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 13,
+      "category": "AP",
+      "code": "AP1",
+      "name": "Online Application Flow (screen shots + process flow diagram) - Includes: Online Application Flow (screen shots + process flow diagram), Mobile Application Flow (screen shots + process flow diagram), Paper Credit Application (template), Phone Application Processing Call Scripts (talking points), Email Application (template), Mail-In Application (template), Joint Application (template), Re-opened application flow",
+      "bank_guidance": "Bank needs to review happy path as well as any possible unhappy paths.",
+      "status": "",
+      "notes": "Post Launch Validation Testing",
+      "hyperlink": "",
+      "parties": [
+        "BSA",
+        "Compliance",
+        "Legal",
+        "SP"
+      ]
+    },
+    {
+      "line": 14,
+      "category": "AP",
+      "code": "AP2",
+      "name": "Application Restart Communications - Includes: Application Restart Communications, Incomplete Application Communications, Application Withdrawn Communications",
+      "bank_guidance": "May be a script, email, text, or other applicable communication",
+      "status": "",
+      "notes": "Post Launch Validation Testing",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 16,
+      "category": "AP",
+      "code": "AP4",
+      "name": "Automated Payment Set-up (Incl. ACH Authorization and Capture process)",
+      "bank_guidance": "Another consideration is that Consumer accounts and Business accounts have differing ACH Authorization requirements. \nRegulation E is applicable to consumer accounts and is a consumer protection reg. (Business accounts are not regulated under Reg E.) Single ACH Authorization is treated differently that recurring automated EFTs (like ACHs).",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 17,
+      "category": "AP",
+      "code": "AP5",
+      "name": "E-Sign Authorization & Capture Process (Incl. Disclosure, Consent, and email verification)",
+      "bank_guidance": "Need to ensure ESIGN is consented to prior to delivery of a notice required to be provided in writing (Adverse Action, TILA). Also must ensure reasonable demonstration from the customer that they have the ability to view and retain the notice in the form provided (email, online document portal). Otherwise required notices must be provided in a paper format.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 19,
+      "category": "AP",
+      "code": "AP7",
+      "name": "Terms of Use",
+      "bank_guidance": "Includes Terms of Use for website or app",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 20,
+      "category": "AP",
+      "code": "AP8",
+      "name": "Military Service Eligibility Communications (MLA) - MLA disclosures in agreement to also include verbal disclosures and phone number",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 24,
+      "category": "UW",
+      "code": "UW1",
+      "name": "Credit Policy - Includes: Credit Policy , Credit Policy Change Management Procedure, Ability to Pay calculations, Non-Predatory Lending Assessment (for APR's/Effective Interest Rate > 36%)",
+      "bank_guidance": "Should provide great detail pertaining to all aspects to credit decisions including pricing, limits, ability-to-pay, and other considerations.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Credit",
+        "Legal",
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 26,
+      "category": "UW",
+      "code": "UW3",
+      "name": "Model Governance Policy & Model Inventory List - Includes: Model Governance Policy, Model Development Document, Generic/Off the shelf Model Score Whitepapers (should be included in UW2.2), Fraud Model Documentation (should be included in UW2.2), Any other custom score model documentation (should be included in UW2.2), Model Performance Report, Independent Model Validation Report",
+      "bank_guidance": "Compliance is becoming more and more involved in the review of models. Review as applicable and work with the Treating Customers Fairly officer and the assigned post-launch Compliance Manager to ensure the appropriate level of compliance review.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Credit",
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 28,
+      "category": "UW",
+      "code": "UW5",
+      "name": "Income Verification Procedures",
+      "bank_guidance": "Does the party rely on stated income? Does the Partner seek access to bank account information, ask for paystubs, or use a 3rd party (such as a credit reporting agency) to confirm applicant's income?\nIf the product is regulated under TILA and CARD Act - how is Ability to Pay confirmed?",
+      "status": "",
+      "notes": "Flex application flow introduces a self-reported Ability-to-Pay assessment",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Credit",
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 31,
+      "category": "UW",
+      "code": "UW8",
+      "name": "Validate APR Calculation (Incl. MAPR if applicable to Product)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "4.28.2026: May need to validate APY",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Credit",
+        "SP"
+      ]
+    },
+    {
+      "line": 33,
+      "category": "UW",
+      "code": "UW10",
+      "name": "Notice of Incompleteness",
+      "bank_guidance": "Relates directly to whether or not a Notice of Adverse Action must be sent to an applicant that has been declined for an incomplete application. If an NOI, that is in compliance with Reg B's requirements for an NOI, is sent to the applicant and the reason for adverse action is incomplete application, then a Notice of Adverse Action may not be required.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance"
+      ]
+    },
+    {
+      "line": 34,
+      "category": "UW",
+      "code": "UW11",
+      "name": "Decisions & Reasons - Includes: Decision Communication , AA Methodology , AA Reasons, Adverse Action Communications - Bureau, Adverse Action Communications - Non Bureau, Adverse Action Communications - Manual Delivery Process, ECOA/Adverse Action Reporting, Approval Communication",
+      "bank_guidance": "The methodology behind what adverse action descriptions are provided to the applicant. Normally no more than four reasons are shared with the applicant. Only the top and most meaningful reasons are shared.\nThe verbiage for the AA reasons must be specific and accurate. Many partners receive many  decline reason codes, after the call to the credit reporting agency, these codes may be mapped down to the same adverse action reason. \nShould clearly indicate the Bank is the creditor, with the Partner as the servicer.  Questions regarding a credit bureau pull must be addressed to the appropriate Credit Reporting Agency.\nThere are model forms available under Reg B and Reg V.",
+      "status": "",
+      "notes": "Post Launch Validation Testing\nNo new adverse action reasons are being introduced",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 36,
+      "category": "UW",
+      "code": "UW13",
+      "name": "MLA Borrower Identification Procedures",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance"
+      ]
+    },
+    {
+      "line": 38,
+      "category": "UW",
+      "code": "UW15",
+      "name": "Credit Policy Adherence - Partner to provide documentation that confirms credit policy controls.",
+      "bank_guidance": "A notice that is sent to the applicant to let them know why the applicant did not get approved for the lowest interest rate or other such prime terms. This notice is not required if the FCRA notice related to credit scores is provided.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Credit"
+      ]
+    },
+    {
+      "line": 39,
+      "category": "UW",
+      "code": "UW16",
+      "name": "Credit Strategy Testing Performance Results - Volume and performance updates on all credit strategy tests active within the past quarter.",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Credit"
+      ]
+    },
+    {
+      "line": 40,
+      "category": "UW",
+      "code": "UW17",
+      "name": "Credit Policy Support Documentation - Includes IP10. This will need to be completed by the Partner's Credit Team as an additional supporting document to their Credit Policy. This will be submitted in conjunction with the new Credit Policy or any Credit Policy Changes. Notify Credit, SP, and Compliance., This will need to be completed by the Partners Credit Team as an additional supporting document to their Credit Policy. This will be submitted in conjunction with the new Credit Policy or any Credit Policy Changes.",
+      "bank_guidance": "A notice that is sent to the applicant to let them know why the applicant did not get approved for the lowest interest rate or other such prime terms. This notice is not required if the FCRA notice related to credit scores is provided.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Credit"
+      ]
+    },
+    {
+      "line": 41,
+      "category": "DD",
+      "code": "DD1",
+      "name": "Daily Deposit Transactions File",
+      "bank_guidance": "Related to application approvals and decline notices. There are model forms for counteroffer notices under the applicable federal regulations.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 42,
+      "category": "DD",
+      "code": "DD2",
+      "name": "Daily Deposit Positions Report",
+      "bank_guidance": "Proposed Cardholder Agreement that has been reviewed and approved by Partner's Counsel and Compliance teams. Must reconcile with the credit policy.\nTwo forms of TIL disclosures. There is a general application TIL disclosure and an approved applicant TIL that is specific to the applicant. The application TIL must be presented and reviewed by the consumer prior to the application being submitted by the consumer. The approved applicant TIL must be presented to the consumer prior to account opening.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 43,
+      "category": "DD",
+      "code": "DD3",
+      "name": "Daily Deposit Reconciliation Report",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 44,
+      "category": "DD",
+      "code": "DD4",
+      "name": "Daily Deposit Applications File",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 45,
+      "category": "DD",
+      "code": "DD5",
+      "name": "Daily FDIC Deposit Data Report",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 46,
+      "category": "DD",
+      "code": "DD6",
+      "name": "Outgoing ACH & Outgoing ACH - ACH Totals File (2 separate files)",
+      "bank_guidance": "Autopay cannot be required for the extension of credit. WebBank generally does not allow autopay as the default payment option, so we require the applicant to affirmative choose automated payments.",
+      "status": "",
+      "notes": "Marqeta to provide",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 47,
+      "category": "DD",
+      "code": "DD7",
+      "name": "Outgoing Returns ACH & Outgoing Returns ACH - ACH Totals File (2 separate files)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "Marqeta to provide",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 49,
+      "category": "DP",
+      "code": "DP1",
+      "name": "Reg CC Policy  (Timing of when deposits are available)",
+      "bank_guidance": "Related to application approvals and decline notices. There are model forms for counteroffer notices under the applicable federal regulations.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 50,
+      "category": "DP",
+      "code": "DP2",
+      "name": "Reg CC Procedure",
+      "bank_guidance": "Proposed Cardholder Agreement that has been reviewed and approved by Partner's Counsel and Compliance teams. Must reconcile with the credit policy.\nTwo forms of TIL disclosures. There is a general application TIL disclosure and an approved applicant TIL that is specific to the applicant. The application TIL must be presented and reviewed by the consumer prior to the application being submitted by the consumer. The approved applicant TIL must be presented to the consumer prior to account opening.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 51,
+      "category": "DP",
+      "code": "DP3",
+      "name": "Reg DD Policy",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 52,
+      "category": "DP",
+      "code": "DP4",
+      "name": "Reg DD Procedure",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 53,
+      "category": "DP",
+      "code": "DP5",
+      "name": "Consumer Deposit Account Policy",
+      "bank_guidance": "",
+      "status": "In Review",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 54,
+      "category": "DP",
+      "code": "DP6",
+      "name": "Consumer Account Agreement",
+      "bank_guidance": "Autopay cannot be required for the extension of credit. WebBank generally does not allow autopay as the default payment option, so we require the applicant to affirmative choose automated payments.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Legal",
+        "SP"
+      ]
+    },
+    {
+      "line": 55,
+      "category": "DP",
+      "code": "DP7",
+      "name": "Dispute (Reg E) Procedure",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 56,
+      "category": "DP",
+      "code": "DP8",
+      "name": "NACHA Policy & Requirements",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 57,
+      "category": "DP",
+      "code": "DP9",
+      "name": "NACHA Procedure",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 58,
+      "category": "DP",
+      "code": "DP10",
+      "name": "ACH Risk Assessment Matrix",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 59,
+      "category": "DP",
+      "code": "DP11.1",
+      "name": "Flex Card ACH Bill Pay",
+      "bank_guidance": "",
+      "status": "In Review",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 60,
+      "category": "DP",
+      "code": "DP11.2",
+      "name": "Flex Card ACH Direct Deposit",
+      "bank_guidance": "",
+      "status": "In Review",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 62,
+      "category": "OR",
+      "code": "OR2",
+      "name": "Borrower Agreements - Includes: Cardholder Agreement (if open-end), Terms and Conditions, Business Loan Agreement (if SMB), Consumer Loan Agreement, Promissory Note, Truth In Lending Disclosure (TIL), Loan Agreement (if closed-end)",
+      "bank_guidance": "Proposed Cardholder Agreement that has been reviewed and approved by Partner's Counsel and Compliance teams. Must reconcile with the credit policy.\nTwo forms of TIL disclosures. There is a general application TIL disclosure and an approved applicant TIL that is specific to the applicant. The application TIL must be presented and reviewed by the consumer prior to the application being submitted by the consumer. The approved applicant TIL must be presented to the consumer prior to account opening.",
+      "status": "",
+      "notes": "Post Launch Validation Testing",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Legal",
+        "SP"
+      ]
+    },
+    {
+      "line": 65,
+      "category": "OR",
+      "code": "OR5",
+      "name": "Funding - Includes: Loan Disbursement Procedure/Process Flow, Bank Information Confirmation, Funding Statement Sample, Funding & Settlement Processes Tested , NACHA File, Funding & Purchase Process Flow (visio), Purchase Statement sample",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 66,
+      "category": "OR",
+      "code": "OR5.1",
+      "name": "Funds Flow Matrix",
+      "bank_guidance": "",
+      "status": "In Review",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 68,
+      "category": "OR",
+      "code": "OR7",
+      "name": "Processing Procedure and Reports",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "4.28.26: Related to setting up a new processor (Marqeta)",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 69,
+      "category": "OR",
+      "code": "OR8",
+      "name": "Card Mailing, Use, and Activation - Includes: Plastic (Card design, activation label), Envelopes, Card design, Activation label, Card Carrier, PIN Mailer, Card Activation Instructions & Procedure, Card Activation Procedure, Origination/Activation Call Scripts (talking points)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 73,
+      "category": "SV",
+      "code": "SV1",
+      "name": "Account Servicing Policy/Procedures - Includes: Account Servicing Policy/Procedures , Account Closing Procedure, Servicing Portal Screen Shots, Servicing Call Scripts (talking points), Fraud Procedures (Servicing), Fraud Communications, Escheatment",
+      "bank_guidance": "As applicable to the credit product. If not uploaded to Box, and made available only on the Partner's software, we are willing to leave comments with Partner as long as a document history is made available to WebBank via Box or as agreed. This may be initially addressed with a walkthrough of the operating system used by Partner's operations team or servicer.\nIf there are scripts, guidelines or standards for service WebBank will review for applicability and regulatory compliance.\nThese are  often addressed on other sheets or by other implementation log items. Red Flags that may alert to fraud are covered under the Red Flags sheet.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 76,
+      "category": "SV",
+      "code": "SV4",
+      "name": "Payment Procedure - Includes: Payment Procedure, Auto Pay Enrollment (at Servicing), Payment Adjustment Procedure",
+      "bank_guidance": "Should address disputes coming directly from the customer or the customer's financial institution. Must address any applicable regulatory provisions.",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 77,
+      "category": "SV",
+      "code": "SV5",
+      "name": "Payment Communications - Includes: Payment Inquiry Responses, Payment Schedule(d) Communications, Payment Reminders Communications, Payment Received Communications, Auto Pay Enabled / Disabled Notification, Payment Return/NSF Communications, Due Date Changed Notification Communications",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 80,
+      "category": "SV",
+      "code": "SV8",
+      "name": "Billing statement(s) + Demonstration - Partner to provide sample billing statements for the Bank's review that model the actual statements that customers will receive or have access to in production upon launch. Statements should demonstrate accurate calculations and include appropriate compliance requirements, as applicable (e.g., transaction data including charges, credits, payments, interest, fees, other account & balance adjustments, due dates, proper disclosure language, etc.).",
+      "bank_guidance": "Statements must be made available 14-21 days prior to the due date on open-end credit.",
+      "status": "",
+      "notes": "Post Launch Validation Testing",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 81,
+      "category": "SV",
+      "code": "SV9",
+      "name": "Return Handling/Chargebacks/Statement Credits(Open-end)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 90,
+      "category": "SV",
+      "code": "SV18",
+      "name": "Bankruptcy Procedures",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 91,
+      "category": "SV",
+      "code": "SV19",
+      "name": "Card Reissuance & Replacement - Includes: Card Reissuance & Replacement, Reissuance Communications",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 92,
+      "category": "SV",
+      "code": "SV20",
+      "name": "Backup & Successor Servicing Agreement (or equivalent)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Legal",
+        "SP"
+      ]
+    },
+    {
+      "line": 93,
+      "category": "CO",
+      "code": "CO1",
+      "name": "Collections Policy - Includes: Collections Policy, Collections Procedures",
+      "bank_guidance": "Operations policy regarding collection on delinquent accounts. Policy may include Collections Model/Strategy and the monitoring and oversight of third-party debt collectors under the regulation of FDCPA.",
+      "status": "",
+      "notes": "Product specific language updates",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 95,
+      "category": "CO",
+      "code": "CO3",
+      "name": "Collections Communications - Includes: Collections Communications (30/60/90/120, charge-off, etc.), Collection Call Scripts (talking points), Default Communications",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 100,
+      "category": "CO",
+      "code": "CO8",
+      "name": "Settlement Procedure",
+      "bank_guidance": "Should align with collection model / strategy document and collections policy.",
+      "status": "",
+      "notes": "adjustments needed",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 101,
+      "category": "CO",
+      "code": "CO9",
+      "name": "Charge-Off - Includes: Charge-Off Policy, Charge-Off procedure",
+      "bank_guidance": "May or may not include information on writing-off the debt.",
+      "status": "",
+      "notes": "adjustments needed, current one is specific to Pay Later",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "Credit",
+        "Other",
+        "SP"
+      ]
+    },
+    {
+      "line": 105,
+      "category": "WB",
+      "code": "WB1",
+      "name": "Application Data File",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "*Bank note: This should also be reviewed by Zoe",
+      "hyperlink": "",
+      "parties": [
+        "Credit",
+        "Other"
+      ]
+    },
+    {
+      "line": 106,
+      "category": "WB",
+      "code": "WB2",
+      "name": "Loan/Account Data File (Positions)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 107,
+      "category": "WB",
+      "code": "WB3",
+      "name": "Portfolio Monthly Metrics and Performance Report",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "SP"
+      ]
+    },
+    {
+      "line": 109,
+      "category": "WB",
+      "code": "WB5",
+      "name": "Card network reporting requirements",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "SP"
+      ]
+    },
+    {
+      "line": 114,
+      "category": "WB",
+      "code": "WB10",
+      "name": "State Reporting",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "SP"
+      ]
+    },
+    {
+      "line": 123,
+      "category": "CM",
+      "code": "CM1",
+      "name": "Compliance Management System (CMS) Policies",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "Marketing Policy - contains product specific language, Social Media Policy - contains product specific languag, SCRA/MLA Policy - review for Flex as the Cleo Card and Pay Later are handled differently, new deposit policies in DP",
+      "hyperlink": "",
+      "parties": []
+    },
+    {
+      "line": 126,
+      "category": "CM",
+      "code": "CM4",
+      "name": "Compliance Training",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "Additional training has been assigned that should cover Compliance topics\nrelated to Flex Card",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 127,
+      "category": "CM",
+      "code": "CM5",
+      "name": "1st & 2nd Line Testing - Initial and Annual Plan: A risk-based approach will see that this plan is based on the Partner's Risk Assessment. The monitoring aspect will outline the real-time monitoring of systems and controls.",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 128,
+      "category": "CM",
+      "code": "CM6",
+      "name": "Compliance Risk Assessment",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance"
+      ]
+    },
+    {
+      "line": 129,
+      "category": "BSA",
+      "code": "BSA1",
+      "name": "BSA/AML Program/Policy Document (including Risk Appetite) - Includes: BSA/AML Program/Policy Document (including Risk Appetite)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 130,
+      "category": "BSA",
+      "code": "BSA2",
+      "name": "USA Patriot Act Training Module",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 131,
+      "category": "BSA",
+      "code": "BSA3",
+      "name": "OFAC Training Module",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 132,
+      "category": "BSA",
+      "code": "BSA4",
+      "name": "BSA Training Module",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 133,
+      "category": "BSA",
+      "code": "BSA5",
+      "name": "CIP Verification - Includes: CIP Procedures, CIP verification during application/underwriting process, CIP Software Demonstration - Specific to CIP collection during application process, CIP Software Data Validation - Specific to CIP collection during application process",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 134,
+      "category": "BSA",
+      "code": "BSA6",
+      "name": "Watchlist Screening -  Initial, Ongoing and ACH screening",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 135,
+      "category": "BSA",
+      "code": "BSA7",
+      "name": "Annual Training Plan - includes system/platform, report and plan.",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 136,
+      "category": "BSA",
+      "code": "BSA8",
+      "name": "CDD/EDD High Risk Customer Identification -  Includes: CDD/EDD High Risk Customer Identification Procedure, CDD/EDD software demonstration, CDD/EDD software data validation, CDD/EDD Records/Reporting",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 137,
+      "category": "BSA",
+      "code": "BSA9",
+      "name": "List or other identification of specialized training (specific to new risk of the New Product)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire\n4.29.2026: Key FCC personnel to be trained on deposit added risk/money laundering fraud.",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 138,
+      "category": "BSA",
+      "code": "BSA10",
+      "name": "BSA Monitoring & Testing Plan",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 140,
+      "category": "BSA",
+      "code": "BSA12",
+      "name": "BSA Change Management",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 141,
+      "category": "BSA",
+      "code": "BSA13",
+      "name": "Suspicious Activity Detection/Investigation/Reporting - Includes: Suspicious Activity Investigation/Reporting Procedures, Process for reporting Suspicious Activity to the Bank  SAR Procedures, Transaction Surveillance Thresholds, Transaction Surveillance Software Demonstration, Transaction Surveillance Software Data Validation, process for detecting suspicious activity. FCC Case Management Software Demonstration, FCC Case Management Software Data Validation",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA",
+        "Legal"
+      ]
+    },
+    {
+      "line": 142,
+      "category": "BSA",
+      "code": "BSA13.1",
+      "name": "Suspicious Activity Reporting Procedure",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA",
+        "Legal"
+      ]
+    },
+    {
+      "line": 144,
+      "category": "BSA",
+      "code": "BSA15",
+      "name": "314a - Includes: 314a Procedures, 314a Software Demonstration, 314a Software Data Validation, 314a Report",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 145,
+      "category": "BSA",
+      "code": "BSA16",
+      "name": "Aged Alert/Case Volumes Report (monthly)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 146,
+      "category": "BSA",
+      "code": "BSA17",
+      "name": "Enhanced Monitoring Program Risk Asessment",
+      "bank_guidance": "",
+      "status": "In Review",
+      "notes": "4.29.2026:David M. to provide matrices/risk assessments",
+      "hyperlink": "",
+      "parties": []
+    },
+    {
+      "line": 147,
+      "category": "BSA",
+      "code": "BSA18",
+      "name": "Enhanced Monitoring Reporting",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": []
+    },
+    {
+      "line": 148,
+      "category": "BSA",
+      "code": "BSA19",
+      "name": "System Access - QA level access for bank team",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": []
+    },
+    {
+      "line": 149,
+      "category": "BSA",
+      "code": "BSA20",
+      "name": "Enhanced Goverance Program - ex: More frequent site vists, weekly meetings, etc.",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": []
+    },
+    {
+      "line": 150,
+      "category": "RF",
+      "code": "RF1",
+      "name": "Red Flags / External Fraud Program Policy - Includes Credit Fraud - Includes: Fraud Procedures, Fraud Communications, Document Request Communications,  Red Flags software demonstration, Red Flags data validation, Red Flags thresholds, Fraud Procedure and controls for mitigating, detecting, and resolving fraud after account opening",
+      "bank_guidance": "Must include: potential red flags, process for detecting red flags, actions to take when red flags are detected, identification of emerging threats",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA",
+        "Legal"
+      ]
+    },
+    {
+      "line": 151,
+      "category": "RF",
+      "code": "RF2",
+      "name": "Red Flags / External Fraud Procedure 1",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 152,
+      "category": "RF",
+      "code": "RF2.1",
+      "name": "Red Flags / External Fraud Procedure 2",
+      "bank_guidance": "",
+      "status": "Existing - In Review",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 153,
+      "category": "RF",
+      "code": "RF3",
+      "name": "Red Flags / External Fraud Report",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire\n4.29.2026: David M. to provide an updated template.",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 154,
+      "category": "RF",
+      "code": "RF4",
+      "name": "Identity Theft Red Flags / External Fraud Training Module",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "See FCC New Product Questionnaire",
+      "hyperlink": "",
+      "parties": [
+        "BSA"
+      ]
+    },
+    {
+      "line": 155,
+      "category": "PV",
+      "code": "PV1",
+      "name": "Privacy - Program Policy & Procedures: Includes - Online Privacy Statement, Training Modules, Training System/Platform, Annual Training  Plan, Periodic Training Report- Template or Current Report, Annual Training Report- Template or Current Report, Monitoring & Testing Plam",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "review due to cross-product data combining",
+      "hyperlink": "",
+      "parties": [
+        "Compliance"
+      ]
+    },
+    {
+      "line": 164,
+      "category": "VM",
+      "code": "VM1",
+      "name": "Vendor Management Program/Policy - Includes: Vendor Management Program/Policy, Critical Vendor Risk Assessment(s) for e. Critical Vendor, Vendor Inventory (updated as needed), Due Diligence Questionnaire for e. Critical Vendor, Monitoring & Testing Plan(s)",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "*Marqeta being added.\n4.28.26: Need VM inventory",
+      "hyperlink": "",
+      "parties": [
+        "Other"
+      ]
+    },
+    {
+      "line": 165,
+      "category": "TS",
+      "code": "TS1",
+      "name": "Test Plan - Includes: Initial Test Plans, Tester Terms and Conditions, Tester Scripts, Finalized Test Scripts, Test Results (proving launch functionality), Pilot Program Design Test Plan",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "BSA",
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 166,
+      "category": "TS",
+      "code": "TS2",
+      "name": "Pre Launch Testing or Demonstration - Additional demonstrations per Bank's request",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "Compliance",
+        "SP"
+      ]
+    },
+    {
+      "line": 167,
+      "category": "TS",
+      "code": "TS3",
+      "name": "Post Launch Validation Testing Kickoff - New Products Team to meet with the Partner to discuss the process of testing key policies and procedures following launch to ensure practice aligns with approved materials. No deliverable needed - discussion will be scheduled shortly after launch.",
+      "bank_guidance": "",
+      "status": "",
+      "notes": "",
+      "hyperlink": "",
+      "parties": [
+        "BSA",
+        "Compliance",
+        "Credit",
+        "SP"
+      ]
+    }
+  ],
+  "dropped_not_required": [
+    {
+      "code": "AQ1",
+      "name": "Marketing Procedures",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "AQ2",
+      "name": "Translation Process Questionnaire (for languages supported other than English)",
+      "status": "Not Required"
+    },
+    {
+      "code": "AQ3",
+      "name": "Prescreen Procedures",
+      "status": "Not Required"
+    },
+    {
+      "code": "AQ4",
+      "name": "Response Model Documentation/Response Model Variables list",
+      "status": "Not Required"
+    },
+    {
+      "code": "AQ6",
+      "name": "Promotions (Promotional interest programs: deferred interest or payment, same as cash, airline miles etc.) Any customer facing materials.",
+      "status": "Not Required"
+    },
+    {
+      "code": "AQ7",
+      "name": "Sales Call Scripts/ Pre-Issuance Customer Service Procedures",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "AQ8",
+      "name": "Sales Incentive/Commission Policy",
+      "status": "Not Required"
+    },
+    {
+      "code": "AQ9",
+      "name": "CAN SPAM and/or pre-screen Opt-Out Procedures",
+      "status": "Not Required"
+    },
+    {
+      "code": "AQ10",
+      "name": "Dealer/Contractor/Retailer Materials",
+      "status": "Not Required"
+    },
+    {
+      "code": "AP3",
+      "name": "Credit Pull Authorization",
+      "status": "Not Required"
+    },
+    {
+      "code": "AP6",
+      "name": "Cosigner notice",
+      "status": "Not Required"
+    },
+    {
+      "code": "AP9",
+      "name": "Add-on/ Ancillary Products Disclosures",
+      "status": "Not Required"
+    },
+    {
+      "code": "AP10",
+      "name": "Beneficial Owner indicator/questionnaire",
+      "status": "Not Required"
+    },
+    {
+      "code": "AP11",
+      "name": "Commercial Financing Disclosure Law (CFDL) - CFDL requirements are state-level regulations that apply to commercial financing transactions. CFDL disclosures are generally required before consummation of the financing transaction. For commercial credit cards specifically, this typically means before the account is opened or the credit is first extended.",
+      "status": "Not Required"
+    },
+    {
+      "code": "UW2",
+      "name": "Credit Standard Operating Procedures - Includes: Pricing Assignment, Loan/Line assignment, manual adjudication, line management, credit policy exception process, refinance.(Should include manual underwriting steps that are not part of the Credit Policy)",
+      "status": "Not Required"
+    },
+    {
+      "code": "UW4",
+      "name": "Collateral Verification Procedures",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "UW6",
+      "name": "Employment Verification Procedures",
+      "status": "Not Required"
+    },
+    {
+      "code": "UW7",
+      "name": "Other Verifications - Includes: Phone Verification, Internet Protocol (IP Address), Business Existence Verification",
+      "status": "Not Required"
+    },
+    {
+      "code": "UW9",
+      "name": "CB Alert Procedure - Includes: CB Alert Procedure, Credit Freeze Handling Procedure, Extended Fraud Alert Procedure",
+      "status": "Not Required"
+    },
+    {
+      "code": "UW12",
+      "name": "Adverse Action Notice Demonstration: Demonstration through screenshare or other reasonable approach that the correct adverse action notices will be sent timely and in the right circumstances and that the correct reasons for decline will be populated.",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "UW14",
+      "name": "Risk Based Pricing Notice/Credit score disclosure notice",
+      "status": "Not Required"
+    },
+    {
+      "code": "DD8",
+      "name": "Daily Settlement Statement (PULSE)",
+      "status": "Not Required"
+    },
+    {
+      "code": "OR1",
+      "name": "Counteroffer Communications",
+      "status": "Not Required"
+    },
+    {
+      "code": "OR3",
+      "name": "Sales Slip (if applicable)",
+      "status": "Not Required"
+    },
+    {
+      "code": "OR4",
+      "name": "Auto Pay Enrollment (at Origination)",
+      "status": "Not Required"
+    },
+    {
+      "code": "OR6",
+      "name": "Privacy Procedure (if sharing information) - Includes: Privacy Procedure (if sharing information), Privacy opt-out notice",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "OR9",
+      "name": "Customer Access Point or Document Retention Portal",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "OR10",
+      "name": "Security Interest Filing Procedure",
+      "status": "Not Required"
+    },
+    {
+      "code": "OR11",
+      "name": "Rewards Collateral Account",
+      "status": "Not Required"
+    },
+    {
+      "code": "SV2",
+      "name": "Call Monitoring Program and Systems - Includes: Call Monitoring Program and Systems, Call Retention and Storage",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "SV3",
+      "name": "Credit Bureau Reporting Procedure - Includes: Bureau Data Pull setup/agreement(s), Bureau Reporting setup/agreement(s). Credit Disputes Report (template), Disputes Procedures, Reg E Disputes Procedure, Transaction Disputes Procedure, Dispute / Chargeback Responses",
+      "status": "Not Required"
+    },
+    {
+      "code": "SV6",
+      "name": "Payoff - Includes: Payoff Quote Communications, Payoff Quote, Loan Paid-Off Confirmation, Payoff Refund Communications (Overpayment), Delinquent Communications (pre-default )",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "SV7",
+      "name": "Incentive Program",
+      "status": "Not Required"
+    },
+    {
+      "code": "SV10",
+      "name": "Account Information Updates - Confirmation - Includes: Account Information Updated - Confirmation, Address Change Communications, Account Information Request Responses, Password (Forgot/Reset) Communications, Power of Attorney Communications, Deceased Confirmation Communications",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "SV11",
+      "name": "Early stage DQ - Past Due/Missed Payment Notifications - Includes: Past Due/Missed Payment Notifications, Declined Transaction (revolving), Overlimit Notification (revolving)",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "SV12",
+      "name": "SCRA Requirements - Includes: SCRA Procedure, SCRA Request Report, SCRA Communications",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "SV13",
+      "name": "Power of Attorney Communications, Deceased Communications",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "SV14",
+      "name": "Re-Age Procedure",
+      "status": "Not Required"
+    },
+    {
+      "code": "SV15",
+      "name": "Hardship Program Setup - Includes: Hardship Program Setup, Hardship Communications",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "SV16",
+      "name": "Promotional & Rewards Fulfillment Procedure",
+      "status": "Not Required"
+    },
+    {
+      "code": "SV17",
+      "name": "Change in Terms Communications (e.g. Hardship or CARD Act req.) - Includes: Change in Terms Communications (e.g. Hardship or CARD Act req.), Interest Rate Change (prime rate), Interest Rate Change (margin), Prime Update Procedure, Limit assignment increase/decrease",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "CO2",
+      "name": "Collections Model/Strategy Document",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "CO4",
+      "name": "Litigation Procedure",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "CO5",
+      "name": "Debt Sale Procedure",
+      "status": "Not Required"
+    },
+    {
+      "code": "CO6",
+      "name": "Repossession Procedure",
+      "status": "Not Required"
+    },
+    {
+      "code": "CO7",
+      "name": "3rd Party Collections Procedure",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "CO10",
+      "name": "Re-age Policy",
+      "status": "Not Required"
+    },
+    {
+      "code": "CO11",
+      "name": "ALLL Policy",
+      "status": "Not Required"
+    },
+    {
+      "code": "CO12",
+      "name": "Agent Incentive Program",
+      "status": "Not Required"
+    },
+    {
+      "code": "WB4",
+      "name": "FICO Reporting",
+      "status": "Not Required"
+    },
+    {
+      "code": "WB6",
+      "name": "Waterfall Schedule (as applicable)",
+      "status": "Not Required"
+    },
+    {
+      "code": "WB7",
+      "name": "Loan Trailing Fees - Payments",
+      "status": "Not Required"
+    },
+    {
+      "code": "WB8",
+      "name": "Loan Trailing Fees - Monthly Report",
+      "status": "Not Required"
+    },
+    {
+      "code": "WB9",
+      "name": "Loan Trailing Fees - Collateral True-Up",
+      "status": "Not Required"
+    },
+    {
+      "code": "WB11",
+      "name": "Transactions",
+      "status": "Not Required"
+    },
+    {
+      "code": "WB12",
+      "name": "Credit Policy Adherence Monitoring Results Report - Results of any ongoing credit policy adherence controls in place, including any audits, transaction testing, independent validation, or other monitoring activities.",
+      "status": "Not Required"
+    },
+    {
+      "code": "CM2",
+      "name": "Complaint Management Report Update",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "CM3",
+      "name": "Issue Management Report Update",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "BSA11",
+      "name": "BSA Independent Audit Report/Annual System and Model Validation",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "BSA14",
+      "name": "FCC Point of Contact",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "PV2",
+      "name": "GLBA - Includes: Customer Privacy Notice, Privacy Disclosure(s), Opt Out Procedures",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "PV3",
+      "name": "CCPA - Policy- Disclosures - Includes: CCPA - Policy- Disclosures, CCPA- Handling Procedure, CCPA - Inventory of Consumer Data, CCPA - DSAR (Data Subject Access Requests) Response Templates",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "IT1",
+      "name": "Information Security Policy",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "IT2",
+      "name": "Information Security Program - Includes: Information Security Program, IT Risk Assessment (FFIEC CAT, NIST, etc.), System Inventory (Network diagram, IT Scope, or data flow diagram, etc.), Information Security Training, Third-Party IT Audit (SOC I, SOC II, PCI, ITGC), Conduct App and Network Penetration Test and Report Results to Bank, Incident Response / Data Breach Policy or Procedure, Business Continuity & Disaster Recovery Training, BCP Plan, DR Plan, BCP Test Results, DR Test Results",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "IT3",
+      "name": "InfoSecurity: Incident Management & Response Procedure , Breach Notification Process ,  Customer Breach Notification Communication Template, PII Handling Procedure",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "IT4",
+      "name": "Business Continuity Policy",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "IT5",
+      "name": "Disaster Recovery Policy",
+      "status": "Existing - Not Req."
+    },
+    {
+      "code": "IT6",
+      "name": "Issue Management",
+      "status": "Existing - Not Req."
+    }
+  ],
+  "dropped_count": 68
+}

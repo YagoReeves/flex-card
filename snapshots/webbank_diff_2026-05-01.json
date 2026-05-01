@@ -1,0 +1,106 @@
+{
+  "today": "2026-05-01",
+  "prev": "2026-04-30",
+  "totals": {
+    "kept_today": 92,
+    "kept_prev": 89
+  },
+  "added": [
+    {
+      "code": "OR5.1",
+      "name": "Funds Flow Matrix",
+      "category": "OR"
+    },
+    {
+      "code": "BSA13.1",
+      "name": "Suspicious Activity Reporting Procedure",
+      "category": "BSA"
+    },
+    {
+      "code": "RF2.1",
+      "name": "Red Flags / External Fraud Procedure 2",
+      "category": "RF"
+    }
+  ],
+  "marked_not_required": [],
+  "disappeared": [],
+  "status_changes": [
+    {
+      "code": "BSA13",
+      "name": "Suspicious Activity Detection/Investigation/Reporting - Includes: Suspicious Activity Investigation/Reporting Procedures, Process for reporting Suspicious Activity to the Bank  SAR Procedures, Transaction Surveillance Thresholds, Transaction Surveillance Software Demonstration, Transaction Surveillance Software Data Validation, process for detecting suspicious activity. FCC Case Management Software Demonstration, FCC Case Management Software Data Validation",
+      "from": "",
+      "to": "Existing - In Review"
+    },
+    {
+      "code": "BSA2",
+      "name": "USA Patriot Act Training Module",
+      "from": "",
+      "to": "Existing - In Review"
+    },
+    {
+      "code": "CM1",
+      "name": "Compliance Management System (CMS) Policies",
+      "from": "",
+      "to": "Existing - In Review"
+    },
+    {
+      "code": "BSA17",
+      "name": "Enhanced Monitoring Program Risk Asessment",
+      "from": "",
+      "to": "In Review"
+    },
+    {
+      "code": "BSA3",
+      "name": "OFAC Training Module",
+      "from": "",
+      "to": "Existing - In Review"
+    },
+    {
+      "code": "RF2",
+      "name": "Red Flags / External Fraud Procedure 1",
+      "from": "",
+      "to": "Existing - In Review"
+    },
+    {
+      "code": "BSA15",
+      "name": "314a - Includes: 314a Procedures, 314a Software Demonstration, 314a Software Data Validation, 314a Report",
+      "from": "",
+      "to": "Existing - In Review"
+    },
+    {
+      "code": "BSA4",
+      "name": "BSA Training Module",
+      "from": "",
+      "to": "Existing - In Review"
+    },
+    {
+      "code": "BSA6",
+      "name": "Watchlist Screening -  Initial, Ongoing and ACH screening",
+      "from": "",
+      "to": "Existing - In Review"
+    }
+  ],
+  "note_changes": [],
+  "bank_guidance_changes": [],
+  "hyperlink_changes": [
+    {
+      "code": "DP5",
+      "name": "Consumer Deposit Account Policy",
+      "from": "https://webbank.app.box.com/file/2200497966844",
+      "to": ""
+    },
+    {
+      "code": "DP11.2",
+      "name": "Flex Card ACH Direct Deposit",
+      "from": "https://webbank.app.box.com/file/2191955588660",
+      "to": ""
+    },
+    {
+      "code": "DP11.1",
+      "name": "Flex Card ACH Bill Pay",
+      "from": "https://webbank.app.box.com/file/2191952675072",
+      "to": ""
+    }
+  ],
+  "parties_changes": []
+}

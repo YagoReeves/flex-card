@@ -166,13 +166,20 @@ Before processing the checklist, `Read prompts/project_context.md` from the work
   }
   ```
 - **Sanity check before continuing**: the parser should return roughly 94 kept rows on a healthy run. If `kept` is materially smaller (say <80), abort: post a Slack failure digest with the row count and do not commit anything or update Notion. Do not silently proceed with a degraded parse.
-- **Backwards-compat notes**: (a) snapshots without `dropped_not_required` (written before 2026-04-29) — treat as `[]`. (b) snapshots without `schema_version` or with `schema_version` < 2 use `hyperlink` instead of `bank_draft_url`/`bank_draft_name` and do not have `target_submission`. On the **first fire after this prompt update**, if `<PREV>` has no `schema_version` or `schema_version` < 2: skip the diff entirely, treat this as a baseline fire, post `"Schema upgraded to v2 — baseline rebuilt with <N> kept rows. No diff available for this fire."` as the Slack digest, and write the v2 snapshot. One-day diff loss is acceptable.
+- **Backwards-compat notes**: (a) snapshots without `dropped_not_required` (written before 2026-04-29) — treat as `[]`. (b) snapshots without `schema_version` or with `schema_version` < 2 use `hyperlink` instead of `bank_draft_url`/`bank_draft_name` and do not have `target_submission`. On the **first fire after this prompt update**, if `<PREV>` has no `schema_version` or `schema_version` < 2, this is a **schema-upgrade fire** — see the dedicated handling at the start of step 3.
 - **`parties` is read from Excel col 20 ("Required Reviews")** with a canonical→Other mapping. Excel may list non-canonical names (MRM, LC/Board, VP-New Products, Finance, IT, VM, etc.) — these collapse to a single `Other` entry. Canonical names (SP, Compliance, Credit, BSA, Legal, Ops, Product) pass through unchanged. The mapping matches the seed parser's behaviour, so re-parsing existing rows produces stable values.
 - The `code` is the canonical row key for diff matching and Notion upserts.
 
 ### 3. Diff against yesterday's snapshot
 
 If `<PREV>` is null, skip — see step 6.
+
+**Schema-upgrade fire** (first fire after this prompt update): if `<PREV>` snapshot has no `schema_version` or `schema_version` < 2:
+  - Compute **structural-only** diff (codes only): `added`, `marked_not_required`, `disappeared` per the normal definitions below. **Skip** all field-level change derivations (no `status_changes`, `note_changes`, `bank_guidance_changes`, `bank_draft_changes`, `bank_due_changes`, `parties_changes` — set them all to `[]`).
+  - Build the diff payload with the standard structure (see below) PLUS `"schema_upgrade": true` and `"rows_refreshed": <N>` where `<N>` = `len(kept)`. Write this in step 5 so Daily Brief can detect the upgrade.
+  - In step 4: process `added` / `marked_not_required` / `disappeared` per the normal branching (upsert / archive / archive). **Additionally**, for every other kept code (codes in `TODAY.kept` that are NOT in `added`), force-update the **full Box-mapped field set** on the existing Notion page (rewrites every Box-mapped field, populating `Bank Due` and `Bank Draft` for the first time). Internal-only fields stay untouched as always.
+  - Step 6: use the "Schema-upgrade case" Slack digest template.
+  - Then proceed to step 5 normally.
 
 Otherwise, `Read snapshots/webbank_checklist_<PREV>.json`. Index both `<PREV>.kept` and `<TODAY>.kept` by `code`. Index `<TODAY>.dropped_not_required` by `code` (treat missing field as `[]` for legacy snapshots — see backwards-compat note in step 2). Compute:
 
@@ -226,6 +233,8 @@ Empty arrays are fine. Total-change-count = sum of all array lengths.
 
 **Also do not write to:** `Last Diff Summary`, `Last Diff Change` (written separately by this routine), `Created by` (system-managed), `Link to Draft` (deprecated — leave untouched).
 
+**On schema-upgrade fires** (see step 3): use the diff-driven branching below for `added` / `marked_not_required` / `disappeared` (these still apply — codes are unaffected by schema version). Skip the per-field "changed" branch since field-level changes aren't derivable. **Additionally**, for every kept code NOT in `added` (i.e. existing rows), force-update the full Box-mapped field set on its Notion page — this is what populates `Bank Due` and `Bank Draft` for the first time across the whole DB.
+
 - **Upsert by code, never blind-create. Search BOTH active and archived pages.** For each **added** code from the diff: query the Mirror DB for any page (active or archived) where the code field matches.
   - If an active page is found → apply parsed fields to bring it up to date (treat as a changed-code update).
   - If an archived page is found → un-archive it (`archived: false`) and apply parsed fields. This is the recovery path when WebBank re-flags a previously Not-Required row as required.
@@ -271,6 +280,13 @@ No changes since <PREV>. Mirror DB unchanged. (<N> items tracked.)
 :robot_face: *[FLEX AGENT] WebBank Sync — <TODAY>*
 
 First scheduled fire. Baseline established with <N> items tracked. No diff (no prior snapshot).
+```
+
+**Schema-upgrade case** (PREV exists, `schema_version` < 2 — see step 3):
+```
+:robot_face: *[FLEX AGENT] WebBank Sync — <TODAY>*
+
+Schema upgraded to v2 — refreshed <N> kept rows with new Bank Due / Bank Draft fields. No diff available for this fire.
 ```
 
 **Changes case**:

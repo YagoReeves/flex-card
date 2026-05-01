@@ -1,0 +1,393 @@
+{
+  "date": "2026-05-01",
+  "generated_at_utc": "2026-05-01T06:45:25Z",
+  "mode": "LIVE",
+  "slack_permalink": "https://cleo-team.slack.com/archives/C0AV07H9QPP/p1777618449606159",
+  "meetings": [
+    {
+      "title": "Credit Reporting: Pt 2",
+      "time_local": "14:15",
+      "attendees_summary": "Ladi (org), Meghan, Charlie D, Madelaine Ford, Ashley J, Deane L, Jago, Kirill S",
+      "prep_pointer": "https://app.notion.com/p/3535c63b8745815688d0fcb98ab9453f"
+    },
+    {
+      "title": "Flex Card Construct Legal Sync",
+      "time_local": "16:00",
+      "attendees_summary": "Jago (org), Maia R, Madelaine Ford, Neela, Ladi (Lea + Colin declined)",
+      "prep_pointer": "https://app.notion.com/34f5c63b8745810885aed9cafe6062e2"
+    }
+  ],
+  "action_items_due": [
+    {
+      "notion_page_id": "34e5c63b-8745-8105-a52e-eeeb5ea66780",
+      "title": "Schedule 2x Marqeta deep-dive sessions next week (Onboarding + Transactions)",
+      "owner": "Jago",
+      "due": "2026-05-01",
+      "priority": "P0"
+    },
+    {
+      "notion_page_id": "34f5c63b-8745-8191-9da8-e4e073830c8c",
+      "title": "Drive written Reg E rebuttal for Flex Card wallet — for Tuesday's WebBank product-construct call",
+      "owner": "Jago",
+      "due": "2026-05-01",
+      "priority": "P0"
+    }
+  ],
+  "awaiting_partners": [
+    {
+      "notion_page_id": "34f5c63b-8745-811e-b716-f9c7e8493dfe",
+      "title": "WebBank to share templates for net-new policies & procedures (Reg CC, Reg DD, Reg E)",
+      "partner_owner": "WebBank",
+      "due": "2026-05-01",
+      "days_since_last_nudged": 4,
+      "last_nudged_null": false,
+      "priority": "P2"
+    },
+    {
+      "notion_page_id": "34f5c63b-8745-814a-928c-ecf12c1a7f5b",
+      "title": "WebBank to confirm BSA / Reg E / Reg DD / Reg CC drop-offs after FCC scoping session",
+      "partner_owner": "WebBank",
+      "due": "2026-05-01",
+      "days_since_last_nudged": 4,
+      "last_nudged_null": false,
+      "priority": "P1"
+    },
+    {
+      "notion_page_id": "34f5c63b-8745-81af-a557-d7b65d790271",
+      "title": "WebBank to apply P1/P2/P3 priority ratings across the Flex Card implementation checklist",
+      "partner_owner": "WebBank",
+      "due": "2026-05-01",
+      "days_since_last_nudged": 4,
+      "last_nudged_null": false,
+      "priority": "P1"
+    },
+    {
+      "notion_page_id": "3505c63b-8745-81be-bdd3-f14e68fd372d",
+      "title": "Marqeta to confirm whether 14 May sandbox includes reporting-layer (Decoda) access",
+      "partner_owner": "Marqeta",
+      "due": "2026-05-01",
+      "days_since_last_nudged": 2,
+      "last_nudged_null": false,
+      "priority": "P1"
+    },
+    {
+      "notion_page_id": "3515c63b-8745-81c8-b521-c477abd7de7d",
+      "title": "Marqeta to confirm pricing on user creation + maintenance + clean definitions of \"active account\" and \"token on file\"",
+      "partner_owner": "Marqeta",
+      "due": "2026-05-01",
+      "days_since_last_nudged": 2,
+      "last_nudged_null": false,
+      "priority": "P1"
+    },
+    {
+      "notion_page_id": "3515c63b-8745-8105-9454-e170d38da3f6",
+      "title": "Marqeta to confirm Mastercard's position on BNPL-as-primary credential",
+      "partner_owner": "Marqeta",
+      "due": "2026-05-01",
+      "days_since_last_nudged": 2,
+      "last_nudged_null": false,
+      "priority": "P2"
+    }
+  ],
+  "central_memory": {
+    "newly_added_today": [
+      {
+        "notion_page_id": "3535c63b-8745-81e9-ad7d-ce446af16a1e",
+        "entry": "BNPL Builder subscription fee: cost-of-credit disclosure risk",
+        "category": "Risk",
+        "status": "Logged",
+        "workstream": "Bank & Compliance",
+        "severity": "High",
+        "partner": "WebBank",
+        "notion_url": "https://app.notion.com/3535c63b874581e9ad7dce446af16a1e"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-81f4-bac4-c732775d65c1",
+        "entry": "September UAT and March 2027 launch timeline at risk",
+        "category": "Risk",
+        "status": "Logged",
+        "workstream": "Programme",
+        "severity": "High",
+        "partner": null,
+        "notion_url": "https://app.notion.com/3535c63b874581f4bac4c732775d65c1"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-81dd-8834-c972d630867e",
+        "entry": "WebBank fund flow structure: wallet claim vs reversal",
+        "category": "Risk",
+        "status": "Logged",
+        "workstream": "Bank & Compliance",
+        "severity": "High",
+        "partner": "WebBank",
+        "notion_url": "https://app.notion.com/3535c63b874581dd8834c972d630867e"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-8129-b353-df08ba6ee418",
+        "entry": "Flex card squad hires at risk from headcount reduction",
+        "category": "Risk",
+        "status": "Logged",
+        "workstream": "Programme",
+        "severity": null,
+        "partner": null,
+        "notion_url": "https://app.notion.com/3535c63b87458129b353df08ba6ee418"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-814a-830f-e9939a7477b1",
+        "entry": "Mastercard initial implementation call: next Wednesday",
+        "category": "Commitment",
+        "status": "Logged",
+        "workstream": "Platform Foundations",
+        "severity": null,
+        "partner": "Mastercard",
+        "notion_url": "https://app.notion.com/3535c63b8745814a830fe9939a7477b1"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-817f-a56c-ecd3bb1b1d96",
+        "entry": "ACH rail AML risk flagged for Flex Card by WebBank",
+        "category": "Risk",
+        "status": "Logged",
+        "workstream": "Fraud & Risk",
+        "severity": null,
+        "partner": "WebBank",
+        "notion_url": "https://app.notion.com/3535c63b8745817fa56cecd3bb1b1d96"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-81ac-9058-fd4c41e18cad",
+        "entry": "Current Reg E policy requires Flex-specific updates",
+        "category": "Issue",
+        "status": "Logged",
+        "workstream": "Bank & Compliance",
+        "severity": null,
+        "partner": "WebBank",
+        "notion_url": "https://app.notion.com/3535c63b874581ac9058fd4c41e18cad"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-81ae-90ee-d66c193dcc14",
+        "entry": "WebBank implementation contact: Rachel Wright → KG",
+        "category": "Issue",
+        "status": "Logged",
+        "workstream": "Bank & Compliance",
+        "severity": null,
+        "partner": "WebBank",
+        "notion_url": "https://app.notion.com/3535c63b874581ae90eed66c193dcc14"
+      }
+    ],
+    "high_severity_untriaged": [
+      {
+        "notion_page_id": "3535c63b-8745-81e9-ad7d-ce446af16a1e",
+        "entry": "BNPL Builder subscription fee: cost-of-credit disclosure risk",
+        "category": "Risk",
+        "workstream": "Bank & Compliance",
+        "days_since_created": 0,
+        "notion_url": "https://app.notion.com/3535c63b874581e9ad7dce446af16a1e"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-81f4-bac4-c732775d65c1",
+        "entry": "September UAT and March 2027 launch timeline at risk",
+        "category": "Risk",
+        "workstream": "Programme",
+        "days_since_created": 0,
+        "notion_url": "https://app.notion.com/3535c63b874581f4bac4c732775d65c1"
+      },
+      {
+        "notion_page_id": "3535c63b-8745-81dd-8834-c972d630867e",
+        "entry": "WebBank fund flow structure: wallet claim vs reversal",
+        "category": "Risk",
+        "workstream": "Bank & Compliance",
+        "days_since_created": 0,
+        "notion_url": "https://app.notion.com/3535c63b874581dd8834c972d630867e"
+      }
+    ],
+    "stale_untriaged_count": 0
+  },
+  "inbox": {
+    "email": [
+      {
+        "sender": "zalpuri@gvgroup.net",
+        "subject": "RE: Processor Assessment - Cleo's Flex Card Construct discussion",
+        "snippet": "GV Group requesting initial review call with Cleo SME following yesterday's onsite; also sharing Thomas Layman's key takeaways",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19ddf69e3d41276d",
+        "awaiting_jago_reply": true
+      },
+      {
+        "sender": "tlayman@gvgroup.net",
+        "subject": "FW: Meeting assets for Thomas Layman's Zoom Meeting are ready!",
+        "snippet": "Thomas Layman (GV Group) thanking Cleo for hosting the onsite lunch and meetings yesterday",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19ddda407b5f21d9",
+        "awaiting_jago_reply": true
+      },
+      {
+        "sender": "jwright@marqeta.com",
+        "subject": "Updated invitation: [External] Cleo<>Marqeta Product Deep Dive - Onboarding @ Wed 6 May 2026",
+        "snippet": "Calendar invite update for Wed 6 May 17:00-18:00 BST Marqeta deep-dive (Onboarding)",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19ddf2d0e4921b01",
+        "awaiting_jago_reply": false
+      },
+      {
+        "sender": "jwright@marqeta.com",
+        "subject": "Updated invitation: [External] Cleo<>Marqeta Product Deep Dive - Transactions @ Fri 8 May 2026",
+        "snippet": "Calendar invite update for Fri 8 May 17:00-18:00 BST Marqeta deep-dive (Transactions)",
+        "link": "https://mail.google.com/mail/u/0/#inbox/19ddf2cea71982b1",
+        "awaiting_jago_reply": false
+      }
+    ],
+    "email_status": "ok",
+    "slack": [
+      {
+        "channel": "#product-cleo-card",
+        "new_count": 7,
+        "key_discussion": "Marqeta deep-dives rescheduled to 6+8 May; Tylar IC Payments plastics/pricing follow-ups; Ladi wants to sync with Jago before sharing WebBank abridged-doc responses",
+        "mentions_jago": 3
+      },
+      {
+        "channel": "#collab-card-accourt",
+        "new_count": 0,
+        "key_discussion": "",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#proj-flex-card-design",
+        "new_count": 2,
+        "key_discussion": "Emotive study first draft ready for refinement; targeting go-live EOW",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#collab-card_ops_support",
+        "new_count": 0,
+        "key_discussion": "",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#collab-compliance-credit",
+        "new_count": 0,
+        "key_discussion": "",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#x-cleo-mq",
+        "new_count": 0,
+        "key_discussion": "",
+        "mentions_jago": 0
+      },
+      {
+        "channel": "#x-cleo-mq-ic",
+        "new_count": 1,
+        "key_discussion": "Tylar rescheduling internal IC/MC timing chat with Dawson Lake and Lucy Hein",
+        "mentions_jago": 0
+      }
+    ],
+    "slack_dms": [
+      {
+        "counterpart_email": "oladipo@meetcleo.com",
+        "counterpart_name": "Ladi",
+        "summary": "Marqeta offsite planning for w/c 18 May — Wed 20 vs Thu 21 options; 11-person attendee list discussed, John's summit conflict flagged",
+        "thread_link": "https://cleo-team.slack.com/archives/D08NCJ33X6Y",
+        "flex_relevance_signal": "keyword"
+      }
+    ],
+    "slack_dms_unresolved": [
+      {
+        "email": "aarellano@marqeta.com",
+        "reason": "User not found via slack_search_users — likely external/deactivated account or MCP scope limitation"
+      }
+    ]
+  },
+  "slack_candidates_written": [
+    {
+      "actionable": "IC Payments to deliver plastics pricing spreadsheet by Wed 6 May",
+      "author": "Tylar Bloch",
+      "channel": "#product-cleo-card",
+      "thread_link": "https://meetcleo.slack.com/archives/C09RJRG0QUC/p1777580244",
+      "notion_page_id": "3535c63b-8745-817c-8aec-f5b7ed527fcd",
+      "notion_page_url": "https://app.notion.com/p/3535c63b8745817c8aecf5b7ed527fcd",
+      "assumed_due": "2026-05-06"
+    },
+    {
+      "actionable": "Push Marqeta to send onboarding + transaction flow diagrams ahead of 6 May session",
+      "author": "Ladi",
+      "channel": "#product-cleo-card",
+      "thread_link": "https://meetcleo.slack.com/archives/C09RJRG0QUC/p1777541549",
+      "notion_page_id": "3535c63b-8745-8146-8cb8-e3d772ec9284",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581468cb8e3d772ec9284",
+      "assumed_due": null
+    },
+    {
+      "actionable": "Tylar to share updated plastics logistics roadmap (early next week)",
+      "author": "Tylar Bloch",
+      "channel": "#product-cleo-card",
+      "thread_link": "https://meetcleo.slack.com/archives/C09RJRG0QUC/p1777580244",
+      "notion_page_id": "3535c63b-8745-8108-b589-e0b541d69f6a",
+      "notion_page_url": "https://app.notion.com/p/3535c63b87458108b589e0b541d69f6a",
+      "assumed_due": null
+    },
+    {
+      "actionable": "Confirm IC Payments availability for weekly Mastercard implementation call",
+      "author": "Tylar Bloch",
+      "channel": "#product-cleo-card",
+      "thread_link": "https://meetcleo.slack.com/archives/C09RJRG0QUC/p1777580244",
+      "notion_page_id": "3535c63b-8745-8123-8ed2-ff701756e69e",
+      "notion_page_url": "https://app.notion.com/p/3535c63b874581238ed2ff701756e69e",
+      "assumed_due": null
+    }
+  ],
+  "slack_candidates_skipped": [],
+  "proposed_queue_size_over_3_days": 0,
+  "granola_sweep_summary": {
+    "available": true,
+    "auto_processed_count": 3,
+    "candidates_written": 7,
+    "candidates_skipped": 1,
+    "grey_zone_count": 0,
+    "grey_zone_highlights": []
+  },
+  "risks_flagged": [
+    {
+      "workstream": "Bank & Compliance",
+      "risk": "Reg E rebuttal for Tuesday's WB product-construct call is due today — Paul Hastings OC review not yet engaged; no outside-counsel-backed legal position going into that call",
+      "why_it_matters": "Without an OC-backed position, Cleo risks product-classification challenge or material redesign demand from WebBank",
+      "critical_path_risk_ref": "1",
+      "source": "action-item"
+    },
+    {
+      "workstream": "Bank & Compliance",
+      "risk": "Three WebBank partner items past due today (policy templates, BSA/Reg E drop-offs, checklist priorities) — last nudged 4 days ago",
+      "why_it_matters": "These gate the FCC compliance track; unresolved items could block Tuesday's product-construct call",
+      "critical_path_risk_ref": "2",
+      "source": "action-item"
+    },
+    {
+      "workstream": "Platform Foundations",
+      "risk": "Marqeta transaction flow diagrams still outstanding — 6 May session gated on pre-reads",
+      "why_it_matters": "Same cancellation risk as today if diagrams don't land before Wednesday; this is the second slip on Marqeta deep-dive sessions",
+      "critical_path_risk_ref": "2",
+      "source": "inbox"
+    },
+    {
+      "workstream": "Programme",
+      "risk": "September UAT + March 2027 launch timeline flagged High risk in yesterday's gates review; squad hires at risk from headcount reduction",
+      "why_it_matters": "Both logged in Central Memory this morning at High severity — need triage and owner assignment",
+      "critical_path_risk_ref": "2",
+      "source": "meeting"
+    },
+    {
+      "workstream": "Credit Reporting",
+      "risk": "Workstream unowned pending hire; Banking Ops uncertainty on in-house build persists",
+      "why_it_matters": "Today's session (14:15) must land a clear in-house build plan — unresolved uncertainty could reopen Ash's March decision",
+      "critical_path_risk_ref": null,
+      "source": "quiet-workstream"
+    }
+  ],
+  "webbank_diff_summary": {
+    "available": true,
+    "added": 3,
+    "removed": 0,
+    "status_changed": 9,
+    "note_changed": 0,
+    "highlights": [
+      "3 new items added: OR5.1 Funds Flow Matrix, BSA13.1 SAR Procedure, RF2.1 Red Flags Procedure 2",
+      "9 BSA/compliance items moved to Existing - In Review or In Review (BSA2/3/4/6/13/15/17, CM1, RF2) — WebBank progressing through FCC reviews",
+      "3 Box hyperlinks removed from DP5 Consumer Deposit Account Policy, DP11.1 ACH Bill Pay, DP11.2 ACH Direct Deposit — may indicate stale links"
+    ]
+  },
+  "rendered_slack_text": ":robot_face: **[FLEX AGENT] Daily Brief — 2026-05-01**\n\n**Today's meetings**\n• Credit Reporting: Pt 2 — 14:15 — Ladi (org), Meghan, Charlie D, Madelaine Ford, Ashley J, Deane L, Jago, Kirill S — prep: [Action item](https://app.notion.com/p/3535c63b8745815688d0fcb98ab9453f)\n• Flex Card Construct Legal Sync — 16:00 — Jago (org), Maia R, Madelaine Ford, Neela, Ladi (Lea + Colin declined) — prep: [Central Memory: Flex product classification challenge](https://app.notion.com/34f5c63b8745810885aed9cafe6062e2)\n\n─────────────────────────\n\n**Action items: overdue / due today**\n• P0 — [Schedule 2x Marqeta deep-dive sessions (Onboarding + Transactions)](https://app.notion.com/34e5c63b87458105a52eeeeb5ea66780) — Jago — 2026-05-01\n• P0 — [Drive written Reg E rebuttal for Flex Card wallet — for Tuesday's WB call](https://app.notion.com/34f5c63b874581919da8e4e073830c8c) — Jago — 2026-05-01\n\n**Awaiting partners** (Cleo waiting on)\n_WebBank_ — 3 items, all due today, last nudged 4 days ago:\n• P2 — [Share net-new policy/procedure templates (Reg CC, Reg DD, Reg E)](https://app.notion.com/34f5c63b8745811eb716f9c7e8493dfe) — WebBank — 2026-05-01 — 4 days since nudge\n• P1 — [Confirm BSA / Reg E / Reg DD / Reg CC drop-offs post FCC scoping](https://app.notion.com/34f5c63b8745814a928cecf12c1a7f5b) — WebBank — 2026-05-01 — 4 days since nudge\n• P1 — [Apply P1/P2/P3 priority ratings across implementation checklist](https://app.notion.com/34f5c63b874581afa557d7b65d790271) — WebBank — 2026-05-01 — 4 days since nudge\n_Marqeta_ — 3 items, all due today, nudged 2 days ago:\n• P1 — [Confirm 14 May sandbox includes Decoda (reporting layer)](https://app.notion.com/3505c63b874581bebdd3f14e68fd372d) — Marqeta — 2026-05-01 — 2 days since nudge\n• P1 — [Confirm pricing: user creation + maintenance + \"active account\" definitions](https://app.notion.com/3515c63b874581c8b521c477abd7de7d) — Marqeta — 2026-05-01 — 2 days since nudge\n• P2 — [Confirm Mastercard's position on BNPL-as-primary credential](https://app.notion.com/3515c63b874581059454e170d38da3f6) — Marqeta — 2026-05-01 — 2 days since nudge\n\n─────────────────────────\n\n**Central Memory**\n_Newly added today:_\n• BNPL Builder subscription fee: cost-of-credit disclosure risk — Risk — Logged — Bank & Compliance — High\n• September UAT and March 2027 launch timeline at risk — Risk — Logged — Programme — High\n• WebBank fund flow structure: wallet claim vs reversal — Risk — Logged — Bank & Compliance — High\n• Flex card squad hires at risk from headcount reduction — Risk — Logged — Programme — —\n• Mastercard initial implementation call: next Wednesday — Commitment — Logged — Platform Foundations — —\n(+3 more: ACH AML risk flagged by WebBank, Reg E policy needs Flex update, WB implementation contact change Rachel → KG)\n_High-severity untriaged:_\n• BNPL Builder subscription fee: cost-of-credit disclosure risk — Risk — Bank & Compliance — 0 days\n• September UAT and March 2027 launch timeline at risk — Risk — Programme — 0 days\n• WebBank fund flow structure: wallet claim vs reversal — Risk — Bank & Compliance — 0 days"
+}
